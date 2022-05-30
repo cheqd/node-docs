@@ -2,12 +2,12 @@
 
 ## Status
 
-| Category                  | Status                                      |
-| ------------------------- | ------------------------------------------- |
-| **Authors**               | Renata Toktar, Brent Zundel, Ankur Banerjee |
-| **ADR Stage**             | DRAFT                                       |
-| **Implementation Status** | Draft                                       |
-| **Start Date**            | 2021-09-23                                  |
+| Category                  | Status                                           |
+| ------------------------- | ------------------------------------------------ |
+| **Authors**               | Renata Toktar, Alexander Kolesov, Ankur Banerjee |
+| **ADR Stage**             | DRAFT                                            |
+| **Implementation Status** | Draft                                            |
+| **Start Date**            | 2021-09-23                                       |
 
 ## Summary
 
@@ -48,39 +48,179 @@ For example, "did:cheqd:example1234?service=ExampleSchema" can be dereferenced. 
 
 ## Decision
 
+### DID Resources
+
+#### Assumptions
+
+* Immutability:
+  * Resources are immutable, so can't be updated/removed;
+
+* Limitations
+  * Resource size is now limited by maximum tx/block size;
+
+#### Future improvements
+
+* Limitations
+  * Introduce module level resource size limit that can be changed by voting
+
+####'Resources' module on ledger
+
+A new module will be created: `resources`.
+
+**Dependencies**
+
+* It will have `cheqd` module as a dependency.
+  * Will be used for DIDs existence checks.
+  * Will be used for authentication
+
+#### Types
+
+**Resource**
+
+*  **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
+*  **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
+*  **Name: String (e.g., `CL-Schema1` (supplied client-side)**
+*  **ResourceType (e.g., `CL-Schema`****, `JSONSchema2020`****) (supplied client-side)**
+*  **MimeType: (e.g., `application/json`****, `image/png`****) (supplied client-side)**
+*  **Data: Byte\[\] (supplied client-side)**
+*  Created: XMLDatetime (computed ledger-side)
+*  Checksum: SHA-256 (computed ledger-side)
+*  previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+*  nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+
+**MsgCreateResource**
+
+*   The same fields as in **Resource,** except `Created`, `Created`, `PreviousVersion`, `NextVersion` and `Checksum`
+
+**MsgCreateResourceResponse**
+
+*   Resource: Resource
+
+**QueryGetResourcesRequest**
+
+*   DID: String
+
+**QueryGetResourcesResponse**
+
+*   Resources: Resource\[\]
+
+**QueryGetResourceRequest**
+
+*   DID: String
+*   ID: String
+
+**QueryGetResourceResponse**
+
+*   Resource: Resource
+
+**QueryGetAllResourceVersionsRequest**
+
+*   DID: String
+*   Name: String
+*   Type: String
+*   MimeType: String
+
+**QueryGetAllResourceVersionsResponse**
+
+*   Resources: Resource\[\]
+
+#### State
+*   `resources:<did-id>:<resource-id>` ➝ **Resource**
+  *   `<did-id>` is the last part of DID. It can be UUID, Indy-style or whatever is allowed by ledger. It allows us to evolve over time more easily.
+  *   Primary key is (ID)
+
+#### Transactions
+
+**CreateResource:**
+
+* Input:
+  * **MsgCreateResource**
+
+* Output:
+  * **MsgCreateResourceResponse**
+
+* Processing logic:
+  * Check that associated DIDDoc exists;
+  * Authenticate request the same way as DIDDoc modification;
+  * Validate properties;
+  * Validate **data** for specific resource types (CL Schema);
+  * Validate that **ID** is unique;
+  * Set **created** date time;
+  * Set `previousVertsion` and `nextVersion` if this is a new version (a resource with the same name, type ans resource-type exists);
+  * Compute **checksum**;
+  * Persist the **resource** in state;
+
+#### Queries
+
+**GetResources:**
+
+* Input:
+  * **QueryGetResourcesRequest**
+
+* Output:
+
+  * **QueryGetResourcesResponse**
+
+* Processing logic:
+
+  * Retrieves the whole resource collection for the specified DID;
+
+
+**GetResource:**
+
+* Input:
+  * **QueryGetResourceRequest**
+
+* Output:
+  * **QueryGetResourceResponse**
+
+* Processing issues:
+  * Retrieves a specific resource by Collection-ID(DID) and resource ID;
+
+**GetAllResourceVersions:**
+
+* Input:
+  * **QueryAllResourceVersionsRequest**
+
+* Output:
+  * **QueryAllResourceVersionsResponse**
+
+* Processing issues:
+  * Retrieves all resource versions by resource name, resource type and mime type;
+
+
+#### Resolver piece
+
+We need to support resource resolution in the DID resolver.
+
+**Resource resolution**
+
+* Input DIDUrl:
+  * `https://resolver.cheqd.net/1.0/identifiers/<did>/resources/<resource-id>`
+
+* Output:
+  * JSON encoded **QueryGetResourceResponse**
+
+* Processing logic:
+  * Simply call **GetResource** via GRPC
+
 ### Schema
 
-There are two important parts of this architecture to understand:
+CL-Schema resource can be created via `CreateResource` transaction with the follow list of parameters:
 
-- Schemas will need to be created with their own specific transaction input in a Command Line; and
-- Each Schema will also have its own DID Document, which are able to be resolved or dereferenced. 
-
-Different results will be returned for a resolved or dereferenced Schema DID URL, this ill be explained below.
-
-#### Creating a Schema using a CLI transaction
-
-The transaction below is used to create a Schema:
-
-* **`id`**: DID as base58-encoded string for 16 or 32 byte DID value with cheqd DID Method prefix `did:cheqd:<namespace>:` and a resource type at the end.
-* **`type`**: String with a schema type. Now only `CL-Schema` is supported.
-* **`attrNames`**: Array of attribute name strings (125 attributes maximum)
-* **`name`**: Schema's name string
-* **`version`**: Schema's version string
-* **`controller`**: DIDs list of strings or only one string of a schema controller(s). All DIDs must exist.
-
-
-In JSON, once the schema is created, it will be represented in the following format:
-
-```jsonc
-{
-  "id": "did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue?service=CL-Schema",
-  "type": "CL-Schema",
-  "controller": "did:cheqd:mainnet-1:IK22KY2Dyvmuu2PyyqSFKu",  // Schema Issuer DID
-  "version": "1.0",
-  "name": "Degree",
-  "attrNames": ["undergrad", "last_name", "first_name", "birth_date", "postgrad", "expiry_date"]
-}
-```
+**MsgCreateResource**
+* **Collection ID: UUID ➝** (did:cheqd:...:)** ➝ Parent DID identifier without a prefix
+* **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
+* **Name: String (e.g., `CL-Schema1` )** ➝ Schema name
+* **ResourceType**  ➝ `CL-Schema`
+* **MimeType**  ➝  `application/json`
+* **Data: Byte\[\]** ➝ JSON string with the follow structure:
+  * **attrNames**: Array of attribute name strings (125 attributes maximum)
+  ```jsonc
+  {
+    "attrNames": ["undergrad", "last_name", "first_name", "birth_date", "postgrad", "expiry_date"]
+  }
+  ```
 
 #### Schema DID Document
 
