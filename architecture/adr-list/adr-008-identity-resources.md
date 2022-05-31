@@ -54,7 +54,6 @@ For example, "did:cheqd:example1234?service=ExampleSchema" can be dereferenced. 
 
 * Immutability:
   * Resources are immutable, so can't be updated/removed;
-
 * Limitations
   * Resource size is now limited by maximum tx/block size;
 
@@ -63,7 +62,7 @@ For example, "did:cheqd:example1234?service=ExampleSchema" can be dereferenced. 
 * Limitations
   * Introduce module level resource size limit that can be changed by voting
 
-####'Resources' module on ledger
+#### 'Resources' module on ledger
 
 A new module will be created: `resources`.
 
