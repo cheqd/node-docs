@@ -46,14 +46,14 @@ Once installed, `cheqd-node` can be controlled using the [cheqd Cosmos CLI guide
 * Creating, managing, and configuring accounts and keys on a cheqd node
 * Staking and participating in public-permissionless governance
 * Governance framework for public-permissionless self-sovereign identity networks
-* Creating [`did:cheqd` method DIDs](architecture/adr-list/adr-002-cheqd-did-method.md), DID Documents ("DIDDocs"), and querying full DIDDocs
+* Creating [`did:cheqd` method DIDs](architecture/adr-list/adr-002-cheqd-did-method.md), DID Documents ("DIDDocs")
+* Querying DIDs/DIDDocs using our [Universal Resolver driver](https://github.com/cheqd/did-resolver)
+* Creating and managing Verifiable Credentials anchored to DIDs on cheqd mainnet
 
 ### 🔮 Upcoming functionality
 
 A non-exhaustive list of future planned functionality (not necessarily in order of priority) is highlighted below:
 
-* Creating and managing Verifiable Credentials anchored to DIDs on cheqd mainnet
-* Querying DIDDoc fragments and specific resources
 * Defining persistent Schemas that can be referenced using DIDs
 
 We plan on adding new functionality rapidly and on a regular basis and welcome feedback on our [cheqd Community Slack](http://cheqd.link/join-cheqd-slack) workspace.
