@@ -10,7 +10,7 @@ description: This is the suggested template to be used for ADRs on the cheqd-nod
 | :--- | :--- |
 | **Authors** | Alexandr Kolesov |
 | **ADR Stage** | ACCEPTED |
-| **Implementation Status** | Not Implemented |
+| **Implementation Status** | Implemented |
 | **Start Date** | 2021-09-08 |
 
 ## Summary
@@ -75,4 +75,3 @@ More information about fee distribution is available in the [**End Block** secti
 
 * [Cosmos SDK `distribution` module parameters](https://docs.cosmos.network/v0.44/modules/distribution/07_params.html#parameters)
 * [Cosmos SDK `governance` module](https://docs.cosmos.network/v0.44/modules/gov/)
-
