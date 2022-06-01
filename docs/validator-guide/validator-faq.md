@@ -99,10 +99,9 @@ We suggest the set:
 
 should fall within this recommended range:
 
-Low: 25ncheq
-Medium: 50ncheq
-High: 100ncheq
-
+1. Low: 25ncheq
+2. Medium: 50ncheq
+3. High: 100ncheq
 
 ## How do I change my public name and description
 
