@@ -46,29 +46,6 @@ While the instructions listed here are specific to the cheqd testnet, a similar 
 
     (The assumption above is that there is only one account / key that has been added on the node. In case you have multiple addresses, please jot down the preferred account address.)
 
-### Requesting CHEQ tokens for cheqd mainnet
-
-When you have a node successfully installed, please fill out our [**mainnet node operator onboarding form**](http://cheqd.link/mainnet-onboarding). You will need to have the following details on hand to fill out the form:
-
-1. Node ID for your node
-2. IP address / DNS record that points to the node (if you're using an IP address, a static IP is recommended)
-3. Peer-to-peer (P2P) connection port (defaults to `26656`)
-4. Validator account address (begins with `cheqd1`)
-5. Moniker (nickname/moniker that is set for your mainnet node)
-
-### Requesting CHEQ tokens for cheqd testnet
-
-Once you have successfully completed the steps above, please fill out our [**node operator onboarding form**](http://cheqd.link/join-testnet-form) so that you can acquire CHEQ testnet tokens required for staking on the network. The tokens will be send to your (validator) account address generated above.
-
-You will need to have the following details on hand to fill out the form:
-
-1. Node ID for your node
-2. IP address / DNS record that points to the node (if you're using an IP address, a static IP is recommended)
-3. Peer-to-peer (P2P) connection port (default is `26656`)
-4. Validator account address (begins with `cheqd`)
-
-If you need help or support, join our [**cheqd Community Slack**](http://cheqd.link/join-cheqd-slack) and [ask for help](https://cheqd-community.slack.com/archives/C02AQ9UK4HY).
-
 ## Promote a node to validator after acquiring CHEQ tokens for staking
 
 1. **Ensure your account has a positive balance**
@@ -94,7 +71,7 @@ If you need help or support, join our [**cheqd Community Slack**](http://cheqd.l
     To promote to validation, submit a `create-validator` transaction to the network:
 
     ```bash
-    cheqd-noded tx staking create-validator --amount <amount-staking> --from <key-name> --chain-id <chain-id> --min-self-delegation <min-self-delegation> --gas auto --gas-adjustment <multiplication-factor> --gas-prices <price-gas> --pubkey <validator-pubkey> --commission-max-change-rate <commission-max-change-rate> --commission-max-rate <commission-max-rate> --commission-rate <commission-rate>
+    cheqd-noded tx staking create-validator --amount <amount-staking> --from <key-name> --min-self-delegation <min-self-delegation> --pubkey <validator-pubkey> --commission-max-change-rate <commission-max-change-rate> --commission-max-rate <commission-max-rate> --commission-rate <commission-rate> --gas auto --gas-adjustment <multiplication-factor> --gas-prices <price-gas> --chain-id <chain-id> 
     ```
 
     Parameters required in the transaction above are:
@@ -116,7 +93,7 @@ If you need help or support, join our [**cheqd Community Slack**](http://cheqd.l
     _Example transaction:_
 
     ```bash
-    cheqd-noded tx staking create-validator --amount 1000ncheq --from eu-node-operator --moniker node1-eu-testnet-cheqd --chain-id cheqd-mainnet-1 --min-self-delegation="1" --gas="300000" --gas-prices="25ncheq" --pubkey '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"4anVUO8WhmRMqG1t4z6VxqmqZL3V7q6HqucjwZePiUw="}' --commission-max-change-rate="0.02" --commission-max-rate="0.02" --commission-rate="0.01" --node http://sentry1.eu.cheqd.net:26657
+    cheqd-noded tx staking create-validator --amount 1000ncheq --from eu-node-operator --moniker node1-eu-testnet-cheqd --chain-id cheqd-mainnet-1 --min-self-delegation="1" --gas auto --gas-prices="50ncheq" --pubkey '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"4anVUO8WhmRMqG1t4z6VxqmqZL3V7q6HqucjwZePiUw="}' --commission-rate="0.05" --commission-max-change-rate="0.02" --commission-max-rate="0.10" --node https://rpc.cheqd.net:443
     ```
 
 4. **Check that your validator node is bonded**
