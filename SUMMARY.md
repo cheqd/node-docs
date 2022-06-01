@@ -5,22 +5,18 @@
 ## Guides <a href="#docs" id="docs"></a>
 
 * [Setting up a new cheqd node](docs/setup-and-configure/README.md)
-  *
   * [Debian package installation](docs/setup-and-configure/debian/README.md)
-    *
     * [Installing a cheqd node using Debian package releases](docs/setup-and-configure/debian/deb-package-install.md)
     * [Upgrading a cheqd node using Debian package releases](docs/setup-and-configure/debian/deb-package-upgrade.md)
   * [Installing cheqd-node with Docker](docs/setup-and-configure/docker-install.md)
   * [Installing a cheqd node from binary package releases](docs/setup-and-configure/binary-install.md)
   * [Configure a cheqd node as validator](docs/setup-and-configure/configure-new-validator.md)
 * [cheqd Cosmos CLI](docs/cheqd-cli/README.md)
-  *
   * [Using cheqd Cosmos CLI to manage keys](docs/cheqd-cli/cheqd-cli-key-management.md)
   * [Using cheqd Cosmos CLI to manage accounts](docs/cheqd-cli/cheqd-cli-accounts.md)
   * [Using cheqd Cosmos CLI to manage a node](docs/cheqd-cli/cheqd-cli-node-management.md)
   * [Using cheqd Cosmos CLI for token transactions](docs/cheqd-cli/cheqd-cli-token-transactions.md)
 * [Building from source](docs/build-and-networks/README.md)
-  *
   * [Docker Based Localnet](docs/build-and-networks/local-docker-network.md)
   * [Docker Compose Based Localnet](docs/build-and-networks/local-docker-compose-network.md)
   * [Setting up a new network](docs/build-and-networks/manual-network-setup.md)
@@ -43,6 +39,7 @@
 
 ***
 
+* [License](LICENSE.md)
 * [Code of Conduct](code\_of\_conduct.md)
 * [Security Policy](security.md)
 * [Notice](notice.md)
