@@ -20,13 +20,13 @@ Extended information on [recommended hardware requirements is available in Tende
 
 * 2 GB RAM
 * x64 1.4 GHz 1 vCPU (or equivalent)
-* 120 GB of disk space
+* 200 GB of disk space
 
 #### Recommended specifications
 
 * 4 GB RAM
 * x64 2.0 GHz 2 vCPU (or equivalent)
-* 150 GB SSD
+* 300 GB SSD
 
 ### Operating system
 
@@ -61,11 +61,7 @@ Further details on [how P2P settings work is defined in Tendermint documentation
 
 #### RPC port
 
-The RPC port is intended to be used by client applications to interact with the node.
-
-During node configuration for cheqd testnet, the RPC port is needed to transfer the initial balance of `cheq` tokens required for staking.
-
-Beyond this stage, it is up to a node operator whether they want this port to be exposed to the public internet.
+The RPC port is intended to be used by client applications as well as the cheqd-node CLI. Your RPC port **must** be active and available on localhost to be able to use the CLI. It is up to a node operator whether they want to expose the RPC port to public internet.
 
 The [RPC endpoints for a node](https://docs.tendermint.com/master/rpc/) provide REST, JSONRPC over HTTP, and JSONRPC over WebSockets. These API endpoints can provide useful information for node operators, such as healthchecks, network information, validator information etc.
 
