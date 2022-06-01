@@ -1,4 +1,4 @@
-# Setting up a new network
+# Setting up a new network manually
 
 ## Creating a new network from genesis
 
@@ -28,83 +28,91 @@ Current delivery is compiled and tested for `Ubuntu 20.04 LTS` so we recommend u
 
 #### Setting up nodes
 
-All participants should [setup their nodes](../setup-and-configure/) using default genesis and empty list of peers.
+All participants should [setup their nodes](../setup-and-configure/README.md) using default genesis and empty list of peers.
 
 #### Generating genesis file
 
 1. Participants must choose `<chain_id>` for the network.
 2. Each participant (one by one) should:
-   *   **Generate local keys for the future account:**
+   * **Generate local keys for the future account:**
 
-       Command `cheqd-noded keys add <key_name>`
+     Command `cheqd-noded keys add <key_name>`
 
-       Example `cheqd-noded keys add alice`
-   *   **(Each participant except the first one) Get genesis config from the another participant:**
+     Example `cheqd-noded keys add alice`
 
-       Location on the previous participant's machine: `$HOME/.cheqdnode/config/genesis.json`
+   * **(Each participant except the first one) Get genesis config from the another participant:**
 
-       Destination folder on the current participant's machine: `$HOME/.cheqdnode/config/`
-   *   **(Each participant except the first one) Get genesis node transactions from the previous participant:**
+     Location on the previous participant's machine: `$HOME/.cheqdnode/config/genesis.json`
 
-       Location on the previous participant's machine: `$HOME/.cheqdnode/config/gentx/`
+     Destination folder on the current participant's machine: `$HOME/.cheqdnode/config/`
 
-       Destination folder on the current participant's machine: `$HOME/.cheqdnode/config/gentx/`
-   *   **Add a genesis account with a public key:**
+   * **(Each participant except the first one) Get genesis node transactions from the previous participant:**
 
-       Command: `cheqd-noded add-genesis-account <key_name> 10000000cheq,100000000stake`
+     Location on the previous participant's machine: `$HOME/.cheqdnode/config/gentx/`
 
-       Example: `cheqd-noded add-genesis-account alice 10000000cheq,100000000stake`
-   *   **Generate genesis node transaction:**
+     Destination folder on the current participant's machine: `$HOME/.cheqdnode/config/gentx/`
 
-       Command: `cheqd-noded gentx <key_name> 1000000stake --chain-id <chain_id>`
+   * **Add a genesis account with a public key:**
 
-       Example: `cheqd-noded gentx alice 1000000stake --chain-id cheqd-node`
+     Command: `cheqd-noded add-genesis-account <key_name> 10000000cheq,100000000stake`
 
-       **TODO: Node owner should specify gas prices here. This work is in progress.**
+     Example: `cheqd-noded add-genesis-account alice 10000000cheq,100000000stake`
+
+   * **Generate genesis node transaction:**
+
+     Command: `cheqd-noded gentx <key_name> 1000000stake --chain-id <chain_id>`
+
+     Example: `cheqd-noded gentx alice 1000000stake --chain-id cheqd-node`
+
+     **TODO: Node owner should specify gas prices here. This work is in progress.**
 3. The last participant:
-   *   **Add genesis node transactions into genesis:**
+   * **Add genesis node transactions into genesis:**
 
-       Command: `cheqd-noded collect-gentxs`
-   *   **Verify genesis:**
+     Command: `cheqd-noded collect-gentxs`
 
-       Command: `cheqd-noded validate-genesis`
-   *   **Share genesis with other nodes:**
+   * **Verify genesis:**
 
-       Location on the last participant's machine: `$HOME/.cheqdnode/config/genesis.json`
+     Command: `cheqd-noded validate-genesis`
+
+   * **Share genesis with other nodes:**
+
+     Location on the last participant's machine: `$HOME/.cheqdnode/config/genesis.json`
 
 #### Sharing peer list
 
-All participants should share their peer info with each other. See [node setup instruction](../setup-and-configure/) for more information.
+All participants should share their peer info with each other. See [node setup instruction](../setup-and-configure/README.md) for more information.
 
 #### Updating genesis and persistent peers
 
 * Each participant should:
   * **Stop the node:** `systemctl stop cheqd-noded`
   * **Make sure the node is stopped** `systemctl status cheqd-noded`
-  *   **Update the genesis file:**
+  * **Update the genesis file:**
 
-      File location:
+    File location:
 
-      * Deb destribution: `/etc/cheqd-node/genesis.json`
-      * Binary destribution: `$HOME/.cheqdnode/config/genesis.json`
-  *   **Update peer list:**
+    * Deb destribution: `/etc/cheqd-node/genesis.json`
+    * Binary destribution: `$HOME/.cheqdnode/config/genesis.json`
 
-      Open node's config file:
+  * **Update peer list:**
 
-      * Deb destribution: `/etc/cheqd-node/config.toml`
-      *   Binary destribution: `$HOME/.cheqdnode/config/config.toml`
+    Open node's config file:
 
-          Search for `persistent_peers` parameter and set it's value to a comma separated list of peers.
+    * Deb destribution: `/etc/cheqd-node/config.toml`
+    * Binary destribution: `$HOME/.cheqdnode/config/config.toml`
 
-          Format: `<node-0-id>@<node-0-ip>, <node-1-id>@<node-1-ip>, <node-2-id>@<node-2-id>, <node-3-id>@<node-3-id>`.
+      Search for `persistent_peers` parameter and set it's value to a comma separated list of peers.
 
-          Domain names can be used instead of IP adresses.
+      Format: `<node-0-id>@<node-0-ip>, <node-1-id>@<node-1-ip>, <node-2-id>@<node-2-id>, <node-3-id>@<node-3-id>`.
 
-          Example:
+      Domain names can be used instead of IP adresses.
 
-          ```
-          persistent_peers = "d45dcc54583d6223ba6d4b3876928767681e8ff6@node0:26656, 9fb6636188ad9e40a9caf86b88ffddbb1b6b04ce@node1:26656, abbcb709fb556ce63e2f8d59a76c5023d7b28b86@node2:26656, cda0d4dbe3c29edcfcaf4668ff17ddcb96730aec@node3:26656"
-          ```
+      Example:
+
+      ```text
+      persistent_peers = "d45dcc54583d6223ba6d4b3876928767681e8ff6@node0:26656, 9fb6636188ad9e40a9caf86b88ffddbb1b6b04ce@node1:26656, abbcb709fb556ce63e2f8d59a76c5023d7b28b86@node2:26656, cda0d4dbe3c29edcfcaf4668ff17ddcb96730aec@node3:26656"
+      ```
+
   * **Start node:** `systemctl start cheqd-noded`
   * **Make sure the node process is running:** `systemctl status cheqd-noded`
 
@@ -113,3 +121,4 @@ Congratulations, you should have node(s) deployed and running on a network if th
 ## Support
 
 Please log issues and any questions via GitHub Issues
+

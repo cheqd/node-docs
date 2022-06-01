@@ -2,7 +2,7 @@
 
 ## Overview
 
-A `cheqd-node` instance can be controlled and configured using the [cheqd Cosmos CLI](./).
+A `cheqd-node` instance can be controlled and configured using the [cheqd Cosmos CLI](README.md).
 
 This document contains the commands for node operators that relate to node management, configuration, and status.
 
@@ -33,18 +33,19 @@ cheqdvalcons1sg4azh7qwk6akm0eadkgvgq2kegtzksr09a685
 
 There are several ways to get hex-encoded validator address:
 
-1.  Convert from bech32
+1. Convert from bech32
 
-    ```bash
-    cheqd-noded keys parse <bech-32-encoded-address>
-    ```
-2.  Query node using CLI:
+   ```bash
+   cheqd-noded keys parse <bech-32-encoded-address>
+   ```
 
-    ```bash
-    cheqd-noded status
-    ```
+2. Query node using CLI:
 
-    Look for `"ValidatorInfo":{"Address":"..."}`
+   ```bash
+   cheqd-noded status
+   ```
+
+   Look for `"ValidatorInfo":{"Address":"..."}`
 
 ### Getting validator public key
 

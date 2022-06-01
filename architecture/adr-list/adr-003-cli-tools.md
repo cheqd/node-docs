@@ -2,12 +2,12 @@
 
 ## Status
 
-| Category                  | Status           |
-| ------------------------- | ---------------- |
-| **Authors**               | Alexandr Kolesov |
-| **ADR Stage**             | ACCEPTED         |
-| **Implementation Status** | Implemented      |
-| **Start Date**            | 2021-09-10       |
+| Category | Status |
+| :--- | :--- |
+| **Authors** | Alexandr Kolesov |
+| **ADR Stage** | ACCEPTED |
+| **Implementation Status** | Implemented |
+| **Start Date** | 2021-09-10 |
 
 ## Summary
 
@@ -93,13 +93,14 @@ Based on the options considerations above and an analysis of development require
 
 ### CLI tools feature matrix
 
-| Only available in Cosmos CLI   | In both Cosmos CLI and VDR CLI                   | Only available in VDR CLI       |
-| ------------------------------ | ------------------------------------------------ | ------------------------------- |
-| Cosmos transactions + Queries  | Signing service + Key storage                    | Identity transactions + Queries |
-| MultiSig                       | (Transaction + Query) sending + Proof validation | DIDs + VCs (+ DID storage)      |
-| Network bootstrapping commands |                                                  |                                 |
+| Only available in Cosmos CLI | In both Cosmos CLI and VDR CLI | Only available in VDR CLI |
+| :--- | :--- | :--- |
+| Cosmos transactions + Queries | Signing service + Key storage | Identity transactions + Queries |
+| MultiSig | (Transaction + Query) sending + Proof validation | DIDs + VCs (+ DID storage) |
+| Network bootstrapping commands |  |  |
 
 ### CLI components overview
+
 
 > [Editable versions of the diagrams](https://github.com/cheqd/cheqd-node/tree/e5f850355609f35a9a62c557ebf4adc73e766a44/architecture/adr-list/assets/adr003-cli-components-editable.excalidraw) (in Excalidraw format)
 
@@ -118,3 +119,4 @@ Based on the options considerations above and an analysis of development require
 * Seek feedback from cheqd's open source community and node operators during testnet phase on whether the documentation and user experience is easy to understand and appropriate tools are available.
 
 ## References
+

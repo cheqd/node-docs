@@ -2,7 +2,7 @@
 
 ## Overview
 
-A `cheqd-node` instance can be controlled and configured using the [cheqd Cosmos CLI](./).
+A `cheqd-node` instance can be controlled and configured using the [cheqd Cosmos CLI](README.md).
 
 This document contains the commands for account management.
 

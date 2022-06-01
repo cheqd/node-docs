@@ -1,4 +1,4 @@
-# Docker Based Localnet
+# cheqd-testsnet docker image
 
 ## Description
 
@@ -12,7 +12,7 @@ You can find prebuilt package here:
 
 To pull it use:
 
-```
+```text
 docker pull ghcr.io/cheqd/cheqd-testnet:latest
 ```
 
@@ -33,3 +33,4 @@ To build the image:
 * RPC apis are exposed on the folowing ports:
   * node\_0: `26657`
 * Try to connect to any node in your browser, for instance: `http://localhost:26657/`
+
