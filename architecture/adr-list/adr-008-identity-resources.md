@@ -73,7 +73,7 @@ A new module will be created: `resources`.
   * Will be used for DIDs existence checks.
   * Will be used for authentication
 
-#### Types
+### Types
 
 **Resource**
 
@@ -90,7 +90,21 @@ A new module will be created: `resources`.
 
 **MsgCreateResource**
 
-*   The same fields as in **Resource,** except `Created`, `Created`, `PreviousVersion`, `NextVersion` and `Checksum`
+* **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
+* **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
+* **Name: String (e.g., `CL-Schema1` (supplied client-side)**
+* **ResourceType (e.g., `CL-Schema`****, `JSONSchema2020`****) (supplied client-side)**
+* **MimeType: (e.g., `application/json`****, `image/png`****) (supplied client-side)**
+* **Data: Byte\[\] (supplied client-side)**
+
+Example: 
+```
+{
+"collection_id": "",
+"id": "",
+
+}
+```
 
 **MsgCreateResourceResponse**
 
@@ -98,7 +112,7 @@ A new module will be created: `resources`.
 
 **QueryGetResourcesRequest**
 
-*   DID: String
+*   Collection ID: String
 
 **QueryGetResourcesResponse**
 
@@ -106,7 +120,7 @@ A new module will be created: `resources`.
 
 **QueryGetResourceRequest**
 
-*   DID: String
+*   Collection ID: String
 *   ID: String
 
 **QueryGetResourceResponse**
@@ -115,7 +129,7 @@ A new module will be created: `resources`.
 
 **QueryGetAllResourceVersionsRequest**
 
-*   DID: String
+*   Collection ID: String
 *   Name: String
 *   Type: String
 *   MimeType: String
@@ -124,12 +138,12 @@ A new module will be created: `resources`.
 
 *   Resources: Resource\[\]
 
-#### State
-*   `resources:<did-id>:<resource-id>` ➝ **Resource**
-  *   `<did-id>` is the last part of DID. It can be UUID, Indy-style or whatever is allowed by ledger. It allows us to evolve over time more easily.
-  *   Primary key is (ID)
+### State
+*   `resources:<collection-id>:<resource-id>` ➝ **Resource**
+  *   `<collection-id>` is the last part of DID. It can be UUID, Indy-style or whatever is allowed by ledger. It allows us to evolve over time more easily.
+  *   `<resource-id>` is a unique resource identifier on UUID format 
 
-#### Transactions
+### Transactions
 
 **CreateResource:**
 
@@ -150,7 +164,7 @@ A new module will be created: `resources`.
   * Compute **checksum**;
   * Persist the **resource** in state;
 
-#### Queries
+### Queries
 
 **GetResources:**
 
@@ -174,7 +188,7 @@ A new module will be created: `resources`.
 * Output:
   * **QueryGetResourceResponse**
 
-* Processing issues:
+* Processing logic:
   * Retrieves a specific resource by Collection-ID(DID) and resource ID;
 
 **GetAllResourceVersions:**
@@ -185,11 +199,11 @@ A new module will be created: `resources`.
 * Output:
   * **QueryAllResourceVersionsResponse**
 
-* Processing issues:
+* Processing logic:
   * Retrieves all resource versions by resource name, resource type and mime type;
 
 
-#### Resolver piece
+### DID Resolver
 
 We need to support resource resolution in the DID resolver.
 
@@ -204,12 +218,12 @@ We need to support resource resolution in the DID resolver.
 * Processing logic:
   * Simply call **GetResource** via GRPC
 
-### Schema
+### CL Schema
 
 CL-Schema resource can be created via `CreateResource` transaction with the follow list of parameters:
 
 **MsgCreateResource**
-* **Collection ID: UUID ➝** (did:cheqd:...:)** ➝ Parent DID identifier without a prefix
+* **Collection ID: UUID ➝** (did:cheqd:...:) ➝ Parent DID identifier without a prefix
 * **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Name: String (e.g., `CL-Schema1` )** ➝ Schema name
 * **ResourceType**  ➝ `CL-Schema`
@@ -222,51 +236,7 @@ CL-Schema resource can be created via `CreateResource` transaction with the foll
   }
   ```
 
-#### Schema DID Document
-
-This is an example of a Schema's DID Document:
-
-```jsonc
-{
-  "id": "did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue", // Schema's public DID
-  "controller": "did:cheqd:mainnet-1:IK22KY2Dyvmuu2PyyqSFKu", // Schema Issuer DID
-  "service":[
-    {
-      "id": "cheqd-schema", 
-      "type": "CL-Schema", // What is queried in the service
-      "serviceEndpoint": "did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue?service=CL-Schema" // the Resource that is returned
-    }
-  ]
-}
-```
-
-**Note**: `SCHEMA` **cannot** be updated
-
-**`SCHEMA` State format:**
-
-* `"schema:<id>" -> {SchemaEntity, txHash, txTimestamp}`
-
-`id` example: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue`
-
-**Note**
-
-This DID Document will be returned if the schema is **Resolved**
-
-The Schema's DID Document URL is: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue`
-
-The Schema's specific Entity URL is: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue?service=CL-Schema`
-
-If the former is resolved it will return the DID Document. If the latter is dereferenced it will return the specific schema. 
-
-
-#### Updating a Schema
-
-It is not possible to update an existing Schema using this architecture. This is because there are no verification methods specified for the DID Document. Therefore, it is a persistent Schema to ensure the original schema used to issue any credentials in the past are always available.
-
-If a Schema evolves, a new Schema with a new version or name needs to be created.
-
-
-#### Credential Definition
+### Credential Definition
 
 \[TODO: explain that a Cred Def is simply an additional property inside of the Issuer's DID Doc]
 
