@@ -10,7 +10,7 @@ description: This is the suggested template to be used for ADRs on the cheqd-nod
 | :--- | :--- |
 | **Authors** | Alexandr Kolesov |
 | **ADR Stage** | ACCEPTED |
-| **Implementation Status** | Not Implemented |
+| **Implementation Status** | Implemented |
 | **Start Date** | 2021-09-08 |
 
 ## Summary
