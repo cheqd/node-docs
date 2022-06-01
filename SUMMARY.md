@@ -40,6 +40,5 @@
 ***
 
 * [License](LICENSE.md)
-* [Code of Conduct](code\_of\_conduct.md)
-* [Security Policy](security.md)
-* [Notice](notice.md)
+* [Code of Conduct](CODE_OF_CONDUCT.md)
+* [Security Policy](SECURITY.md)
