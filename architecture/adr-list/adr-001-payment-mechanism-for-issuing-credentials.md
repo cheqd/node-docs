@@ -5,7 +5,7 @@
 | Category | Status |
 | :--- | :--- |
 | **Authors** | Ankur Banerjee |
-| **ADR Stage** | ACCEPTED |
+| **ADR Stage** | PROPOSED |
 | **Implementation Status** | Not Implemented |
 | **Start Date** | 2021-09-01 |
 
