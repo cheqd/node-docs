@@ -2,12 +2,12 @@
 
 ## Status
 
-| Category                  | Status          |
-| ------------------------- | --------------- |
-| **Authors**               | Renata Toktar   |
-| **ADR Stage**             | DRAFT           |
+| Category | Status |
+| :--- | :--- |
+| **Authors** | Renata Toktar |
+| **ADR Stage** | DRAFT |
 | **Implementation Status** | Not Implemented |
-| **Start Date**            | 2021-09-10      |
+| **Start Date** | 2021-09-10 |
 
 ## Summary
 
@@ -25,17 +25,18 @@ In addition, it seems likely that the data inside credentials will change over t
 
 Adds a Revocation Registry Definition, that Issuer creates and publishes for a particular Credential Definition. It contains public keys, maximum number of credentials the registry may contain, reference to the Credential Definition, plus some revocation registry specific data.
 
-*   **`value` (dict):**
+* **`value` (dict):**
 
-    Dictionary with Revocation Registry Definition's data:
+  Dictionary with Revocation Registry Definition's data:
 
-    * **`max_cred_num`** (integer): The maximum number of credentials the Revocation Registry can handle
-    * **`tails_hash`** (string): Tails file digest
-    * **`tails_location`** (string): Tails file location (URL)
-    * **`issuance_type`** (string enum): Defines credential revocation strategy. Can have the following values:
-      * `ISSUANCE_BY_DEFAULT`: All credentials are assumed to be issued and active initially, so that Revocation Registry needs to be updated (`REVOC_REG_ENTRY` transaction sent) only when revoking. Revocation Registry stores only revoked credentials indices in this case. Recommended to use if expected number of revocation actions is less than expected number of issuance actions.
-      * `ISSUANCE_ON_DEMAND`: No credentials are issued initially, so that Revocation Registry needs to be updated (`REVOC_REG_ENTRY` transaction sent) on every issuance and revocation. Revocation Registry stores only issued credentials indices in this case. Recommended to use if expected number of issuance actions is less than expected number of revocation actions.
-    * **`public_keys`** (dict): Revocation Registry's public key
+  * **`max_cred_num`** (integer): The maximum number of credentials the Revocation Registry can handle
+  * **`tails_hash`** (string): Tails file digest
+  * **`tails_location`** (string): Tails file location (URL)
+  * **`issuance_type`** (string enum): Defines credential revocation strategy. Can have the following values:
+    * `ISSUANCE_BY_DEFAULT`: All credentials are assumed to be issued and active initially, so that Revocation Registry needs to be updated (`REVOC_REG_ENTRY` transaction sent) only when revoking. Revocation Registry stores only revoked credentials indices in this case. Recommended to use if expected number of revocation actions is less than expected number of issuance actions.
+    * `ISSUANCE_ON_DEMAND`: No credentials are issued initially, so that Revocation Registry needs to be updated (`REVOC_REG_ENTRY` transaction sent) on every issuance and revocation. Revocation Registry stores only issued credentials indices in this case. Recommended to use if expected number of issuance actions is less than expected number of revocation actions.
+  * **`public_keys`** (dict): Revocation Registry's public key
+
 * **`id`** (string): Revocation Registry Definition's unique identifier (a key from state trie is currently used) `owner:cred_def_id:revoc_def_type:tag`
 * **`cred_def_id`** (string): The corresponding Credential Definition's unique identifier (a key from state tree is currently used)
 * **`revoc_def_type`** (string enum): Revocation Type. `CL_ACCUM` (Camenisch-Lysyanskaya Accumulator) is the only supported type now.
@@ -49,7 +50,7 @@ Adds a Revocation Registry Definition, that Issuer creates and publishes for a p
 
 _Request Example_:
 
-```
+```text
 {
     "data": {
         "id": "L5AD5g65TDQr1PPHHRoiGf:3:FC4aWomrA13YyvYC1Mxw7:3:CL:14:some_tag:CL_ACCUM:tag1",
@@ -73,7 +74,7 @@ _Request Example_:
 
 _Reply Example_:
 
-```
+```text
 {}
 ```
 
@@ -81,14 +82,15 @@ _Reply Example_:
 
 The Revocation Registry Entry contains the new accumulator value and issued/revoked indices. This is just a delta of indices, not the whole list. It can be sent each time a new credential is issued/revoked.
 
-*   **`value`** (dict):
+* **`value`** (dict):
 
-    Dictionary with revocation registry's data:
+  Dictionary with revocation registry's data:
 
-    * **`accum`** (string): The current accumulator value
-    * **`prev_accum`** (string): The previous accumulator value. It is compared with the current value, and transaction is rejected if they don't match. This is necessary to avoid dirty writes and updates of accumulator.
-    * **`issued`** (list of integers): An array of issued indices (may be absent/empty if the type is `ISSUANCE_BY_DEFAULT`). This is delta, and will be accumulated in state.
-    * **`revoked`** (list of integers): An array of revoked indices. This is delta; will be accumulated in state)
+  * **`accum`** (string): The current accumulator value
+  * **`prev_accum`** (string): The previous accumulator value. It is compared with the current value, and transaction is rejected if they don't match. This is necessary to avoid dirty writes and updates of accumulator.
+  * **`issued`** (list of integers): An array of issued indices (may be absent/empty if the type is `ISSUANCE_BY_DEFAULT`). This is delta, and will be accumulated in state.
+  * **`revoked`** (list of integers):  An array of revoked indices. This is delta; will be accumulated in state)
+
 * **`revoc_reg_def_id`** (string): The corresponding Revocation Registry Definition's unique identifier (a key from state trie is currently used)
 * **`revoc_def_type`** (string enum): Revocation Type. `CL_ACCUM` (Camenisch-Lysyanskaya Accumulator) is the only supported type now.
 
@@ -101,7 +103,7 @@ The Revocation Registry Entry contains the new accumulator value and issued/revo
 
 _Request Example_:
 
-```
+```text
 {
     "data": {
             "revoc_reg_def_id": "L5AD5g65TDQr1PPHHRoiGf:3:FC4aWomrA13YyvYC1Mxw7:3:CL:14:some_tag:CL_ACCUM:tag1"
@@ -121,10 +123,11 @@ _Request Example_:
 
 _Reply Example_:
 
-```
+```text
 {}
 ```
 
 ## References
 
 * [Hyperledger Indy Credential Revocation Hype](https://hyperledger-indy.readthedocs.io/projects/hipe/en/latest/text/0011-cred-revocation/README.html)
+

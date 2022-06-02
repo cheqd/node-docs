@@ -2,12 +2,12 @@
 
 ## Status
 
-| Category                  | Status          |
-| ------------------------- | --------------- |
-| **Authors**               | Ankur Banerjee  |
-| **ADR Stage**             | ACCEPTED        |
+| Category | Status |
+| :--- | :--- |
+| **Authors** | Ankur Banerjee |
+| **ADR Stage** | PROPOSED |
 | **Implementation Status** | Not Implemented |
-| **Start Date**            | 2021-09-01      |
+| **Start Date** | 2021-09-01 |
 
 ## Summary
 
@@ -23,7 +23,7 @@ Hyperledger Aries protocol has the concept of payment "decorators" `~payment_req
 
 A message is sent by the Issuer to the potential Holder, describing the credential they intend to offer and optionally, the price the issuer would be expected to be paid for said credential. This is based on the [Hyperledger Aries credential offer RFC](https://github.com/hyperledger/aries-rfcs/blob/main/features/0036-issue-credential/README.md#offer-credential).
 
-```
+```text
     "@type": "https://didcomm.org/issue-credential/1.0/offer-credential",
     "@id": "<uuid-of-offer-message>",
     "comment": "some comment",
@@ -41,7 +41,7 @@ A message is sent by the Issuer to the potential Holder, describing the credenti
 }
 ```
 
-A payment request can then be defined using the [Hyperledger Aries Payment Decorator](https://github.com/hyperledger/aries-rfcs/blob/main/features/0075-payment-decorators/README.md#payment\_request) to add information about an issuing price and address where payment should be sent.
+A payment request can then be defined using the [Hyperledger Aries Payment Decorator](https://github.com/hyperledger/aries-rfcs/blob/main/features/0075-payment-decorators/README.md#payment_request) to add information about an issuing price and address where payment should be sent.
 
 ```json
    "~payment_request": {
@@ -88,7 +88,7 @@ The payment flow can be broken down into five steps:
 
 #### Response format
 
-```
+```text
   Response {
    check_tx: TxResult {
       code: 0,
@@ -160,9 +160,9 @@ REPLACE WITH PNG
 
 #### UML version
 
-Editable version available on [swimlanes.io](https://swimlanes.io/u/6\_9Qx9GOe?rev=2) or as text for compatible UML diagram generators below:
+Editable version available on [swimlanes.io](https://swimlanes.io/u/6_9Qx9GOe?rev=2) or as text for compatible UML diagram generators below:
 
-```
+```text
 Issuer -> Holder: Credential Offer (+ payment_request)
 Holder -> Ledger: payment transaction (with payment_request id in memo)
 Ledger -> Holder: payment transaction response (with transaction_hash)
@@ -200,3 +200,4 @@ Holder -> Issuer: Accept
 * [Hyperledger Aries RFC 0036: Issue Credential Protocol 1.0](https://github.com/hyperledger/aries-rfcs/blob/main/features/0036-issue-credential/README.md)
 * [Hyperledger Aries RFC 0075: Payment Decorators](https://github.com/hyperledger/aries-rfcs/blob/main/features/0075-payment-decorators/README.md)
 * [Evernym VDR Tools cheqd network payments ADR](https://gitlab.com/evernym/verity/vdr-tools/-/tree/main/docs/design/014-bank-transactions)
+

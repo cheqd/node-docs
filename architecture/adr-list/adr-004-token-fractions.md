@@ -6,12 +6,12 @@ description: This is the suggested template to be used for ADRs on the cheqd-nod
 
 ## Status
 
-| Category                  | Status           |
-| ------------------------- | ---------------- |
-| **Authors**               | Alexandr Kolesov |
-| **ADR Stage**             | ACCEPTED         |
-| **Implementation Status** | Not Implemented  |
-| **Start Date**            | 2021-09-08       |
+| Category | Status |
+| :--- | :--- |
+| **Authors** | Alexandr Kolesov |
+| **ADR Stage** | ACCEPTED |
+| **Implementation Status** | Implemented |
+| **Start Date** | 2021-09-08 |
 
 ## Summary
 
@@ -34,7 +34,7 @@ Popular Cosmos networks were compared to check how many digits after the decimal
 
 ## Decision
 
-Fractions of CHEQ tokens will be referred by their [SI/metric prefix](https://en.wikipedia.org/wiki/Metric\_prefix#List\_of\_SI\_prefixes), based on the power of 10 of CHEQ tokens being referred to in context. This notation system is common across other Cosmos networks as well.
+Fractions of CHEQ tokens will be referred by their [SI/metric prefix](https://en.wikipedia.org/wiki/Metric_prefix#List_of_SI_prefixes), based on the power of 10 of CHEQ tokens being referred to in context. This notation system is common across other Cosmos networks as well.
 
 It was decided to go with **10^-9** as the smallest fraction, with the whole number token being 1 CHEQ. Based on the SI prefix system, the lowest denomination would therefore be called "**nanocheq**".
 
@@ -59,3 +59,4 @@ It was decided to go with **10^-9** as the smallest fraction, with the whole num
 ## References
 
 * [Cosmos ADR proposal to add coin metadata](https://docs.cosmos.network/master/architecture/adr-024-coin-metadata.html)
+
