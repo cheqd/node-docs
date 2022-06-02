@@ -74,7 +74,7 @@ A new module will be created: `resources`.
 
 ### Types
 
-**Resource**
+####Resource
 
 *  **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
 *  **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
@@ -87,55 +87,117 @@ A new module will be created: `resources`.
 *  previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
 *  nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
 
-**MsgCreateResource**
+Example:
+```
+{
+  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":               "CL-Schema1",
+  "resource_type":      "CL-Schema",
+  "mime_type":          "application/json"
+  "data":               <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>,
+  "created":            "",
+  "checksum":           "",
+  "previous_version_id: "",
+  "next_version_id:     null
+}
+```
+
+####MsgCreateResource
 
 * **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
 * **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **ResourceType (e.g., `CL-Schema`****, `JSONSchema2020`****) (supplied client-side)**
-* **MimeType: (e.g., `application/json`****, `image/png`****) (supplied client-side)**
+* **ResourceType (e.g., `CL-Schema`, `JSONSchema2020`) (supplied client-side)**
+* **MimeType: (e.g., `application/json`, `image/png`) (supplied client-side)**
 * **Data: Byte\[\] (supplied client-side)**
 
 Example: 
 ```
 {
-"collection_id": "",
-"id": "",
-
+  "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":             "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":           "CL-Schema1",
+  "resource_type":  "CL-Schema",
+  "mime_type":      "application/json"
+  "data":           <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>
 }
 ```
 
-**MsgCreateResourceResponse**
+####MsgCreateResourceResponse
 
-*   Resource: Resource
+* Resource: [Resource](#resource)
 
-**QueryGetResourcesRequest**
+Example:
+```
+{ "resource":  <Resource> }
+```
 
-*   Collection ID: String
+####QueryGetResourcesRequest
 
-**QueryGetResourcesResponse**
+* Collection ID: String
+  
+Example:
+```
+{ "collection_id": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY" }
+```
 
-*   Resources: Resource\[\]
+####QueryGetResourcesResponse
 
-**QueryGetResourceRequest**
+* Resources: [Resource\[\]](#resource)
 
-*   Collection ID: String
-*   ID: String
+Example:
+```
+{ "resources":  [<Resource1>, <Resource2>] }
+```
 
-**QueryGetResourceResponse**
+####QueryGetResourceRequest
 
-*   Resource: Resource
+* Collection ID: String
+* ID: String
 
-**QueryGetAllResourceVersionsRequest**
+Example:
+```
+{ 
+  "collection_id": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id": "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096"
+}
+```
+
+####QueryGetResourceResponse
+
+* Resource: [Resource](#resource)
+
+Example:
+```
+{ "resource":  <Resource> }
+```
+
+####QueryGetAllResourceVersionsRequest
 
 *   Collection ID: String
 *   Name: String
-*   Type: String
+*   ResourceType: String
 *   MimeType: String
 
-**QueryGetAllResourceVersionsResponse**
+Example:
+```
+{ 
+  "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "name":           "CL-Schema1",
+  "resource_type":  "CL-Schema",
+  "mime_type":      "application/json"
+}
+```
 
-*   Resources: Resource\[\]
+####QueryGetAllResourceVersionsResponse
+
+* Resources: [Resource\[\]](#resource)
+
+Example:
+```
+{ "resources":  [<Resource1>, <Resource2>] }
+```
 
 ### State
 *   `resources:<collection-id>:<resource-id>` ➝ **Resource**
@@ -147,10 +209,10 @@ Example:
 **CreateResource:**
 
 * Input:
-  * **MsgCreateResource**
+  * [MsgCreateResource](#msgcreateresource)
 
 * Output:
-  * **MsgCreateResourceResponse**
+  * [MsgCreateResourceResponse](#msgcreateresourceresponse)
 
 * Processing logic:
   * Check that associated DIDDoc exists;
@@ -159,44 +221,58 @@ Example:
   * Validate **data** for specific resource types (CL Schema);
   * Validate that **ID** is unique;
   * Set **created** date time;
-  * Set `previousVertsion` and `nextVersion` if this is a new version (a resource with the same name, type ans resource-type exists);
+  * Set `previousVersion` and `nextVersion` if this is a new version (a resource with the same name, type ans resource-type exists);
   * Compute **checksum**;
   * Persist the **resource** in state;
 
+CLI Example:
+```
+cheqd-noded tx resource create-resource "{
+                                          \"collection_id\":  \"zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY\",
+                                          \"id\":             \"9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096\",
+                                          \"name\":           \"CL-Schema1\",
+                                          \"resource_type\":  \"CL-Schema\",
+                                          \"mime_type\":      \"application/json\"
+                                         }" file_with_resource.data\
+                                          --private-key <private-identity-key-by-collection-
+
+```
+
 ### Queries
 
-**GetResources:**
+####GetResources:
 
 * Input:
-  * **QueryGetResourcesRequest**
+  * [QueryGetResourcesRequest](#querygetresourcesrequest)
 
 * Output:
 
-  * **QueryGetResourcesResponse**
+  * [QueryGetResourcesResponse](#querygetresourcesresponse)
 
 * Processing logic:
 
   * Retrieves the whole resource collection for the specified DID;
 
 
-**GetResource:**
+####GetResource:
 
 * Input:
-  * **QueryGetResourceRequest**
+  * [QueryGetResourceRequest](#querygetresourcerequest)
 
 * Output:
-  * **QueryGetResourceResponse**
+
+  * [QueryGetResourceResponse](#querygetresourceresponse)
 
 * Processing logic:
   * Retrieves a specific resource by Collection-ID(DID) and resource ID;
 
-**GetAllResourceVersions:**
+####GetAllResourceVersions:
 
 * Input:
-  * **QueryAllResourceVersionsRequest**
+  * [QueryAllResourceVersionsRequest](#querygetallresourceversionsrequest)
 
 * Output:
-  * **QueryAllResourceVersionsResponse**
+  * [QueryAllResourceVersionsResponse](#querygetallresourceversionsresponse)
 
 * Processing logic:
   * Retrieves all resource versions by resource name, resource type and mime type;
@@ -212,10 +288,10 @@ We need to support resource resolution in the DID resolver.
   * `https://resolver.cheqd.net/1.0/identifiers/<did>/resources/<resource-id>`
 
 * Output:
-  * JSON encoded **QueryGetResourceResponse**
+  * JSON encoded [QueryGetResourceResponse](#querygetresourcerequest)
 
 * Processing logic:
-  * Simply call **GetResource** via GRPC
+  * Simply call [GetResource](#getresource) via GRPC
 
 ### CL Schema
 
@@ -234,6 +310,20 @@ CL-Schema resource can be created via `CreateResource` transaction with the foll
     "attrNames": ["undergrad", "last_name", "first_name", "birth_date", "postgrad", "expiry_date"]
   }
   ```
+
+CLI Example:
+```
+cheqd-noded tx resource create-cl-schema <collection_id> <id> <name> <schema-data-json>
+                                          --private-key <private-identity-key-by-collection-id-diddoc>
+
+cheqd-noded tx resource create-cl-schema zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY\
+                                         9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096\
+                                         CLSchema1\
+                                         "{\"attrNames\":[\"last_name\", \"first_name\"]}"\
+                                          --private-key <private-identity-key-by-collection-id-diddoc>
+
+```
+
 
 ### Credential Definition
 
