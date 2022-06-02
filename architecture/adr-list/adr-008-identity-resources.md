@@ -36,16 +36,6 @@ The following identity-domain transactions from Indy were considered:
 
 Revocation registries for credentials are not covered under the scope of this ADR. This topic is discussed separately in [ADR 007: **Revocation registry**](adr-007-revocation-registry.md) as there is ongoing research by the cheqd project on how to improve the privacy and scalability of credential revocations.
 
-### Resolving DID vs Dereferencing DID
-
-Before diving into the specific architecture of cheqd's schemas, it is imporntant to understand the difference between resolving a DID and dereferencing a DID URL. 
-
-When you resolve a DID, a DID Document is returned. For example, resolving: "did:cheqd:example1234" would return the full DID Document associated with the specific DID "did:cheqd:example1234". 
-
-Dereferecing a DID URL is slightly different. When you dereference a DID URL, you are parsing the URL for specific actions, such as to take a certain path, highlight a specific fragment, or query a specific resource. 
-
-For example, "did:cheqd:example1234?service=ExampleSchema" can be dereferenced. In this case it will query the service of type "ExampleSchema" within the DID Document and will return the resource specified at the Service Endpoint within the DID Document. It is this type of architecture that cheqd uses in this ADR to fetch schemas. 
-
 ## Decision
 
 ### DID Resources
@@ -206,7 +196,7 @@ Example:
 
 ### Transactions
 
-**CreateResource:**
+####CreateResource:
 
 * Input:
   * [MsgCreateResource](#msgcreateresource)
@@ -327,24 +317,39 @@ cheqd-noded tx resource create-cl-schema zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY\
 
 ### Credential Definition
 
-\[TODO: explain that a Cred Def is simply an additional property inside of the Issuer's DID Doc]
+[TODO: explain that a Cred Def is simply an additional property inside of
+the Issuer's DID Doc]
 
-Adds a Credential Definition (in particular, public key), which is created by an Issuer and published for a particular Credential Schema.
+Adds a Credential Definition (in particular, public key), which is created by an
+Issuer and published for a particular Credential Schema.
 
-It is not possible to update Credential Definitions. If a Credential Definition needs to be evolved (for example, a key needs to be rotated), then a new Credential Definition needs to be created for a new Issuer DIDdoc. Credential Definitions is added to the ledger in as verification method for Issuer DIDDoc
+It is not possible to update Credential Definitions. If a Credential Definition
+needs to be evolved (for example, a key needs to be rotated), then a new
+Credential Definition needs to be created for a new Issuer DIDdoc.
+Credential Definitions is added to the ledger in as verification method for
+Issuer DIDDoc
 
-* **`id`**: DID as base58-encoded string for 16 or 32 byte DID value with Cheqd DID Method prefix `did:cheqd:<namespace>:` and a resource type at the end.
-* **`value`** (dict): Dictionary with Credential Definition's data if `signature_type` is `CL`:
-  * **`primary`** (dict): Primary credential public key
-  * **`revocation`** (dict, optional): Revocation credential public key
-* **`schemaId`** (string): `id` of a Schema the credential definition is created for.
-* **`signatureType`** (string): Type of the credential definition (that is credential signature). `CL-Sig-Cred_def` (Camenisch-Lysyanskaya) is the only supported type now. Other signature types are being explored for future releases.
-* **`tag`** (string, optional): A unique tag to have multiple public keys for the same Schema and type issued by the same DID. A default tag `tag` will be used if not specified.
-* **`controller`**: DIDs list of strings or only one string of a credential definition controller(s). All DIDs must exist.
+- **`id`**: DID as base58-encoded string for 16 or 32 byte DID value with Cheqd
+DID Method prefix `did:cheqd:<namespace>:` and a resource
+type at the end.
+- **`value`** (dict): Dictionary with Credential Definition's data if
+`signature_type` is `CL`:
+  - **`primary`** (dict): Primary credential public key
+  - **`revocation`** (dict, optional): Revocation credential public key
+- **`schemaId`** (string): `id` of a Schema the credential definition is created
+for.
+- **`signatureType`** (string): Type of the credential definition (that is
+credential signature). `CL-Sig-Cred_def` (Camenisch-Lysyanskaya) is the only
+supported type now. Other signature types are being explored for future releases.
+- **`tag`** (string, optional): A unique tag to have multiple public keys for
+the same Schema and type issued by the same DID. A default tag `tag` will be
+used if not specified.
+- **`controller`**: DIDs list of strings or only one string of a credential
+definition controller(s). All DIDs must exist.
 
 `CRED_DEF` entity transaction format:
 
-```
+```jsonc
 {
     "id": "<cred_def_url>",
     "type": "CL-CredDef",
@@ -366,7 +371,7 @@ CredDef Entity URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue?service=CL-CredD
 
 `CRED_DEF` DID Document transaction format:
 
-```
+```jsonc
 {
   "id": "did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue",
   "controller": "did:cheqd:mainnet-1:IK22KY2Dyvmuu2PyyqSFKu", // CredDef Issuer DID
@@ -390,13 +395,13 @@ CredDef Entity URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue?service=CL-CredD
 
 #### Schema options not used
 
-**Option 2**
+##### Option 2
 
 Schema URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue#<schema_entity_id>`
 
 `SCHEMA` DID Document transaction format:
 
-```
+```jsonc
 {
   "id": "did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue",
   "schema":[
@@ -414,13 +419,13 @@ Schema URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue#<schema_entity_id>`
 }
 ```
 
-**Option 3**
+##### Option 3
 
 Schema URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue`
 
 `SCHEMA` DID Document transaction format:
 
-```
+```jsonc
 {
   "id": "did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue",
   "schema": {
@@ -436,13 +441,13 @@ Schema URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue`
 }
 ```
 
-**Option 4**
+##### Option 4
 
 Schema URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue#<schema_entity_id>`
 
 `SCHEMA` DID Document transaction format:
 
-```
+```jsonc
 {
   "id": "did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue",
   "schema":[
@@ -457,13 +462,13 @@ Schema URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue#<schema_entity_id>`
 
 `SCHEMA` State format:
 
-* `"schema:<id>" -> {SchemaEntity, txHash, txTimestamp}`
+- `"schema:<id>" -> {SchemaEntity, txHash, txTimestamp}`
 
 `id` example: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue`
 
 #### Cred Def options not used
 
-**Option 2**
+##### Option 2
 
 Store inside Issuer DID Document
 
@@ -471,7 +476,7 @@ CredDef URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue#<cred_def_entity_id>`
 
 `CRED_DEF` DID Document transaction format:
 
-```
+```jsonc
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
@@ -498,16 +503,18 @@ CredDef URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue#<cred_def_entity_id>`
 
 `CRED_DEF` state format:
 
-**Positive**
+###### Positive
 
-* Credential Definition is a set of Issuer keys. So storing them in Issuer's DIDDoc reasonable.
+- Credential Definition is a set of Issuer keys. So storing them in Issuer's DIDDoc reasonable.
 
-**Negative**
+###### Negative
 
-* Credential Definition name means that it contains more than just a key and `value` field provides this flexibility.
-* Adding all Cred Defs to Issuer's DIDDoc makes it too large. For every DIDDoc or Cred Def request a client will receive the whole list of Issuer's Cred Defs.
-* Impossible to put a few controllers for Cred Def.
-* In theory, we need to make Credential Definitions mutable.
+- Credential Definition name means that it contains more than just a key and `value` field
+  provides this flexibility.
+- Adding all Cred Defs to Issuer's DIDDoc makes it too large. For every DIDDoc or Cred Def request
+  a client will receive the whole list of Issuer's Cred Defs.
+- Impossible to put a few controllers for Cred Def.
+- In theory, we need to make Credential Definitions mutable.
 
 ## Consequences
 
@@ -521,19 +528,19 @@ CredDef URL: `did:cheqd:mainnet-1:N22KY2Dyvmuu2PyyqSFKue#<cred_def_entity_id>`
 
 ## References
 
-* [Hyperledger Indy](https://wiki.hyperledger.org/display/indy) official project background on Hyperledger Foundation wiki
-  * [`indy-node`](https://github.com/hyperledger/indy-node) GitHub repository: Server-side blockchain node for Indy ([documentation](https://hyperledger-indy.readthedocs.io/projects/node/en/latest/index.html))
-  * [`indy-plenum`](https://github.com/hyperledger/indy-plenum) GitHub repository: Plenum Byzantine Fault Tolerant consensus protocol; used by `indy-node` ([documentation](https://hyperledger-indy.readthedocs.io/projects/plenum/en/latest/index.html))
-  * [Indy DID method](https://hyperledger.github.io/indy-did-method/) (`did:indy`)
-  * [Indy identity-domain transactions](https://github.com/hyperledger/indy-node/blob/master/docs/source/transactions.md)
-* [Hyperledger Aries](https://wiki.hyperledger.org/display/ARIES/Hyperledger+Aries) official project background on Hyperledger Foundation wiki
-  * [`aries`](https://github.com/hyperledger/aries) GitHub repository: Provides links to implementations in various programming languages
-  * [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour
-* [W3C Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) specification
-  * [DID Core Specification Test Suite](https://w3c.github.io/did-test-suite/)
-* [Cosmos blockchain framework](https://cosmos.network/) official project website
-  * [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
-* [Sovrin Foundation](https://sovrin.org/)
-  * [Sovrin Networks](https://sovrin.org/overview/)
-  * [`libsovtoken`](https://github.com/sovrin-foundation/libsovtoken): Sovrin Network token library
-  * [Sovrin Ledger token plugin](https://github.com/sovrin-foundation/token-plugin)
+- [Hyperledger Indy](https://wiki.hyperledger.org/display/indy) official project background on Hyperledger Foundation wiki
+  - [`indy-node`](https://github.com/hyperledger/indy-node) GitHub repository: Server-side blockchain node for Indy ([documentation](https://hyperledger-indy.readthedocs.io/projects/node/en/latest/index.html))
+  - [`indy-plenum`](https://github.com/hyperledger/indy-plenum) GitHub repository: Plenum Byzantine Fault Tolerant consensus protocol; used by `indy-node` ([documentation](https://hyperledger-indy.readthedocs.io/projects/plenum/en/latest/index.html))
+  - [Indy DID method](https://hyperledger.github.io/indy-did-method/) (`did:indy`)
+  - [Indy identity-domain transactions](https://github.com/hyperledger/indy-node/blob/master/docs/source/transactions.md)
+- [Hyperledger Aries](https://wiki.hyperledger.org/display/ARIES/Hyperledger+Aries) official project background on Hyperledger Foundation wiki
+  - [`aries`](https://github.com/hyperledger/aries) GitHub repository: Provides links to implementations in various programming languages
+  - [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour
+- [W3C Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) specification
+  - [DID Core Specification Test Suite](https://w3c.github.io/did-test-suite/)
+- [Cosmos blockchain framework](https://cosmos.network/) official project website
+  - [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
+- [Sovrin Foundation](https://sovrin.org/)
+  - [Sovrin Networks](https://sovrin.org/overview/)
+  - [`libsovtoken`](https://github.com/sovrin-foundation/libsovtoken): Sovrin Network token library
+  - [Sovrin Ledger token plugin](https://github.com/sovrin-foundation/token-plugin)

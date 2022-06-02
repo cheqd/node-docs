@@ -1,4 +1,4 @@
-# Debian package installation
+# Guide to Debian packages for cheqd-node
 
 ## Context
 
@@ -52,6 +52,7 @@ The log location can be overridden by passing the variable `CHEQD_LOG_DIR` befor
 
 `rsyslog` is configured to redirect logs from the `cheqd-node` daemon to the log directory defined above.
 
+
 ```bash
 if \$programname == 'cheqd-noded' then ${CHEQD_LOG_DIR}/stdout.log
 & stop
@@ -85,7 +86,7 @@ The main part of post-installation process is to make the `cheqd-node` binary ru
 
 This ensures the service is restarted after any failures and output sent to `rsyslog`.
 
-```
+```text
 [Unit]
 Description=Service for running Cheqd node
 After=network.target
@@ -108,8 +109,8 @@ WantedBy=multi-user.target
 
 ## Uninstalling the Debian package
 
-| :warning: WARNING                                                                             |
-| --------------------------------------------------------------------------------------------- |
+| :warning: WARNING |
+| :--- |
 | Please make sure any accounts keys are backed up or exported before attempting uninstallation |
 
 To uninstall `cheqd-node` when it has been installed using the Debian package release, execute the following (with `sudo` or as the `root` user):
@@ -120,7 +121,7 @@ apt remove cheqd-node
 
 This will remove all configuration files created during installation process from the system, such as:
 
-```
+```text
 /etc/rsyslog.d/cheqd-node.conf
 /etc/logrotate.d/cheqd-node
 /lib/systemd/system/cheqd-noded.service

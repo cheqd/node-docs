@@ -1,4 +1,4 @@
-# cheqd Cosmos CLI
+# cheqd Command Line Interface (CLI) guide
 
 ## Overview
 

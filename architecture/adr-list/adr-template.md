@@ -6,18 +6,18 @@ description: This is the suggested template to be used for ADRs on the cheqd-nod
 
 ## Status
 
-| Category                  | Status                                                                            |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| **Authors**               | {Author or list of authors}                                                       |
-| **ADR Stage**             | {DRAFT \| PROPOSED \| ACCEPTED \| REJECTED \| SUPERSEDED by ADR-xxx \| ABANDONED} |
-| **Implementation Status** | {Implemented \| Not Implemented}                                                  |
-| **Start Date**            | {yyyy-mm-dd}                                                                      |
+| Category | Status |
+| :--- | :--- |
+| **Authors** | {Author or list of authors} |
+| **ADR Stage** | {DRAFT \| PROPOSED \| ACCEPTED \| REJECTED \| SUPERSEDED by ADR-xxx \| ABANDONED} |
+| **Implementation Status** | {Implemented \| Not Implemented} |
+| **Start Date** | {yyyy-mm-dd} |
 
 What is the status, such as proposed, accepted, rejected, deprecated, superseded, etc.?
 
 ## Summary
 
-> A short (\~100 word) description of the issue being addressed. "If you can't explain it simply, you don't understand it well enough." Provide a simplified and layman-accessible explanation of the ADR.
+> A short (~100 word) description of the issue being addressed. "If you can't explain it simply, you don't understand it well enough." Provide a simplified and layman-accessible explanation of the ADR.
 
 ## Context
 

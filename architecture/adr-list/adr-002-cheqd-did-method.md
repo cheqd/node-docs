@@ -2,12 +2,12 @@
 
 ## Status
 
-| Category                  | Status                                      |
-| ------------------------- | ------------------------------------------- |
-| **Authors**               | Renata Toktar, Brent Zundel, Ankur Banerjee |
-| **ADR Stage**             | PROPOSED                                    |
-| **Implementation Status** | Implementation in progress                  |
-| **Start Date**            | 2021-09-23                                  |
+| Category | Status |
+| :--- | :--- |
+| **Authors** | Renata Toktar, Brent Zundel, Ankur Banerjee |
+| **ADR Stage** | ACCEPTED |
+| **Implementation Status** | Implemented |
+| **Start Date** | 2021-09-23 |
 
 ## Summary
 
@@ -128,11 +128,12 @@ A DID Document ("DIDDoc") associated with a cheqd DID is a set of data describin
 8. **`keyAgreement`** (optional): A list of strings with key aliases or IDs
 9. **`service`** (optional): A set of Service Endpoint maps
 10. **`alsoKnownAs`** (optional): A list of strings. A DID subject can have multiple identifiers for different purposes, or at different times. The assertion that two or more DIDs refer to the same DID subject can be made using the `alsoKnownAs` property.
-11. **`@context`** (optional): A list of strings with links or JSONs for describing specifications that this DID Document is following to.
+11. **`@context`** (optional): A list of strings with links or JSONs for
+describing specifications that this DID Document is following to.
 
-**Example of DIDDoc representation**
+##### Example of DIDDoc representation
 
-```
+```jsonc
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
@@ -169,13 +170,14 @@ A DID Document ("DIDDoc") associated with a cheqd DID is a set of data describin
 Each DID Document MUST have a metadata section when a representation is produced. It can have the following properties:
 
 1. **`created`** (string): Formatted as an XML Datetime normalized to UTC 00:00:00 and without sub-second decimal precision, e.g., `2020-12-20T19:17:47Z`.
-2. **`updated`** (string): The value of the property MUST follow the same formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
+2. **`updated`** (string): The value of the property MUST follow the same
+formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
 3. **`deactivated`** (strings): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
 4. **`versionId`** (strings): Contains transaction hash of the current DIDDoc version.
 
-**Example of DIDDoc metadata**
+##### Example of DIDDoc metadata
 
-```
+```jsonc
 {
   "created": "2020-12-20T19:17:47Z",
   "updated": "2020-12-20T19:19:47Z",
@@ -192,13 +194,14 @@ Verification methods are used to define how to authenticate / authorise interact
 2. **`controller`**: A string with fully qualified DID. DID must exist.
 3. **`type`** (string)
 4. **`publicKeyJwk`** (`map[string,string]`, optional): A map representing a JSON Web Key that conforms to [RFC7517](https://tools.ietf.org/html/rfc7517). See definition of `publicKeyJwk` for additional constraints.
-5. **`publicKeyMultibase`** (optional): A base58-encoded string that conforms to a [MULTIBASE](https://datatracker.ietf.org/doc/html/draft-multiformats-multibase-03) encoded public key.
+5. **`publicKeyMultibase`** (optional): A base58-encoded string that conforms to a [MULTIBASE](https://datatracker.ietf.org/doc/html/draft-multiformats-multibase-03)
+encoded public key.
 
 **Note**: Verification method cannot contain both `publicKeyJwk` and `publicKeyMultibase` but must contain at least one of them.
 
-**Example of Verification method in a DIDDoc**
+##### Example of Verification method in a DIDDoc
 
-```
+```jsonc
 {
   "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#key-0",
   "type": "JsonWebKey2020",
@@ -220,11 +223,12 @@ Services can be defined in a DIDDoc to express means of communicating with the D
 
 1. **`id`** (string): The value of the `id` property for a Service MUST be a URI conforming to [RFC3986](https://www.rfc-editor.org/rfc/rfc3986). A conforming producer MUST NOT produce multiple service entries with the same ID. A conforming consumer MUST produce an error if it detects multiple service entries with the same ID. It has a follow formats: `<DIDDoc-id>#<service-alias>` or `#<service-alias>`.
 2. **`type`** (string): The service type and its associated properties SHOULD be registered in the [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/)
-3. **`serviceEndpoint`** (strings): A string that conforms to the rules of [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs, a map, or a set composed of a one or more strings that conform to the rules of [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs and/or maps.
+3. **`serviceEndpoint`** (strings): A string that conforms to the rules of [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs, a map, or a set composed of a one or more strings that conform to the rules of
+[RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs and/or maps.
 
-**Example of Service in a DIDDoc**
+##### Example of Service in a DIDDoc
 
-```
+```jsonc
 {
   "id":"did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#linked-domain",
   "type": "LinkedDomains",
@@ -238,19 +242,19 @@ Services can be defined in a DIDDoc to express means of communicating with the D
 
 This operation creates a new DID using the `did:cheqd` method along with associated DID Document representation.
 
-* **`signatures`**: `CreateDidRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
-* **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
-* **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
+- **`signatures`**: `CreateDidRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
+- **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
 
 #### Client request format for create DID
 
-```
+```jsonc
 WriteRequest (CreateDidRequest(id, controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context), signatures)
 ```
 
 #### Example of a create DID client request
 
-```
+```jsonc
 WriteRequest{
   "data": 
     CreateDidRequest {   
@@ -281,20 +285,20 @@ WriteRequest{
 
 This operation updates the DID Document associated with an existing DID of type `did:cheqd:<namespace>`.
 
-* **`signatures`**: `UpdateDidRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
-* **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
-* **`versionId`**: Transaction hash of the previous DIDDoc version. This is necessary to provide replay protection. The previous DIDDoc `versionId` can fetched using a get DID query.
-* **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
+- **`signatures`**: `UpdateDidRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
+- **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`versionId`**: Transaction hash of the previous DIDDoc version. This is necessary to provide replay protection. The previous DIDDoc `versionId` can fetched using a get DID query.
+- **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
 
 #### Client request format for update DID
 
-```
+```jsonc
 WriteRequest(UpdateDidRequest(id, controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context, versionId), signatures)
 ```
 
 #### Example of an update DID client request
 
-```
+```jsonc
 WriteRequest{
   "data": 
     UpdateDidRequest {   
@@ -326,14 +330,14 @@ WriteRequest{
 
 DIDDocs associated with a DID of type `did:cheqd:<namespace>` can be resolved using the `GetDid` query to fetch a response from the ledger. The response contains:
 
-* **`did`**: DIDDoc associated with the specified DID in a W3C specification compliant [DIDDoc structure](adr-002-cheqd-did-method.md#did-documents-diddocs).
-* **`metadata`**: Contains the MUST have [DIDDoc metadata](adr-002-cheqd-did-method.md#diddoc-metadata) associated with a DIDDOc.
+- **`did`**: DIDDoc associated with the specified DID in a W3C specification compliant [DIDDoc structure](#did-documents-diddocs).
+- **`metadata`**: Contains the MUST have [DIDDoc metadata](#diddoc-metadata) associated with a DIDDOc.
 
 #### Client request format for get/resolve DID
 
 DID resolution requests can be sent to the Tendermint RPC interface for a node by passing the fully-qualified DID.
 
-```
+```jsonc
 QueryGetDidResponse(did)
 ```
 
@@ -341,7 +345,7 @@ QueryGetDidResponse(did)
 
 The response is returned as a protobuf, which can be converted to JSON client-side.
 
-```
+```jsonc
 {
   "did":{
     "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC",
@@ -374,7 +378,7 @@ The response is returned as a protobuf, which can be converted to JSON client-si
 1. For creating a new DID or update the DIDDoc associated with an existing DID, the requested should be signed by all `controller` signatures.
    1. To update a DIDDoc fragment without a `controller` (any field except `VerificationMethods`), the request MUST be signed by the DID's `controller`(s).
    2. To update a DIDDoc fragment that has its own `controller`(s), the request MUST be signed by the DID's `controller`(s) **and** the DIDDoc fragment's `controller`(s).
-2. Changing the `controller`(s) associated with a DID requires a list of signatures as before for changing any field.
+2. Changing the `controller`(s) associated with  a DID requires a list of signatures as before for changing any field.
 
 ### Privacy Considerations
 
@@ -406,37 +410,37 @@ Hyperledger Indy is a public-permissioned distributed ledger and therefore use t
 
 ### Backward Compatibility
 
-* `cheqd-node` [release v0.1.19](https://github.com/cheqd/cheqd-node/releases/tag/v0.1.19) and earlier had a transaction type called `NYM` which would allow writing/reading a unique identifier on ledger. However, this `NYM` state was not fully defined as a DID method and did not store DID Documents associated with a DID. This `NYM` transaction type is deprecated and the data written to cheqd testnet with legacy states will not be retained.
-* The cheqd DID method does not aim to be 1:1 compatible in API methods with `did:indy`. It makes opinionated choices to not implement certain transaction types, which in our analysis have been superseded by new developments in the W3C DID Core specification.
+- `cheqd-node` [release v0.1.19](https://github.com/cheqd/cheqd-node/releases/tag/v0.1.19) and  earlier had a transaction type called `NYM` which would allow writing/reading a unique identifier on ledger. However, this `NYM` state was not fully defined as a DID method and did not store DID Documents associated with a DID. This `NYM` transaction type is deprecated and the data written to cheqd testnet with legacy states will not be retained.
+- The cheqd DID method does not aim to be 1:1 compatible in API methods with `did:indy`. It makes opinionated choices to not implement certain transaction types, which in our analysis have been superseded by new developments in the W3C DID Core specification.
 
 ### Positive
 
-* Design decisions defined in this ADR aim to make the cheqd DID method close to compliance with the W3C DID Core specification.
-* As the client/peer-to-peer exchange layer (at least in the implementation provided by [VDR Tools SDK](https://gitlab.com/evernym/verity/vdr-tools)) is built on a library that supports Hyperledger Aries, extending Aries implementations to other W3C compliant DID methods should become simpler for the SSI ecosystem.
+- Design decisions defined in this ADR aim to make the cheqd DID method close to compliance with the W3C DID Core specification.
+- As the client/peer-to-peer exchange layer (at least in the implementation provided by [VDR Tools SDK](https://gitlab.com/evernym/verity/vdr-tools)) is built on a library that supports Hyperledger Aries, extending Aries implementations to other W3C compliant DID methods should become simpler for the SSI ecosystem.
 
 ### Negative
 
-* The cheqd DID method does not currently have full coverage with the [W3C DID Core Test Suite](https://w3c.github.io/did-test-suite/). It is our intention to aim for further coverage for edge cases in future updates to the DID method implementation on `cheqd-node`.
+- The cheqd DID method does not currently have full coverage with the [W3C DID Core Test Suite](https://w3c.github.io/did-test-suite/). It is our intention to aim for further coverage for edge cases in future updates to the DID method implementation on `cheqd-node`.
 
 ### Neutral
 
-* DID transaction operations at the moment must be assembled using a client-side library with DID specification identity standards support, and then wrapped up inside a Cosmos transaction that is sent to the Tendermint RPC interface. Future implementations of `cheqd-node` aim to provide simpler interfaces, such as gRPC or REST, at least for a read actions on a limited set of commonly-used APIs.
+- DID transaction operations at the moment must be assembled using a client-side library with DID specification identity standards support, and then wrapped up inside a Cosmos transaction that is sent to the Tendermint RPC interface. Future implementations of `cheqd-node` aim to provide simpler interfaces, such as gRPC or REST, at least for a read actions on a limited set of commonly-used APIs.
 
 ## References
 
-* [Hyperledger Indy](https://wiki.hyperledger.org/display/indy) official project background on Hyperledger Foundation wiki
-  * [`indy-node`](https://github.com/hyperledger/indy-node) GitHub repository: Server-side blockchain node for Indy ([documentation](https://hyperledger-indy.readthedocs.io/projects/node/en/latest/index.html))
-  * [`indy-plenum`](https://github.com/hyperledger/indy-plenum) GitHub repository: Plenum Byzantine Fault Tolerant consensus protocol; used by `indy-node` ([documentation](https://hyperledger-indy.readthedocs.io/projects/plenum/en/latest/index.html))
-  * [Indy DID method](https://hyperledger.github.io/indy-did-method/) (`did:indy`)
-  * [Indy identity-domain transactions](https://github.com/hyperledger/indy-node/blob/master/docs/source/transactions.md)
-* [Hyperledger Aries](https://wiki.hyperledger.org/display/ARIES/Hyperledger+Aries) official project background on Hyperledger Foundation wiki
-  * [`aries`](https://github.com/hyperledger/aries) GitHub repository: Provides links to implementations in various programming languages
-  * [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour
-* [W3C Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) specification
-  * [DID Core Specification Test Suite](https://w3c.github.io/did-test-suite/)
-* [Cosmos blockchain framework](https://cosmos.network/) official project website
-  * [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
-* [Sovrin Foundation](https://sovrin.org/)
-  * [Sovrin Networks](https://sovrin.org/overview/)
-  * [`libsovtoken`](https://github.com/sovrin-foundation/libsovtoken): Sovrin Network token library
-  * [Sovrin Ledger token plugin](https://github.com/sovrin-foundation/token-plugin)
+- [Hyperledger Indy](https://wiki.hyperledger.org/display/indy) official project background on Hyperledger Foundation wiki
+  - [`indy-node`](https://github.com/hyperledger/indy-node) GitHub repository: Server-side blockchain node for Indy ([documentation](https://hyperledger-indy.readthedocs.io/projects/node/en/latest/index.html))
+  - [`indy-plenum`](https://github.com/hyperledger/indy-plenum) GitHub repository: Plenum Byzantine Fault Tolerant consensus protocol; used by `indy-node` ([documentation](https://hyperledger-indy.readthedocs.io/projects/plenum/en/latest/index.html))
+  - [Indy DID method](https://hyperledger.github.io/indy-did-method/) (`did:indy`)
+  - [Indy identity-domain transactions](https://github.com/hyperledger/indy-node/blob/master/docs/source/transactions.md)
+- [Hyperledger Aries](https://wiki.hyperledger.org/display/ARIES/Hyperledger+Aries) official project background on Hyperledger Foundation wiki
+  - [`aries`](https://github.com/hyperledger/aries) GitHub repository: Provides links to implementations in various programming languages
+  - [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour
+- [W3C Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) specification
+  - [DID Core Specification Test Suite](https://w3c.github.io/did-test-suite/)
+- [Cosmos blockchain framework](https://cosmos.network/) official project website
+  - [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
+- [Sovrin Foundation](https://sovrin.org/)
+  - [Sovrin Networks](https://sovrin.org/overview/)
+  - [`libsovtoken`](https://github.com/sovrin-foundation/libsovtoken): Sovrin Network token library
+  - [Sovrin Ledger token plugin](https://github.com/sovrin-foundation/token-plugin)
