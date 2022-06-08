@@ -158,7 +158,7 @@ Example:
 #### QueryGetResourceRequest
 
 * Collection ID: String - an identifier of linked DIDDoc
-* ID: String - unique resource id 
+* ID: String - unique resource id
 
 Example:
 
@@ -338,42 +338,43 @@ Resource {
 ### Resource versioning
 
 Resource are immutable, but it is possible to create new versions of it under a new identifier(`id` field). When creating a resource whose fields `collectionId`, `name`, `resourceType`, `mimeType` match an existing resource:
- 
-- The latest version of the current resource will be added with a link to the new one. That is, field `nextVersionId` will contain the new resource identifier.
-- A new resource with data from the transaction will be created with the previous version resource id in field `previousVersionId`.
+
+* The latest version of the current resource will be added with a link to the new one. That is, field `nextVersionId` will contain the new resource identifier.
+* A new resource with data from the transaction will be created with the previous version resource id in field `previousVersionId`.
 
 Example:
 
-1. Resource exists in the ledger:
-```jsonc
-Resource1
-{
-  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-  "name":               "CL-Schema1",
-  "resource_type":      "CL-Schema",
-  "mime_type":          "application/json"
-  ...
-  "previous_version_id: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
-  "next_version_id:     null
-}
-```
+Step 1. Resource exists in the ledger:
 
-2. Client send request for creating a new resource with a transaction MsgCreateResource
+  ```jsonc
+  Resource1
+  {
+    "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+    "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+    "name":               "CL-Schema1",
+    "resource_type":      "CL-Schema",
+    "mime_type":          "application/json"
+    ...
+    "previous_version_id: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
+    "next_version_id:     null
+  }
+  ```
 
-```jsonc
-MsgCreateResource for creating Resource2
-{
-  "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-  "id":             "f47e4790-1b4b-4186-8357-da6199665236",
-  "name":           "CL-Schema1",
-  "resource_type":  "CL-Schema",
-  "mime_type":      "application/json"
-  "data":           ...
-}
-```
+Step 2. Client send request for creating a new resource with a transaction MsgCreateResource
 
-3. After the transaction applying
+  ```jsonc
+  MsgCreateResource for creating Resource2
+  {
+    "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+    "id":             "f47e4790-1b4b-4186-8357-da6199665236",
+    "name":           "CL-Schema1",
+    "resource_type":  "CL-Schema",
+    "mime_type":      "application/json"
+    "data":           ...
+  }
+  ```
+
+Step 3. After the transaction applying
 
 ```jsonc
 Resource1
