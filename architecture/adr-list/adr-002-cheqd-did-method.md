@@ -172,8 +172,9 @@ Each DID Document MUST have a metadata section when a representation is produced
 1. **`created`** (string): Formatted as an XML Datetime normalized to UTC 00:00:00 and without sub-second decimal precision, e.g., `2020-12-20T19:17:47Z`.
 2. **`updated`** (string): The value of the property MUST follow the same
 formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
-3. **`deactivated`** (strings): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
-4. **`versionId`** (strings): Contains transaction hash of the current DIDDoc version.
+3. **`deactivated`** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
+4. **`versionId`** (string): Contains transaction hash of the current DIDDoc version.
+5. **`resources`** (list of string | optional): Identifiers with linked [resources](adr-008-identity-resources.md) identifiers. Can't be change by CreateDID or UpdateDID transactions. 
 
 ##### Example of DIDDoc metadata
 
@@ -183,6 +184,10 @@ formatting rules as the created property. The `updated` field is `null` if an Up
   "updated": "2020-12-20T19:19:47Z",
   "deactivated": false,
   "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
+  "resources": [
+        "c197bfa3-687b-4dda-b308-2ba28742f962",
+        "6546019c-e727-11ec-8fea-0242ac120002"
+  ]
 }
 ```
 
@@ -365,8 +370,8 @@ The response is returned as a protobuf, which can be converted to JSON client-si
     ]
   },
   "metadata":{
-    "created":"2021-10-26 13:35:17.8230284 +0000 UTC",
-    "updated":"2021-10-26 13:35:17.8230284 +0000 UTC",
+    "created":"2022-04-20T20:19:19Z",
+    "updated":"2022-04-20T20:19:19Z",
     "deactivated":false,
     "version_id":"1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E"
   }
