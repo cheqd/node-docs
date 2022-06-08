@@ -96,16 +96,16 @@ Example:
   "resource_type":      "CL-Schema",
   "mime_type":          "application/json"
   "data":               <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>,
-  "created":            "",
-  "checksum":           "",
-  "previous_version_id: "",
+  "created":            "2022-04-20T20:19:19Z",
+  "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+  "previous_version_id: null,
   "next_version_id:     null
 }
 ```
 
 #### MsgCreateResource
 
-* **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
+* **Collection ID: UUID ➝** (did:cheqd:...:)`<identifier>` (supplied client-side)** - a parent DIDDoc identifier from `id` field
 * **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Name: String (e.g., `CL-Schema1` (supplied client-side)**
 * **ResourceType (e.g., `CL-Schema`, `JSONSchema2020`) (supplied client-side)**
@@ -135,9 +135,9 @@ Example:
 { "resource":  <Resource> }
 ```
 
-#### QueryGetResourcesRequest
+#### QueryGetCollectionResourcesRequest
 
-* Collection ID: String
+* Collection ID: String - an identifier of linked DIDDoc
   
 Example:
 
@@ -145,7 +145,7 @@ Example:
 { "collection_id": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY" }
 ```
 
-#### QueryGetResourcesResponse
+#### QueryGetCollectionResourcesResponse
 
 * Resources: [Resource\[\]](#resource)
 
@@ -157,8 +157,8 @@ Example:
 
 #### QueryGetResourceRequest
 
-* Collection ID: String
-* ID: String
+* Collection ID: String - an identifier of linked DIDDoc
+* ID: String - unique resource id 
 
 Example:
 
@@ -181,7 +181,7 @@ Example:
 
 #### QueryGetAllResourceVersionsRequest
 
-* Collection ID: String
+* Collection ID: String - an identifier of linked DIDDoc
 * Name: String
 * ResourceType: String
 * MimeType: String
@@ -225,7 +225,7 @@ Example:
 
 * Processing logic:
   * Check that associated DIDDoc exists;
-  * Authenticate request the same way as DIDDoc modification;
+  * Authenticate request the same way as DIDDoc creation and updating;
   * Validate properties;
   * Validate **data** for specific resource types (CL Schema);
   * Validate that **ID** is unique;
@@ -250,14 +250,14 @@ cheqd-noded tx resource create-resource "{
 
 ### Queries
 
-#### GetResources
+#### GetCollectionResources
 
 * Input:
-  * [QueryGetResourcesRequest](#querygetresourcesrequest)
+  * [QueryGetCollectionResourcesRequest](#querygetcollectionresourcesrequest)
 
 * Output:
 
-  * [QueryGetResourcesResponse](#querygetresourcesresponse)
+  * [QueryGetCollectionResourcesResponse](#querygetcollectionresourcesresponse)
 
 * Processing logic:
 
@@ -273,7 +273,7 @@ cheqd-noded tx resource create-resource "{
   * [QueryGetResourceResponse](#querygetresourceresponse)
 
 * Processing logic:
-  * Retrieves a specific resource by Collection-ID(DID) and resource ID;
+  * Retrieves a specific resource by Collection-ID and resource ID;
 
 #### GetAllResourceVersions
 
@@ -284,7 +284,7 @@ cheqd-noded tx resource create-resource "{
   * [QueryAllResourceVersionsResponse](#querygetallresourceversionsresponse)
 
 * Processing logic:
-  * Retrieves all resource versions by resource name, resource type and mime type;
+  * Retrieves all resource versions by collection id, resource name, resource type and mime type;
   
 ### DID Resolver
 
@@ -300,6 +300,108 @@ We need to support resource resolution in the DID resolver.
 
 * Processing logic:
   * Simply call [GetResource](#getresource) via GRPC
+
+### Linked DIDDoc
+
+`CollectionId` field is an identifier of existing DIDDoc. There are no restrictions on the fields of this DIDDoc other than those described in [Cheqd DID Method ADR](adr-002-cheqd-did-method.md) and [W3C DID specification](https://www.w3.org/TR/did-core/). DIDDock must be located in the same ledger where the resource is created.
+A list of resources related to DIDDoc can be found in its metadata:
+
+```jsonc
+QueryGetDidResponse {
+  "did": {
+    "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
+    ...
+  },
+  "metadata": {
+    "created": "2020-12-20T19:17:47Z",
+    "updated": "2020-12-20T19:19:47Z",
+    "deactivated": false,
+    "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
+    "resources": [
+        "c197bfa3-687b-4dda-b308-2ba28742f962"
+    ]
+  }
+}
+```
+
+```jsonc
+Resource {
+  "collection_id":  "N22KY2Dyvmuu2PyyqSFKue",
+  "id":             "c197bfa3-687b-4dda-b308-2ba28742f962",
+  "name":           "CL-Schema1",
+  "resource_type":  "CL-Schema",
+  "mime_type":      "application/json"
+  "data":           <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>
+}
+```
+
+### Resource versioning
+
+Resource are immutable, but it is possible to create new versions of it under a new identifier(`id` field). When creating a resource whose fields `collectionId`, `name`, `resourceType`, `mimeType` match an existing resource:
+ 
+- The latest version of the current resource will be added with a link to the new one. That is, field `nextVersionId` will contain the new resource identifier.
+- A new resource with data from the transaction will be created with the previous version resource id in field `previousVersionId`.
+
+Example:
+
+1. Resource exists in the ledger:
+```jsonc
+Resource1
+{
+  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":               "CL-Schema1",
+  "resource_type":      "CL-Schema",
+  "mime_type":          "application/json"
+  ...
+  "previous_version_id: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
+  "next_version_id:     null
+}
+```
+
+2. Client send request for creating a new resource with a transaction MsgCreateResource
+
+```jsonc
+MsgCreateResource for creating Resource2
+{
+  "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":             "f47e4790-1b4b-4186-8357-da6199665236",
+  "name":           "CL-Schema1",
+  "resource_type":  "CL-Schema",
+  "mime_type":      "application/json"
+  "data":           ...
+}
+```
+
+3. After the transaction applying
+
+```jsonc
+Resource1
+{
+  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":               "CL-Schema1",
+  "resource_type":      "CL-Schema",
+  "mime_type":          "application/json"
+  ...
+  "previous_version_id: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
+  "next_version_id:     "f47e4790-1b4b-4186-8357-da6199665236"  // Resource2.id
+}
+```
+
+```jsonc
+Resource2
+{
+  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":               "CL-Schema1",
+  "resource_type":      "CL-Schema",
+  "mime_type":          "application/json"
+  ...
+  "previous_version_id: "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096", // Resource1.id
+  "next_version_id:     null
+}
+```
 
 ### CL Schema
 
