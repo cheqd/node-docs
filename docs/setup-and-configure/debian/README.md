@@ -70,13 +70,13 @@ Our installer makes the following changes:
 
 ```bash
 ${CHEQD_LOG_DIR}/stdout.log {
-  rotate 30
+  rotate 7
   daily
   maxsize 100M
   notifempty
   copytruncate
   compress
-  maxage 30
+  maxage 7
 }
 ```
 
@@ -86,23 +86,27 @@ The main part of post-installation process is to make the `cheqd-node` binary ru
 
 This ensures the service is restarted after any failures and output sent to `rsyslog`.
 
-```text
+```unit
 [Unit]
-Description=Service for running Cheqd node
+Description=Service for running cheqd-node daemon
 After=network.target
+Documentation=https://docs.cheqd.io/node
+
 [Service]
 Type=simple
 User=cheqd
-ExecStart=/bin/bash -c '/usr/bin/cheqd-noded start'
+ExecStart=/usr/bin/cheqd-noded start
 Restart=on-failure
-RestartSec=10
-StartLimitBurst=10
-StartLimitInterval=200
-TimeoutSec=300
+RestartSec=30
+StartLimitBurst=5
+StartLimitInterval=60
+TimeoutSec=120
 StandardOutput=syslog
 StandardError=syslog
 SyslogFacility=syslog
 SyslogIdentifier=cheqd-noded
+LimitNOFILE=65535
+
 [Install]
 WantedBy=multi-user.target
 ```
