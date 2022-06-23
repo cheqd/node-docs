@@ -53,7 +53,7 @@ Revocation registries for credentials are not covered under the scope of this AD
 
 #### 'Resources' module on ledger
 
-A new module will be created: `resources`.
+A new module will be created: `resource`.
 
 #### Dependencies
 
@@ -68,8 +68,8 @@ A new module will be created: `resources`.
 * **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
 * **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **ResourceType (e.g., `CL-Schema`****, `JSONSchema2020`****) (supplied client-side)**
-* **MimeType: (e.g., `application/json`****, `image/png`****) (supplied client-side)**
+* **ResourceType (`CL-Schema`/`JSONSchema2020`) (supplied client-side)**
+* **MimeType: (`application/json`/`image`/`application/octet-stream`/`text/plain`) (supplied client-side)**
 * **Data: Byte\[\] (supplied client-side)**
 * Created: XMLDatetime (computed ledger-side)
 * Checksum: SHA-256 (computed ledger-side)
@@ -93,13 +93,41 @@ Example:
 }
 ```
 
+#### ResourcePreview
+
+* **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
+* **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
+* **Name: String (e.g., `CL-Schema1` (supplied client-side)**
+* **ResourceType (`CL-Schema`/`JSONSchema2020`) (supplied client-side)**
+* **MimeType: (`application/json`/`image`/`application/octet-stream`/`text/plain`) (supplied client-side)**
+* Created: XMLDatetime (computed ledger-side)
+* Checksum: SHA-256 (computed ledger-side)
+* previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+* nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+
+Example:
+
+```jsonc
+{
+  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":               "CL-Schema1",
+  "resource_type":      "CL-Schema",
+  "mime_type":          "application/json"
+  "created":            "2022-04-20T20:19:19Z",
+  "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+  "previous_version_id: null,
+  "next_version_id:     null
+}
+```
+
 #### MsgCreateResource
 
 * **Collection ID: UUID ➝** (did:cheqd:...:)`<identifier>` (supplied client-side)** - a parent DIDDoc identifier from `id` field
 * **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **ResourceType (e.g., `CL-Schema`, `JSONSchema2020`) (supplied client-side)**
-* **MimeType: (e.g., `application/json`, `image/png`) (supplied client-side)**
+* **ResourceType (`CL-Schema`/`JSONSchema2020`) (supplied client-side)**
+* **MimeType: (`application/json`/`image`/`application/octet-stream`/`text/plain`) (supplied client-side)**
 * **Data: Byte\[\] (supplied client-side)**
 
 Example:
@@ -137,12 +165,12 @@ Example:
 
 #### QueryGetCollectionResourcesResponse
 
-* Resources: [Resource\[\]](#resource)
+* Resources: [ResourcePreview\[\]](#resourcepreview)
 
 Example:
 
 ```jsonc
-{ "resources":  [<Resource1>, <Resource2>] }
+{ "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
 ```
 
 #### QueryGetResourceRequest
@@ -189,12 +217,12 @@ Example:
 
 #### QueryGetAllResourceVersionsResponse
 
-* Resources: [Resource\[\]](#resource)
+* Resources: [ResourcePreview\[\]](#resourcepreview)
 
 Example:
 
 ```jsonc
-{ "resources":  [<Resource1>, <Resource2>] }
+{ "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
 ```
 
 ### State
@@ -252,6 +280,7 @@ cheqd-noded tx resource create-resource "{
 * Processing logic:
 
   * Retrieves the whole resource collection for the specified DID;
+  * Returns only resources preview without `data` field;
   
 #### GetResource
 
@@ -275,6 +304,7 @@ cheqd-noded tx resource create-resource "{
 
 * Processing logic:
   * Retrieves all resource versions by collection id, resource name, resource type and mime type;
+  * Returns only resources preview without `data` field;
   
 ### DID Resolver
 
@@ -308,7 +338,11 @@ QueryGetDidResponse {
     "deactivated": false,
     "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
     "resources": [
-        "c197bfa3-687b-4dda-b308-2ba28742f962"
+      {
+        "resourceURI":      "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue/resources/9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+        "resourceType":      "CL-Schema",
+        "mimeType":          "application/json"
+      }
     ]
   }
 }
@@ -316,12 +350,16 @@ QueryGetDidResponse {
 
 ```jsonc
 Resource {
-  "collection_id":  "N22KY2Dyvmuu2PyyqSFKue",
-  "id":             "c197bfa3-687b-4dda-b308-2ba28742f962",
-  "name":           "CL-Schema1",
-  "resource_type":  "CL-Schema",
-  "mime_type":      "application/json"
-  "data":           <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>
+  "collection_id":      "N22KY2Dyvmuu2PyyqSFKue",
+  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":               "CL-Schema1",
+  "resource_type":      "CL-Schema",
+  "mime_type":          "application/json"
+  "data":               <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>,
+  "created":            "2022-04-20T20:19:19Z",
+  "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+  "previous_version_id: null,
+  "next_version_id:     null
 }
 ```
 
