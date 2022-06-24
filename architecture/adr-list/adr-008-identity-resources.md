@@ -18,6 +18,7 @@ The identity entities and transactions for the cheqd network are designed to sup
 
 [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are digital entries that represent claims about its subjects and can be verified via digital proofs.
 To issue and validate such a credential, you will need to save the following list of entities to the ledger:
+
 * credential scheme,
 * public keys,
 * etc.
@@ -95,6 +96,7 @@ Example:
   "nextVersionId:     null
 }
 ```
+
 <details>
 <summary>ResourcePreview</summary>
 
@@ -137,6 +139,7 @@ Example:
   "nextVersionId:     null
 }
 ```
+
 </details>
 
 <details>
@@ -160,7 +163,7 @@ Example:
   * `image/jpeg`
   * `image/png`
   * `image/svg+xml`
-  * `image/webp` 
+  * `image/webp`
 * **Data: Byte\[\] (supplied client-side)**
 
 Example:
@@ -190,6 +193,7 @@ Example:
 ```jsonc
 { "resource":  <Resource> }
 ```
+
 </details>
 
 <details>
@@ -204,6 +208,7 @@ Example:
 ```jsonc
 { "collectionId": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY" }
 ```
+
 </details>
 
 <details>
@@ -218,6 +223,7 @@ Example:
 ```jsonc
 { "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
 ```
+
 </details>
 
 <details>
@@ -236,6 +242,7 @@ Example:
   "id": "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096"
 }
 ```
+
 </details>
 
 <details>
@@ -250,6 +257,7 @@ Example:
 ```jsonc
 { "resource":  <Resource> }
 ```
+
 </details>
 
 <details>
@@ -272,6 +280,7 @@ Example:
   "mimeType":      "application/json"
 }
 ```
+
 </details>
 
 <details>
@@ -286,6 +295,7 @@ Example:
 ```jsonc
 { "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
 ```
+
 </details>
 
 ### State
@@ -507,6 +517,7 @@ Resource2
   * [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour
 * [W3C Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) specification
   * [DID Core Specification Test Suite](https://w3c.github.io/did-test-suite/)
+* [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) official specification
 * [Cosmos blockchain framework](https://cosmos.network/) official project website
   * [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
 * [Sovrin Foundation](https://sovrin.org/)
