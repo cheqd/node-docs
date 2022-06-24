@@ -18,10 +18,10 @@ The identity entities and transactions for the cheqd network are designed to sup
 
 [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are digital entries that represent claims about its subjects and can be verified via digital proofs.
 To issue and validate such a credential, you will need to save the following list of entities to the ledger:
-* Scheme
-* public keys
+* credential scheme,
+* public keys,
 * etc.
-* 
+
 The design of this document began as an idea of storing these entities in a ledger, but has evolved to the ability to associate any type of resource with a DID Document. The resource can be `json`, `text`, `image`, or another type of object in byte representation.
 
 ### Resolving DID vs Dereferencing DID
@@ -36,29 +36,31 @@ For example, "did:cheqd:example1234?service=ExampleSchema" can be dereferenced. 
 
 ## Decision
 
-### DID Resources
-
-#### Assumptions
+### Assumptions
 
 * Immutability:
   * Resources are immutable, so can't be updated/removed;
 * Limitations
   * Resource size is now limited by maximum tx/block size;
 
-#### Future improvements
+### Future improvements
 
 * Limitations
   * Introduce module level resource size limit that can be changed by voting
 
-#### 'Resources' module on ledger
+### 'Resources' module on ledger
 
 A new module will be created: `resource`.
 
-#### Dependencies
+### Dependencies
 
 * It will have `cheqd` module as a dependency.
   * Will be used for DIDs existence checks.
   * Will be used for authentication
+
+### DID Resource Creation Flow
+
+![Resource Creation Flow](../../assets/adr008-identity-resources-flow.png)
 
 ### Types
 
@@ -91,18 +93,20 @@ Example:
 
 ```jsonc
 {
-  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
   "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
   "name":               "CL-Schema1",
-  "resource_type":      "CL-Schema",
-  "mime_type":          "application/json"
+  "resourceType":      "CL-Schema",
+  "mimeType":          "application/json"
   "data":               <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>,
   "created":            "2022-04-20T20:19:19Z",
   "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previous_version_id: null,
-  "next_version_id:     null
+  "previousVersionId: null,
+  "nextVersionId:     null
 }
 ```
+<details>
+<summary>ResourcePreview</summary>
 
 #### ResourcePreview
 
@@ -132,17 +136,21 @@ Example:
 
 ```jsonc
 {
-  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
   "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
   "name":               "CL-Schema1",
-  "resource_type":      "CL-Schema",
-  "mime_type":          "application/json"
+  "resourceType":      "CL-Schema",
+  "mimeType":          "application/json"
   "created":            "2022-04-20T20:19:19Z",
   "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previous_version_id: null,
-  "next_version_id:     null
+  "previousVersionId: null,
+  "nextVersionId:     null
 }
 ```
+</details>
+
+<details>
+<summary>MsgCreateResource</summary>
 
 #### MsgCreateResource
 
@@ -169,14 +177,19 @@ Example:
 
 ```jsonc
 {
-  "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "collectionId":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
   "id":             "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
   "name":           "CL-Schema1",
-  "resource_type":  "CL-Schema",
-  "mime_type":      "application/json"
+  "resourceType":  "CL-Schema",
+  "mimeType":      "application/json"
   "data":           <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>
 }
 ```
+
+</details>
+
+<details>
+<summary>MsgCreateResourceResponse</summary>
 
 #### MsgCreateResourceResponse
 
@@ -187,6 +200,10 @@ Example:
 ```jsonc
 { "resource":  <Resource> }
 ```
+</details>
+
+<details>
+<summary>QueryGetCollectionResourcesRequest</summary>
 
 #### QueryGetCollectionResourcesRequest
 
@@ -195,8 +212,12 @@ Example:
 Example:
 
 ```jsonc
-{ "collection_id": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY" }
+{ "collectionId": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY" }
 ```
+</details>
+
+<details>
+<summary>QueryGetCollectionResourcesResponse</summary>
 
 #### QueryGetCollectionResourcesResponse
 
@@ -207,6 +228,10 @@ Example:
 ```jsonc
 { "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
 ```
+</details>
+
+<details>
+<summary>QueryGetResourceRequest</summary>
 
 #### QueryGetResourceRequest
 
@@ -217,10 +242,14 @@ Example:
 
 ```jsonc
 { 
-  "collection_id": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "collectionId": "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
   "id": "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096"
 }
 ```
+</details>
+
+<details>
+<summary>QueryGetResourceResponse</summary>
 
 #### QueryGetResourceResponse
 
@@ -231,6 +260,10 @@ Example:
 ```jsonc
 { "resource":  <Resource> }
 ```
+</details>
+
+<details>
+<summary>QueryGetAllResourceVersionsRequest</summary>
 
 #### QueryGetAllResourceVersionsRequest
 
@@ -243,12 +276,16 @@ Example:
 
 ```jsonc
 { 
-  "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "collectionId":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
   "name":           "CL-Schema1",
-  "resource_type":  "CL-Schema",
-  "mime_type":      "application/json"
+  "resourceType":  "CL-Schema",
+  "mimeType":      "application/json"
 }
 ```
+</details>
+
+<details>
+<summary>QueryGetAllResourceVersionsResponse</summary>
 
 #### QueryGetAllResourceVersionsResponse
 
@@ -259,6 +296,7 @@ Example:
 ```jsonc
 { "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
 ```
+</details>
 
 ### State
 
@@ -291,11 +329,11 @@ CLI Example:
 
 ```jsonc
 cheqd-noded tx resource create-resource "{
-                                          \"collection_id\":  \"zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY\",
+                                          \"collectionId\":  \"zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY\",
                                           \"id\":             \"9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096\",
                                           \"name\":           \"CL-Schema1\",
-                                          \"resource_type\":  \"CL-Schema\",
-                                          \"mime_type\":      \"application/json\"
+                                          \"resourceType\":  \"CL-Schema\",
+                                          \"mimeType\":      \"application/json\"
                                          }" file_with_resource.data\
                                           --private-key <private-identity-key-by-collection-
 
@@ -385,16 +423,16 @@ QueryGetDidResponse {
 
 ```jsonc
 Resource {
-  "collection_id":      "N22KY2Dyvmuu2PyyqSFKue",
+  "collectionId":      "N22KY2Dyvmuu2PyyqSFKue",
   "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
   "name":               "CL-Schema1",
-  "resource_type":      "CL-Schema",
-  "mime_type":          "application/json"
+  "resourceType":      "CL-Schema",
+  "mimeType":          "application/json"
   "data":               <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>,
   "created":            "2022-04-20T20:19:19Z",
   "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previous_version_id: null,
-  "next_version_id:     null
+  "previousVersionId: null,
+  "nextVersionId:     null
 }
 ```
 
@@ -412,14 +450,14 @@ Step 1. Resource exists in the ledger:
   ```jsonc
   Resource1
   {
-    "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+    "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
     "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
     "name":               "CL-Schema1",
-    "resource_type":      "CL-Schema",
-    "mime_type":          "application/json"
+    "resourceType":      "CL-Schema",
+    "mimeType":          "application/json"
     ...
-    "previous_version_id: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
-    "next_version_id:     null
+    "previousVersionId: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
+    "nextVersionId:     null
   }
   ```
 
@@ -428,11 +466,11 @@ Step 2. Client send request for creating a new resource with a transaction MsgCr
   ```jsonc
   MsgCreateResource for creating Resource2
   {
-    "collection_id":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+    "collectionId":  "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
     "id":             "f47e4790-1b4b-4186-8357-da6199665236",
     "name":           "CL-Schema1",
-    "resource_type":  "CL-Schema",
-    "mime_type":      "application/json"
+    "resourceType":  "CL-Schema",
+    "mimeType":      "application/json"
     "data":           ...
   }
   ```
@@ -442,28 +480,28 @@ Step 3. After the transaction applying
 ```jsonc
 Resource1
 {
-  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
   "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
   "name":               "CL-Schema1",
-  "resource_type":      "CL-Schema",
-  "mime_type":          "application/json"
+  "resourceType":      "CL-Schema",
+  "mimeType":          "application/json"
   ...
-  "previous_version_id: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
-  "next_version_id:     "f47e4790-1b4b-4186-8357-da6199665236"  // Resource2.id
+  "previousVersionId: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
+  "nextVersionId:     "f47e4790-1b4b-4186-8357-da6199665236"  // Resource2.id
 }
 ```
 
 ```jsonc
 Resource2
 {
-  "collection_id":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
   "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
   "name":               "CL-Schema1",
-  "resource_type":      "CL-Schema",
-  "mime_type":          "application/json"
+  "resourceType":      "CL-Schema",
+  "mimeType":          "application/json"
   ...
-  "previous_version_id: "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096", // Resource1.id
-  "next_version_id:     null
+  "previousVersionId: "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096", // Resource1.id
+  "nextVersionId:     null
 }
 ```
 
