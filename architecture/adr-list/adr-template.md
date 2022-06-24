@@ -10,8 +10,9 @@ description: This is the suggested template to be used for ADRs on the cheqd-nod
 | :--- | :--- |
 | **Authors** | {Author or list of authors} |
 | **ADR Stage** | {DRAFT \| PROPOSED \| ACCEPTED \| REJECTED \| SUPERSEDED by ADR-xxx \| ABANDONED} |
-| **Implementation Status** | {Implemented \| Not Implemented} |
+| **Implementation Status** | {Implemented \| In Progress \| Not Implemented} |
 | **Start Date** | {yyyy-mm-dd} |
+| **Last Updated** | {yyyy-mm-dd} |
 
 What is the status, such as proposed, accepted, rejected, deprecated, superseded, etc.?
 
@@ -23,9 +24,9 @@ What is the status, such as proposed, accepted, rejected, deprecated, superseded
 
 > This section describes the forces at play, such as business, technological, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts. It should clearly explain the problem and motivation that the proposal aims to resolve.
 
-## Decision
+## ADR-specific Details
 
-What is the change that we're proposing and/or doing?
+> This section describes the implementation and/or architecture approach for the proposed changes in detail.
 
 ## Consequences
 
