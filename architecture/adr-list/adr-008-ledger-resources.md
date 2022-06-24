@@ -55,7 +55,23 @@ DIDs *can* be stored on traditional centralised-storage endpoints (e.g., [`did:w
 
 The issues highlighted above **a material difference to the longevity of Verifiable Credentials**. For example, a passport ([which typically have a 5-10 year validity]((https://en.wikipedia.org/wiki/Passport_validity))) issued as a Verifiable Credential anchored to a DID (regardless of whether the DID was on-ledger or not) might stop working if the credential schema, visual presentation format, or other necessary resources were stored off-ledger on traditional centralised storage.
 
-Despite these issues, many self-sovereign identity (SSI) implementations - *even ones that use ledgers / distributed systems for DIDs* -  often utilise centralised storage. From the W3C Verifiable Credential
+Despite these issues, many self-sovereign identity (SSI) implementations - *even ones that use ledgers / distributed systems for DIDs* -  often utilise centralised storage. From the [W3C Verifiable Credential Implementation Guide](https://w3c.github.io/vc-imp-guide/#creating-new-credential-types):
+
+> Example schema.org address with full URLs
+> ```jsonc
+> {
+>   "@type": "http://schema.org/Person",
+>   "http://schema.org/address": {
+>     "@type": "http://schema.org/PostalAddress",
+>     "http://schema.org/streetAddress": "123 Main St.",
+>     "http://schema.org/addressLocality": "Blacksburg",
+>     "http://schema.org/addressRegion": "VA",
+>     "http://schema.org/postalCode": "24060",
+>     "http://schema.org/addressCountry": "US"
+>   }
+> }
+> ```
+
 
 ## Resources on cheqd ledger
 
