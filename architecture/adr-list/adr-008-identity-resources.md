@@ -54,90 +54,69 @@ A new module will be created: `resource`.
 
 ### Types
 
+#### ResourceHeader
+
+* **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
+* **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
+* **Name: String (e.g., `CL-Schema1` (supplied client-side)**
+* **ResourceType (supplied client-side)** Possible values:
+  * `CL-Schema`
+  * `JSONSchema2020`
+* **MimeType: (`application/json`/`image`/`application/octet-stream`/`text/plain`) (supplied client-side)** Possible values:
+  * `application/json`
+  * `application/octet-stream`
+  * `text/plain`
+  * `image/apng`
+  * `image/avif`
+  * `image/gif`
+  * `image/jpeg`
+  * `image/png`
+  * `image/svg+xml`
+  * `image/webp`
+* Created: XMLDatetime (computed ledger-side)
+* Checksum: SHA-256 (computed ledger-side)
+* previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+* nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+
+Example:
+
+```jsonc
+{
+  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name":               "CL-Schema1",
+  "resourceType":      "CL-Schema",
+  "mimeType":          "application/json"
+  "created":            "2022-04-20T20:19:19Z",
+  "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+  "previousVersionId: null,
+  "nextVersionId:     null
+}
+```
+
 #### Resource
 
-* **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
-* **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
-* **Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **ResourceType (supplied client-side)** Possible values:
-  * `CL-Schema`
-  * `JSONSchema2020`
-* **MimeType: (`application/json`/`image`/`application/octet-stream`/`text/plain`) (supplied client-side)** Possible values:
-  * `application/json`
-  * `application/octet-stream`
-  * `text/plain`
-  * `image/apng`
-  * `image/avif`
-  * `image/gif`
-  * `image/jpeg`
-  * `image/png`
-  * `image/svg+xml`
-  * `image/webp`
+* **Header: ResourceHeader**
 * **Data: Byte\[\] (supplied client-side)**
-* Created: XMLDatetime (computed ledger-side)
-* Checksum: SHA-256 (computed ledger-side)
-* previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
-* nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
 
 Example:
 
 ```jsonc
 {
-  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-  "name":               "CL-Schema1",
-  "resourceType":      "CL-Schema",
-  "mimeType":          "application/json"
+  "header": {
+    "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+    "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+    "name":               "CL-Schema1",
+    "resourceType":      "CL-Schema",
+    "mimeType":          "application/json"
+    "created":            "2022-04-20T20:19:19Z",
+    "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+    "previousVersionId: null,
+    "nextVersionId:     null
+  },
   "data":               <json string '{\"attrNames\":[\"last_name\",\"first_name\"]}` in bytes>,
-  "created":            "2022-04-20T20:19:19Z",
-  "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previousVersionId: null,
-  "nextVersionId:     null
 }
 ```
-<details>
-<summary>ResourcePreview</summary>
-
-#### ResourcePreview
-
-* **Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
-* **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
-* **Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **ResourceType (supplied client-side)** Possible values:
-  * `CL-Schema`
-  * `JSONSchema2020`
-* **MimeType: (`application/json`/`image`/`application/octet-stream`/`text/plain`) (supplied client-side)** Possible values:
-  * `application/json`
-  * `application/octet-stream`
-  * `text/plain`
-  * `image/apng`
-  * `image/avif`
-  * `image/gif`
-  * `image/jpeg`
-  * `image/png`
-  * `image/svg+xml`
-  * `image/webp`
-* Created: XMLDatetime (computed ledger-side)
-* Checksum: SHA-256 (computed ledger-side)
-* previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
-* nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
-
-Example:
-
-```jsonc
-{
-  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-  "name":               "CL-Schema1",
-  "resourceType":      "CL-Schema",
-  "mimeType":          "application/json"
-  "created":            "2022-04-20T20:19:19Z",
-  "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previousVersionId: null,
-  "nextVersionId:     null
-}
-```
-</details>
 
 <details>
 <summary>MsgCreateResource</summary>
@@ -211,12 +190,12 @@ Example:
 
 #### QueryGetCollectionResourcesResponse
 
-* Resources: [ResourcePreview\[\]](#resourcepreview)
+* Resources: [ResourceHeader\[\]](#resourceheader)
 
 Example:
 
 ```jsonc
-{ "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
+{ "resources":  [<ResourceHeader1>, <ResourceHeader2>] }
 ```
 </details>
 
@@ -279,12 +258,12 @@ Example:
 
 #### QueryGetAllResourceVersionsResponse
 
-* Resources: [ResourcePreview\[\]](#resourcepreview)
+* Resources: [ResourceHeader\[\]](#resourceheader)
 
 Example:
 
 ```jsonc
-{ "resources":  [<ResourcePreview1>, <ResourcePreview2>] }
+{ "resources":  [<ResourceHeader1>, <ResourceHeader2>] }
 ```
 </details>
 
@@ -343,7 +322,7 @@ cheqd-noded tx resource create-resource "{
 * Processing logic:
 
   * Retrieves the whole resource collection for the specified DID;
-  * Returns only resources preview without `data` field;
+  * Returns only resource headers (without `data` field);
   
 #### GetResource
 
@@ -367,7 +346,7 @@ cheqd-noded tx resource create-resource "{
 
 * Processing logic:
   * Retrieves all resource versions by collection id, resource name, resource type and mime type;
-  * Returns only resources preview without `data` field;
+  * Returns only resource headers (without `data` field);
   
 ### DID Resolver
 
@@ -440,14 +419,17 @@ Step 1. Resource exists in the ledger:
   ```jsonc
   Resource1
   {
-    "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-    "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-    "name":               "CL-Schema1",
-    "resourceType":      "CL-Schema",
-    "mimeType":          "application/json"
-    ...
-    "previousVersionId: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
-    "nextVersionId:     null
+    "header": {
+      "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+      "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+      "name":               "CL-Schema1",
+      "resourceType":      "CL-Schema",
+      "mimeType":          "application/json"
+      ...
+      "previousVersionId: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
+      "nextVersionId:     null
+    },
+    "data": ...
   }
   ```
 
@@ -470,28 +452,34 @@ Step 3. After the transaction applying
 ```jsonc
 Resource1
 {
-  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-  "name":               "CL-Schema1",
-  "resourceType":      "CL-Schema",
-  "mimeType":          "application/json"
-  ...
-  "previousVersionId: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
-  "nextVersionId:     "f47e4790-1b4b-4186-8357-da6199665236"  // Resource2.id
+  "header": {
+    "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+    "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+    "name":               "CL-Schema1",
+    "resourceType":      "CL-Schema",
+    "mimeType":          "application/json"
+    ...
+    "previousVersionId: "12d5a5f6-e72d-11ec-8fea-0242ac120002",
+    "nextVersionId:     "f47e4790-1b4b-4186-8357-da6199665236"  // Resource2.id
+  },
+  "data": ...
 }
 ```
 
 ```jsonc
 Resource2
 {
-  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-  "name":               "CL-Schema1",
-  "resourceType":      "CL-Schema",
-  "mimeType":          "application/json"
-  ...
-  "previousVersionId: "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096", // Resource1.id
-  "nextVersionId:     null
+  "header": {
+    "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+    "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+    "name":               "CL-Schema1",
+    "resourceType":      "CL-Schema",
+    "mimeType":          "application/json"
+    ...
+    "previousVersionId: "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096", // Resource1.id
+    "nextVersionId:     null
+  },
+  "data": ...
 }
 ```
 
