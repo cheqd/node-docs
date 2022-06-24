@@ -1,0 +1,36 @@
+@startuml
+title Identity resource flow
+
+Client->Cheqd_Node:CreateDID
+note over Cheqd_Node
+**DIDDoc**{
+  **id**: did:cheqd:mainnet:30f8b58e-b1d2-4231-9925-12605318ef9a,
+  **verificationMethod**: ...
+}
+end note
+Client->Cheqd_Node:CreateResource
+note over Cheqd_Node
+**Resource**{
+  **collectionId**: 30f8b58e-b1d2-4231-9925-12605318ef9a,
+  **id**: 9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096,
+  ...
+
+}
+end note
+Client->Cheqd_Node:UpdateDID
+note over Cheqd_Node
+**DIDDoc**{
+  **id**: did:cheqd:mainnet:30f8b58e-b1d2-4231-9925-12605318ef9a,
+  **verificationMethod**: ...
+  **service**: [
+        {
+          **id**: did:cheqd:mainnet:30f8b58e-b1d2-4231-9925-12605318ef9a#Schema2016",
+          **type**: CL-Schema,
+          **serviceEndpoint**: https://resolver.cheqd.net/1.0/identifiers/
+                               did:cheqd:mainnet:30f8b58e-b1d2-4231-9925-12605318ef9a/
+                               resources/d6b802bb-3167-4b44-b136-51cf8fab624a"
+        }
+  ]
+}
+end note
+@enduml
