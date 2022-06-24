@@ -1,22 +1,25 @@
-# ADR 008: cheqd DIDDoc resources
+# ADR 008: On-ledger Resources with DIDs
 
 ## Status
 
 | Category | Status |
 | :--- | :--- |
-| **Authors** | Renata Toktar, Brent Zundel, Ankur Banerjee |
-| **ADR Stage** | DRAFT |
-| **Implementation Status** | Draft |
+| **Authors** | Ankur Banerjee, Alexandr Kolesov, Alex Tweeddale, Renata Toktar   |
+| **ADR Stage** | PROPOSED |
+| **Implementation Status** | Not Implemented |
 | **Start Date** | 2021-09-23 |
+| **Last Updated** | 2022-06-24 |
 
 ## Summary
 
-This ADR will define how DID Resources can be created and represented through the use of a DID URL, which when dereferenced.
-The identity entities and transactions for the cheqd network are designed to support [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) issuing.
+This ADR will define how resources (e.g., text, JSON, images, etc) can be stored on cheqd ledger with a permanent, unique identifier controlled using a DID.
+
+On-ledger resources can provide a more robust way to reference identity resources used in [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/), such as [schemas](https://w3c.github.io/vc-data-model/#data-schemas), [revocation lists](https://w3c.github.io/vc-data-model/#validity-checks), and visual representation formats.
 
 ## Context
 
 [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are digital entries that represent claims about its subjects and can be verified via digital proofs.
+
 To issue and validate such a credential, you will need to save the following list of entities to the ledger:
 
 * credential scheme,
@@ -25,39 +28,6 @@ To issue and validate such a credential, you will need to save the following lis
 
 The design of this document began as an idea of storing these entities in a ledger, but has evolved to the ability to associate any type of resource with a DID Document. The resource can be `json`, `text`, `image`, or another type of object in byte representation.
 
-### Resolving DID vs Dereferencing DID
-
-Before diving into the specific architecture of cheqd's schemas, it is imporntant to understand the difference between resolving a DID and dereferencing a DID URL. 
-
-When you resolve a DID, a DID Document is returned. For example, resolving: "did:cheqd:example1234" would return the full DID Document associated with the specific DID "did:cheqd:example1234". 
-
-Dereferecing a DID URL is slightly different. When you dereference a DID URL, you are parsing the URL for specific actions, such as to take a certain path, highlight a specific fragment, or query a specific resource. 
-
-For example, "did:cheqd:example1234?service=ExampleSchema" can be dereferenced. In this case it will query the service of type "ExampleSchema" within the DID Document and will return the resource specified at the Service Endpoint within the DID Document. It is this type of architecture that cheqd uses in this ADR to fetch schemas. 
-
-## Decision
-
-### Assumptions
-
-* Immutability:
-  * Resources are immutable, so can't be updated/removed;
-* Limitations
-  * Resource size is now limited by maximum tx/block size;
-
-### Future improvements
-
-* Limitations
-  * Introduce module level resource size limit that can be changed by voting
-
-### 'Resources' module on ledger
-
-A new module will be created: `resource`.
-
-### Dependencies
-
-* It will have `cheqd` module as a dependency.
-  * Will be used for DIDs existence checks.
-  * Will be used for authentication
 
 ### DID Resource Creation Flow
 
@@ -93,15 +63,15 @@ Example:
 
 ```jsonc
 {
-  "collectionId":      "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
-  "id":                 "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-  "name":               "CL-Schema1",
-  "resourceType":      "CL-Schema",
-  "mimeType":          "application/json"
-  "created":            "2022-04-20T20:19:19Z",
+  "collectionId":   "zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY",
+  "id":           "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+  "name": "CL-Schema1",
+  "resourceType": "CL-Schema",
+  "mimeType": "application/json",
+  "created": "2022-04-20T20:19:19Z",
   "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previousVersionId: null,
-  "nextVersionId:     null
+  "previousVersionId": null,
+  "nextVersionId":     null
 }
 ```
 
@@ -546,8 +516,37 @@ Resource2
 }
 ```
 
+## Decision
+
+### Assumptions
+
+* Immutability:
+  * Resources are immutable, so can't be updated/removed;
+* Limitations
+  * Resource size is now limited by maximum tx/block size;
+
+### Future improvements
+
+* Limitations
+  * Introduce module level resource size limit that can be changed by voting
+
+### 'Resources' module on ledger
+
+A new module will be created: `resource`.
+
+### Dependencies
+
+* It will have `cheqd` module as a dependency.
+  * Will be used for DIDs existence checks.
+  * Will be used for authentication
+
 ## References
 
+* [W3C Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) specification
+  * [DID Core Specification Test Suite](https://w3c.github.io/did-test-suite/)
+* [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) official specification
+* [Cosmos blockchain framework](https://cosmos.network/) official project website
+  * [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
 * [Hyperledger Indy](https://wiki.hyperledger.org/display/indy) official project background on Hyperledger Foundation wiki
   * [`indy-node`](https://github.com/hyperledger/indy-node) GitHub repository: Server-side blockchain node for Indy ([documentation](https://hyperledger-indy.readthedocs.io/projects/node/en/latest/index.html))
   * [`indy-plenum`](https://github.com/hyperledger/indy-plenum) GitHub repository: Plenum Byzantine Fault Tolerant consensus protocol; used by `indy-node` ([documentation](https://hyperledger-indy.readthedocs.io/projects/plenum/en/latest/index.html))
@@ -556,12 +555,3 @@ Resource2
 * [Hyperledger Aries](https://wiki.hyperledger.org/display/ARIES/Hyperledger+Aries) official project background on Hyperledger Foundation wiki
   * [`aries`](https://github.com/hyperledger/aries) GitHub repository: Provides links to implementations in various programming languages
   * [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour
-* [W3C Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) specification
-  * [DID Core Specification Test Suite](https://w3c.github.io/did-test-suite/)
-* [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) official specification
-* [Cosmos blockchain framework](https://cosmos.network/) official project website
-  * [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
-* [Sovrin Foundation](https://sovrin.org/)
-  * [Sovrin Networks](https://sovrin.org/overview/)
-  * [`libsovtoken`](https://github.com/sovrin-foundation/libsovtoken): Sovrin Network token library
-  * [Sovrin Ledger token plugin](https://github.com/sovrin-foundation/token-plugin)
