@@ -63,23 +63,23 @@ This document provides guidance on how to install and configure a node for the c
    For cheqd testnet:
 
    ```bash
-   wget -O $HOME/.cheqdnode/config/genesis.json https://raw.githubusercontent.com/cheqd/cheqd-node/main/persistent_chains/testnet/genesis.json
+   wget -O $HOME/.cheqdnode/config/genesis.json https://raw.githubusercontent.com/cheqd/cheqd-node/main/networks/testnet/genesis.json
    ```
 
 6. **Define the seed configuration for populating the list of peers known by a node**
 
-   Update `seeds` with a comma separated list of seed node addresses specified in `seeds.txt` for the relevant [persistent chain](https://github.com/cheqd/cheqd-node/tree/main/persistent_chains/).
+   Update `seeds` with a comma separated list of seed node addresses specified in `seeds.txt` for the relevant [network](https://github.com/cheqd/cheqd-node/tree/main/networks/).
 
    For cheqd mainnet, set the `SEEDS` environment variable:
 
    ```bash
-   SEEDS=$(wget -qO- https://raw.githubusercontent.com/cheqd/cheqd-node/main/persistent_chains/mainnet/seeds.txt)
+   SEEDS=$(wget -qO- https://raw.githubusercontent.com/cheqd/cheqd-node/main/networks/mainnet/seeds.txt)
    ```
 
    For cheqd testnet, set the `SEEDS` environment variable:
 
    ```bash
-   SEEDS=$(wget -qO- https://raw.githubusercontent.com/cheqd/cheqd-node/main/persistent_chains/testnet/seeds.txt)
+   SEEDS=$(wget -qO- https://raw.githubusercontent.com/cheqd/cheqd-node/main/networks/testnet/seeds.txt)
    ```
 
    After the `SEEDS` variable is defined, pass the values to the `cheqd-noded configure` tool to set it in the configuration file.
