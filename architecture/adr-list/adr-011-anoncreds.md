@@ -1,4 +1,4 @@
-# ADR 008: AnonCreds: Schemas and Credential Definitions
+# ADR 011: AnonCreds: Schemas and Credential Definitions
 
 ## Status
 
@@ -10,8 +10,6 @@
 | **Start Date**            | 2022-06-23                                       |
 
 ## Summary
-
-This ADR defines the cheqd DID method and describes the identity entities, queries, and transaction types for the cheqd network: a purpose-built self-sovereign identity (SSI) network based on the [Cosmos blockchain framework](https://github.com/cosmos/cosmos-sdk).
 
 This ADR will define how Verifiable Credential schemas can be represented through the use of a DID URL, which when dereferenced, fetches the credential schemas a resource.
 The identity entities and transactions for the cheqd network are designed to support usage scenarios and functionality currently supported by [Hyperledger Indy](https://github.com/hyperledger/indy-node).
