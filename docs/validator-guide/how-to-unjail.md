@@ -31,7 +31,7 @@ The expected response will be the latest cheqd-noded software release. At the ti
 
 If your node is not up to date, please [follow the instructions here](https://github.com/cheqd/cheqd-node/blob/main/docs/setup-and-configure/debian/deb-package-upgrade.md)
 
-## Step 3: Conforming the Node is up to date
+## Step 3: Confirming the Node is up to date
 
 Once again, check if your node is up to date, following Step 1.
 
