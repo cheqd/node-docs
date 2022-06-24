@@ -86,30 +86,56 @@ The cheqd DID method ABNF to conform with [DID syntax guidelines](https://www.w3
 
 ```abnf
 cheqd-did       = "did:cheqd:" [namespace]
-namespace       = 1*255namespace-char ":" unique-id
+namespace       = 1*namespace-char ":" unique-id
 namespace-char  = ALPHA / DIGIT
-unique-id       = 32*255id-char
+unique-id       = 16*id-char / 32*id-char / UUID
 id-char         = ALPHA / DIGIT
+```
+
+Where the formal definition of the UUID string representation is provided by the [following](https://datatracker.ietf.org/doc/html/rfc4122#section-3) ABNF:
+
+```abnf
+UUID                   = time-low "-" time-mid "-"
+                         time-high-and-version "-"
+                         clock-seq-and-reserved
+                         clock-seq-low "-" node
+time-low               = 4hexOctet
+time-mid               = 2hexOctet
+time-high-and-version  = 2hexOctet
+clock-seq-and-reserved = hexOctet
+clock-seq-low          = hexOctet
+node                   = 6hexOctet
+hexOctet               = hexDigit hexDigit
+hexDigit =
+      "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
+      "a" / "b" / "c" / "d" / "e" / "f" /
+      "A" / "B" / "C" / "D" / "E" / "F"
 ```
 
 #### Examples of `did:cheqd` identifiers
 
-A DID written to the cheqd "mainnet" ledger `namespace`:
+A DID written to the cheqd "mainnet" ledger `namespace`, 16 char identifier:
 
-```abnf
-did:cheqd:mainnet:7Tqg6BwSSWapxgUDm9KKgg
+```text
+did:cheqd:mainnet:7Tqg6BwSSWapxgUD
 ```
 
-A DID written to the cheqd "testnet" ledger `namespace`:
+A DID written to the cheqd "testnet" ledger `namespace`, 32 char identifier:
 
-```abnf
-did:cheqd:testnet:6cgbu8ZPoWTnR5Rv5JcSMB
+```text
+did:cheqd:testnet:6cgbu8ZPoWTnR5Rv6cgbu8ZPoWTnR5Rv
 ```
 
 Another possible cheqd DID (where no namespace is defined):
 
-```abnf
-did:cheqd:6cgbu8ZPoWTnR5Rv5JcSMB
+```text
+did:cheqd:6cgbu8ZPoWTnR5Rv
+```
+
+A UUID based DID:
+
+```text
+did:cheqd:mainnet:de9786cd-ec53-458c-857c-9342cf264f80
 ```
 
 ### DID Documents (DIDDocs)
