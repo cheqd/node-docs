@@ -188,23 +188,23 @@ describing specifications that this DID Document is following to.
     "https://www.w3.org/ns/did/v1",
     "https://w3id.org/security/suites/ed25519-2020/v1"
   ],
-  "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
+  "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
   "verificationMethod": [
     {
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1",
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1",
       "type": "Ed25519VerificationKey2020", // external (property value)
-      "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+      "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
       "publicKeyMultibase": "zAKJP3f7BD6W4iWEQ9jwndVTCBq8ua2Utt8EEjJ6Vxsf"
     },
     {
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey",
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey",
       "type": "Ed25519VerificationKey2020", // external (property value)
-      "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+      "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
       "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
     }
   ],
-  "authentication": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1"],
-  "capabilityInvocation": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey"],
+  "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
+  "capabilityInvocation": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey"],
 }
 ```
 
@@ -257,9 +257,9 @@ encoded public key.
 
 ```jsonc
 {
-  "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#key-0",
+  "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#key-0",
   "type": "JsonWebKey2020",
-  "controller": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
+  "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
   "publicKeyJwk": {
     "kty": "OKP",
     // external (property name)
@@ -284,7 +284,7 @@ Services can be defined in a DIDDoc to express means of communicating with the D
 
 ```jsonc
 {
-  "id":"did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#linked-domain",
+  "id":"did:cheqd:mainnet:N22N22KY2Dyvmuu2#linked-domain",
   "type": "LinkedDomains",
   "serviceEndpoint": "https://bar.example.com"
 }
@@ -316,17 +316,17 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
-      "controller": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue"],
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
+      "controller": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2"],
       "verificationMethod": [
         {
-          "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey",
+          "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1",
           "type": "Ed25519VerificationKey2020", // external (property value)
-          "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+          "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
           "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
         }
       ],
-      "authentication": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1"],
+      "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -360,17 +360,17 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
-      "controller": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue"],
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
+      "controller": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2"],
       "verificationMethod": [
         {
-          "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey",
+          "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey",
           "type": "Ed25519VerificationKey2020", // external (property value)
-          "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+          "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
           "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
         }
       ],
-      "authentication": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1"],
+      "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
       "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E"
   },
   "signatures": {
@@ -402,20 +402,20 @@ The response is returned as a [Protobuf](https://developers.google.com/protocol-
 ```jsonc
 {
   "did":{
-    "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC",
+    "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK",
     "controller":[
-        "did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC"
+        "did:cheqd:mainnet:2PRyVHmkXQnQzJQK"
     ],
     "verification_method":[
         {
-          "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC#verkey",
+          "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK#verkey",
           "type":"Ed25519VerificationKey2020",
-          "controller":"did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC",
+          "controller":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK",
           "public_key_multibase":"zkqa2HyagzfMAq42H5f9u3UMwnSBPQx2QfrSyXbUPxMn"
         }
     ],
     "authentication":[
-        "did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC#verkey"
+        "did:cheqd:mainnet:2PRyVHmkXQnQzJQK#verkey"
     ]
   },
   "metadata":{
