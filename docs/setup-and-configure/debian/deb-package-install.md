@@ -52,12 +52,12 @@ This document provides guidance on how to install and configure a node for the c
 
 5. **Download the genesis file for a persistent chain, such as the cheqd testnet**
 
-   Download the `genesis.json` file for the relevant [persistent chain](https://github.com/cheqd/cheqd-node/tree/main/persistent_chains/) and put it in the `$HOME/.cheqdnode/config` directory.
+   Download the `genesis.json` file for the relevant [persistent chain](https://github.com/cheqd/cheqd-node/tree/main/networks/) and put it in the `$HOME/.cheqdnode/config` directory.
 
    For cheqd mainnet:
 
    ```bash
-   wget -O $HOME/.cheqdnode/config/genesis.json https://raw.githubusercontent.com/cheqd/cheqd-node/main/persistent_chains/mainnet/genesis.json
+   wget -O $HOME/.cheqdnode/config/genesis.json https://raw.githubusercontent.com/cheqd/cheqd-node/main/networks/mainnet/genesis.json
    ```
 
    For cheqd testnet:
