@@ -12,19 +12,20 @@
 
 ## Summary
 
-This ADR will define how resources (e.g., text, JSON, images, etc) can be stored on cheqd ledger with a permanent, unique identifier controlled using a DID.
-
-On-ledger resources can provide a more robust way to reference identity resources used in [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/), such as [schemas](https://w3c.github.io/vc-data-model/#data-schemas), [revocation lists](https://w3c.github.io/vc-data-model/#validity-checks), and visual representation formats.
+This ADR defines how on-ledger resources (e.g., text, JSON, images, etc) can be referenced using [a permanent and unique `did:cheqd` identifier](adr-002-cheqd-did-method.md), with create/update operations controlled using the specified DIDs.
 
 ## Context
 
 [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are digital entries that represent claims about its subjects and can be verified via digital proofs.
 
-To issue and validate such a credential, you will need to save the following list of entities to the ledger:
+To issue and validate Verifiable Credentials, there are additional entities that are 
 
 * credential scheme,
 * public keys,
 * etc.
+
+
+On-ledger resources can provide a more robust way to reference identity resources used in [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/), such as [schemas](https://w3c.github.io/vc-data-model/#data-schemas), [revocation lists](https://w3c.github.io/vc-data-model/#validity-checks), and visual representation formats.
 
 The design of this document began as an idea of storing these entities in a ledger, but has evolved to the ability to associate any type of resource with a DID Document. The resource can be `json`, `text`, `image`, or another type of object in byte representation.
 
@@ -51,6 +52,7 @@ The design of this document began as an idea of storing these entities in a ledg
   * `image/avif`
   * `image/gif`
   * `image/jpeg`
+  * `image/heic`
   * `image/png`
   * `image/svg+xml`
   * `image/webp`

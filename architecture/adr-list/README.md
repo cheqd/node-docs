@@ -18,7 +18,7 @@ description: >-
 ## Proposed
 
 1. [ADR 009: **Importing/exporting mnemonic keys from Cosmos**](adr-009-mnemonic-keys-cosmos.md)
-2. [ADR 008: **cheqd DIDDoc resources**](adr-008-identity-resources.md)
+2. [ADR 008: **cheqd DIDDoc resources**](adr-008-ledger-resources.md)
 
 ## Draft
 
