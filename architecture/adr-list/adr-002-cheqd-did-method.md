@@ -223,7 +223,7 @@ Each DID Document MUST have a metadata section when a representation is produced
 formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
 3. **`deactivated`** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
 4. **`versionId`** (string): Contains transaction hash of the current DIDDoc version.
-5. **`resources`** (list of string | optional): Identifiers with linked [resources](adr-008-identity-resources.md) identifiers. Can't be change by CreateDID or UpdateDID transactions.
+5. **`resources`** (list of string | optional): Identifiers with linked [resources](adr-008-ledger-resources.md) identifiers. Can't be change by CreateDID or UpdateDID transactions.
 
 #### Example of DIDDoc metadata
 
