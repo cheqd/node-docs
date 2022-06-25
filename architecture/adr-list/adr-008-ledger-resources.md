@@ -445,7 +445,7 @@ We need to support resource resolution in the DID resolver.
 
 ### Linked DIDDoc
 
-`CollectionId` field is an identifier of existing DIDDoc. There are no restrictions on the fields of this DIDDoc other than those described in [Cheqd DID Method ADR](adr-002-cheqd-did-method.md) and [W3C DID specification](https://www.w3.org/TR/did-core/). DIDDock must be located in the same ledger where the resource is created.
+`CollectionId` field is an identifier of existing DIDDoc. There are no restrictions on the fields of this DIDDoc other than those described in [cheqd DID Method ADR](adr-002-cheqd-did-method.md) and [W3C DID specification](https://www.w3.org/TR/did-core/). DIDDock must be located in the same ledger where the resource is created.
 A list of resources related to DIDDoc can be found in its metadata:
 
 ```jsonc
