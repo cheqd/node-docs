@@ -110,10 +110,10 @@ After, you need to rewrite `systemd`, `logrotate` and `rsyslog` configs by runni
 
 ```text
 1) v0.5.0
-2) v0.6.0-rc2
-3) v0.6.0-rc1
-4) v0.5.0-rc2
-5) v0.5.0-rc1
+2) v0.6.0
+3) v0.6.0-rc2
+4) v0.6.0-rc1
+5) v0.5.0-rc2
 Choose list option number above to select version of cheqd-node to install [default: 1]:
 2
 Set path for cheqd user's home directory [default: /home/cheqd]:
@@ -137,10 +137,10 @@ y
 *********  Latest stable cheqd-noded release version is Name: v0.5.0
 *********  List of cheqd-noded releases: 
 1) v0.5.0
-2) v0.6.0-rc2
-3) v0.6.0-rc1
-4) v0.5.0-rc2
-5) v0.5.0-rc1
+2) v0.6.0
+3) v0.6.0-rc2
+4) v0.6.0-rc1
+5) v0.5.0-rc2
 Choose list option number above to select version of cheqd-node to install [default: 1]:
 1
 Set path for cheqd user's home directory [default: /home/cheqd]:
