@@ -27,7 +27,7 @@ The next questions will be in any cases:
 
 - Question about versions:
 
-```
+```text
 1) v0.5.0
 2) v0.6.0-rc2
 3) v0.6.0-rc1
@@ -45,11 +45,12 @@ where default version is the latest release. The others just next even `pre-rele
 In case of using installer on the clean machine the next group of questions is significant:
 
 - `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:`. This options can be used in case of setting up the node.
-- `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`. For now, we have 2 networks, `testnet` and `mainnet`. Please, type here which chain you want to use or just keep the default by clicking `Enter`. 
+- `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`. For now, we have 2 networks, `testnet` and `mainnet`. Please, type here which chain you want to use or just keep the default by clicking `Enter`.
 - `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` . Default value is going to be `Yes`. We assume, that the next upgrades can be in an automative mode.
 - `CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:`. This can help you speed up the catchup to cheqd network.
 
 Questions in case of answering `Yes` for setting up the node after installation:
+
 - `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . It's a name of your node.
 
 - `What is the externally-reachable IP address or DNS name for your cheqd-node? [default: Fetch automatically via DNS resolver lookup]:`. Just Ip address of your node. This address shows your public address.
@@ -81,13 +82,13 @@ If there is `$HOME/.cheqdnode` directory, where `$HOME` is answer on the questio
 
   In case of yes on `upgrade` question, the next flow will be:
 
-  - `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` - It's needed only for figuring out is Cosmovisor uses for now.
+- `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` - It's needed only for figuring out is Cosmovisor uses for now.
   
-  - `Overwrite existing systemd configuration for cheqd-node? (yes/no) [default: yes]:`. In case of existing systemd config file even for `cheqd-noded` or `cheqd-cosmovisor` services this question will be asked in case if rewriting is needed.
+- `Overwrite existing systemd configuration for cheqd-node? (yes/no) [default: yes]:`. In case of existing systemd config file even for `cheqd-noded` or `cheqd-cosmovisor` services this question will be asked in case if rewriting is needed.
   
-  - `Overwrite existing configuration for cheqd-node logging? (yes/no) [default: yes]:`. In case of existing `/etc/rsyslog.d/cheqd-node.conf` config file this question will be asked in case if rewriting is needed.
+- `Overwrite existing configuration for cheqd-node logging? (yes/no) [default: yes]:`. In case of existing `/etc/rsyslog.d/cheqd-node.conf` config file this question will be asked in case if rewriting is needed.
 
-  - `Overwrite existing configuration for logrotate? (yes/no) [default: yes]:`. In case of existing `/etc/logrotate.d/cheqd-node` config file this question will be asked in case if rewriting is needed. 
+- `Overwrite existing configuration for logrotate? (yes/no) [default: yes]:`. In case of existing `/etc/logrotate.d/cheqd-node` config file this question will be asked in case if rewriting is needed.
 
 
 ## Postinstall steps
@@ -95,7 +96,7 @@ If there is `$HOME/.cheqdnode` directory, where `$HOME` is answer on the questio
 When the installation process ends you can start the `systemctl` service:
 
 ```bash
-$ sudo systemctl start <service-name>
+sudo systemctl start <service-name>
 ```
 
 where `<service-name>` is a name of service depending was `Install Cosmovisor` selected or not.
@@ -106,7 +107,7 @@ where `<service-name>` is a name of service depending was `Install Cosmovisor` s
 For checking that service works, please run the next command:
 
 ```bash
-$ systemctl status <service-name>
+systemctl status <service-name>
 ```
 
 where `<service-name>` has the same meaning as above.
@@ -116,7 +117,7 @@ where `<service-name>` has the same meaning as above.
 For make it happens Debian package should be removed firstly.
 
 ```bash
-$ sudo apt remove cheqd-node
+sudo apt remove cheqd-node
 ```
 
 **Please take it into account, that `apt remove` just removes the binary and systemd config. All your ledger `configs` and `data` will keep the same. But it would be nice before all the manipulations with installer to make sure that you have a copy of your private keys somewhere outside.**
