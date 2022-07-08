@@ -60,6 +60,8 @@ Questions in case of answering `Yes` for setting up the node after installation:
 
 - `Specify minimum gas price for transactions [default: 25ncheq]:`. Gas-price parameter.
 
+After successfull installation cheqd-noded is ready to be started and it's time to [post-install steps](#postinstall-steps)
+
 ### Upgrade case
 
 For running an `Upgrade scenario` it's required to setup current home directory for `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. Cause only if this directory exists upgrade scenario will be used.
@@ -93,10 +95,21 @@ If there is `$HOME/.cheqdnode` directory, where `$HOME` is answer on the questio
 When the installation process ends you can start the `systemctl` service:
 
 ```bash
-sudo systemctl start <service-name>
+$ sudo systemctl start <service-name>
 ```
 
 where `<service-name>` is a name of service depending was `Install Cosmovisor` selected or not.
+
+- `cheqd-cosmovisor` if Cosmovisor was installed.
+- `cheqd-noded` in case of keeping `cheqd-noded` as was with debian package approach.
+
+For checking that service works, please run the next command:
+
+```bash
+$ systemctl status <service-name>
+```
+
+where `<service-name>` has the same meaning as above.
 
 ## Move from Debian installation to new interactive with Cosmovisor support
 
