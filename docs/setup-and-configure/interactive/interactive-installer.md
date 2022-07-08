@@ -62,6 +62,8 @@ Questions in case of answering `Yes` for setting up the node after installation:
 
 ### Upgrade case
 
+For running an `Upgrade scenario` it's required to setup current home directory for `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. Cause only if this directory exists upgrade scenario will be used.
+
 #### Install from scratch
 
 If there is `$HOME/.cheqdnode` directory, where `$HOME` is answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , installer assumes that there is current installation on such machine. In this case the next questions will be:
