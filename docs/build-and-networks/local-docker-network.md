@@ -1,24 +1,12 @@
-# cheqd-testsnet docker image
+# cheqd-testnet docker image
 
 ## Description
 
-Debian based docker image with the `cheqd-nonded` executable inside preconfigured to run a network of 2 nodes. Intended for use in CI pipelines.
-
-## Prebuilt package
-
-You can find prebuilt package here:
-
-[https://github.com/cheqd/cheqd-node/pkgs/container/cheqd-testnet](https://github.com/cheqd/cheqd-node/pkgs/container/cheqd-testnet)
-
-To pull it use:
-
-```text
-docker pull ghcr.io/cheqd/cheqd-testnet:latest
-```
+This is a Debian-based docker image. `cheqd-noded` is executable within this docker image which has been preconfigured to run a network of 2 nodes. It is intended for use in CI pipelines.
 
 ## Prerequisites
 
-* Build `cheqd-node` image first. See the [instruction](../setup-and-configure/docker-install.md).
+* Build `cheqd-node` image first. See the [instructions](../setup-and-configure/docker-install.md) here.
 
 ## Building
 
