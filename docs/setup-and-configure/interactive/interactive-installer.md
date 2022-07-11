@@ -1,6 +1,6 @@
 # Overview
 
-This document provides information about how-to use new interactive installer and describes the main options.
+This document provides information on how to use the new interactive installer and describes the main options available. 
 
 ## OS pre-requirements
 
@@ -16,14 +16,14 @@ wget -q https://raw.githubusercontent.com/cheqd/cheqd-node/v0.6.0/installer/inst
 
 All the questions at the end have the default value in [] brackets, like `[default: 1]`. If a default value exists you can just press `Enter` without needing to type the whole answer.
 
-Current installer has 2 possible options for using:
+This installer has 2 possible options:
 
 - Installation from scratch
-- Upgrade current installation
+- Upgrade existing installation
 
 ### General questions
 
-The next questions will be in any cases:
+The next questions will be used with both options:
 
 - Question about versions:
 
@@ -33,12 +33,12 @@ The next questions will be in any cases:
 3) v0.6.0-rc1
 4) v0.5.0-rc2
 5) v0.5.0-rc1
-Choose list option number above to select version of cheqd-node to install [default: 1]:
+Choose the appropriate list option number above to select the version of cheqd-node to install [default: 1]:
 ```
   
 where default version is the latest release. The others just next even `pre-releases`, just the next.
 
-- `Set path for cheqd user's home directory [default: /home/cheqd]:`. It's a question about home directory where `.cheqdnode` directory is located or will be.
+- `Set path for cheqd user's home directory [default: /home/cheqd]:`. This is essentialy a question about where the home directory,  `.cheqdnode`, is located or will be.
 
 ### Installation from scratch
 
@@ -51,9 +51,9 @@ In case of using installer on the clean machine the next group of questions is s
 
 Questions in case of answering `Yes` for setting up the node after installation:
 
-- `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . It's a name of your node.
+- `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . (this is just a nickname for your node, used for things like block explorer). 
 
-- `What is the externally-reachable IP address or DNS name for your cheqd-node? [default: Fetch automatically via DNS resolver lookup]:`. Just Ip address of your node. This address shows your public address.
+- `What is the externally-reachable IP address or DNS name for your cheqd-node? [default: Fetch automatically via DNS resolver lookup]:`. This is an IP address of your node. This address shows your public address.
 
 - `Specify port for Tendermint RPC [default: 26657]:`. RPC port for client-node communications.
 
@@ -61,34 +61,34 @@ Questions in case of answering `Yes` for setting up the node after installation:
 
 - `Specify minimum gas price for transactions [default: 25ncheq]:`. Gas-price parameter.
 
-After successfull installation cheqd-noded is ready to be started and it's time to [post-install steps](#postinstall-steps)
+After completely a successful installation, cheqd-noded is ready to be started and it's time to complete the [post-install steps](#postinstall-steps)
 
 ### Upgrade case
 
-For running an `Upgrade scenario` it's required to setup current home directory for `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. Cause only if this directory exists upgrade scenario will be used.
+For running an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists. 
 
 #### Install from scratch
 
-If there is `$HOME/.cheqdnode` directory, where `$HOME` is answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , installer assumes that there is current installation on such machine. In this case the next questions will be:
+If there is `$HOME/.cheqdnode` directory, where `$HOME` is the answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , the installer assumes that there is current installation on such machine. In this case the next questions will be:
 
 - `Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]:`. Here there 2 possible ways, upgrade current installation and remove all and install from the scratch.
   In case of answering `No` the next question will be:
 
 - `WARNING: Doing a fresh installation of cheqd-node will remove ALL existing configuration and data. CAUTION: Please ensure you have a backup of your existing configuration and data before proceeding. Do you want to do fresh installation of cheqd-node? (yes/no) [default: no]:`.
   **Please make sure, that answer 'Yes' means removing all the ledger-related data with `config` and `data` directories. Please check that you have copied your private keys and configs**
-  After that installation process will go as installation from the [beginning](#installation-from-scratch).
+  After that installation process will complete as installation from the [beginning](#installation-from-scratch).
 
 #### Upgrade current installation
 
-  In case of yes on `upgrade` question, the next flow will be:
+  In case of yes on the `upgrade` question, the next flow will be:
 
 - `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` - It's needed only for figuring out is Cosmovisor uses for now.
   
-- `Overwrite existing systemd configuration for cheqd-node? (yes/no) [default: yes]:`. In case of existing systemd config file even for `cheqd-noded` or `cheqd-cosmovisor` services this question will be asked in case if rewriting is needed.
+- `Overwrite existing systemd configuration for cheqd-node? (yes/no) [default: yes]:`. This question will be asked if rewriting is needed, for example, if the existing systemd config file for `cheqd-noded` or `cheqd-cosmovisor` is used.
   
-- `Overwrite existing configuration for cheqd-node logging? (yes/no) [default: yes]:`. In case of existing `/etc/rsyslog.d/cheqd-node.conf` config file this question will be asked in case if rewriting is needed.
+- `Overwrite existing configuration for cheqd-node logging? (yes/no) [default: yes]:`. In case of existing `/etc/rsyslog.d/cheqd-node.conf` config file this question will be asked to check if rewriting is needed.
 
-- `Overwrite existing configuration for logrotate? (yes/no) [default: yes]:`. In case of existing `/etc/logrotate.d/cheqd-node` config file this question will be asked in case if rewriting is needed.
+- `Overwrite existing configuration for logrotate? (yes/no) [default: yes]:`. In case of existing `/etc/logrotate.d/cheqd-node` config file this question will be asked to check if rewriting is needed.
 
 
 ## Postinstall steps
@@ -114,15 +114,15 @@ where `<service-name>` has the same meaning as above.
 
 ## Move from Debian installation to new interactive with Cosmovisor support
 
-For make it happens Debian package should be removed firstly.
+For this to work correctlly, the Debian package should be removed first.
 
 ```bash
 sudo apt remove cheqd-node
 ```
 
-**Please take it into account, that `apt remove` just removes the binary and systemd config. All your ledger `configs` and `data` will keep the same. But it would be nice before all the manipulations with installer to make sure that you have a copy of your private keys somewhere outside.**
+**Please take it into account, that `apt remove` just removes the binary and systemd config. All your ledger `configs` and `data` will remain the same. For additional comfort, before all the manipulations with installer are done, make sure that you have a copy of your private keys, somewhere outside.**
 
-After, you need to rewrite `systemd`, `logrotate` and `rsyslog` configs by running installer, by answering `Yes` or `y` on questions below:
+Afterward you'll need to rewrite `systemd`, `logrotate` and `rsyslog` configs by running the installer, by answering `Yes` or `y` on questions below:
 
 ```text
 1) v0.5.0
@@ -168,7 +168,7 @@ testnet
 *********  INFO: Installing cheqd-node with Cosmovisor allows for automatic unattended upgrades for valid software upgrade proposals.
 Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:
 y
-CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:
+CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually it's safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:
 y
 Provide a moniker for your cheqd-node [default: test-interactive-installer]:
 interactive
