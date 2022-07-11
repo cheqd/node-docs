@@ -68,7 +68,7 @@ This document provides guidance on how to install and configure a node for the c
 
 6. **Define the seed configuration for populating the list of peers known by a node**
 
-   Update `seeds` with a comma separated list of seed node addresses specified in `seeds.txt` for the relevant [persistent chain](https://github.com/cheqd/cheqd-node/tree/main/networks/).
+   Update `seeds` with a comma separated list of seed node addresses specified in `seeds.txt` for the relevant [network](https://github.com/cheqd/cheqd-node/tree/main/networks/).
 
    For cheqd mainnet, set the `SEEDS` environment variable:
 
