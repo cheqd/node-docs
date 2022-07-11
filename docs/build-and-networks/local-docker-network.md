@@ -6,7 +6,7 @@ This is a Debian-based docker image. `cheqd-noded` is executable within this doc
 
 ## Prerequisites
 
-* Build `cheqd-node` image first. See the [instructions](../setup-and-configure/docker-install.md) here. 
+* Build `cheqd-node` image first. See the [instructions](../setup-and-configure/docker-install.md) here.
 
 ## Building
 

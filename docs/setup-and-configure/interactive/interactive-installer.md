@@ -1,6 +1,6 @@
 # Overview
 
-This document provides information on how to use the new interactive installer and describes the main options available. 
+This document provides information on how to use the new interactive installer and describes the main options available.
 
 ## OS pre-requirements
 
@@ -51,7 +51,7 @@ In case of using installer on the clean machine the next group of questions is s
 
 Questions in case of answering `Yes` for setting up the node after installation:
 
-- `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . (this is just a nickname for your node, used for things like block explorer). 
+- `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . (this is just a nickname for your node, used for things like block explorer).
 
 - `What is the externally-reachable IP address or DNS name for your cheqd-node? [default: Fetch automatically via DNS resolver lookup]:`. This is an IP address of your node. This address shows your public address.
 
@@ -65,7 +65,7 @@ After completely a successful installation, cheqd-noded is ready to be started a
 
 ### Upgrade case
 
-For running an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists. 
+For running an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists.
 
 #### Install from scratch
 
