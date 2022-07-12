@@ -9,7 +9,7 @@ By default, our target platform already has `python3` under the hood and no addi
 For running installer the next command can be used:
 
 ```bash
-wget -q https://raw.githubusercontent.com/cheqd/cheqd-node/v0.6.0/installer/installer.py && sudo python3 installer.py
+wget -q https://raw.githubusercontent.com/cheqd/cheqd-node/interactive_installer/installer/installer.py && sudo python3 installer.py
 ```
 
 ## Installer modes
