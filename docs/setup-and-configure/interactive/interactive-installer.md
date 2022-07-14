@@ -151,9 +151,9 @@ If recovering or instantiating on another machine is required this installer als
 
 The steps are:
 
-### Make sure that there is a copy of your private keys and `data/priv_validator_state.json` file somewhere in safe place and on another machine.
+### Make sure that there is a copy of your private keys and `data/priv_validator_state.json` file somewhere in safe place and on another machine
 
-It's extreamely important cause during the installation process your `CHEQD_HOME/.cheqdnode` directory will be removed and all the configs and data will be lost. 
+It's extreamely important cause during the installation process your `CHEQD_HOME/.cheqdnode` directory will be removed and all the configs and data will be lost.
 
 ### Run installer in `installation from scratch` mode
 
