@@ -165,7 +165,7 @@ After approving `installation from scratch` the list of questions will be the sa
 
 **If there is backup of whole `config` directory** If you backed up the whole `config` directory, it would be better to skip setting up the node after installation, answer on question `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:` no. Cause after installation you can just replace `CHEQD_HOME/.cheqdnode/config` with your own and start the service.
 
-**If there are only private keys** In this case I'd recommend to setting up the node after installation cause it does not require to change configs and genesis after.
+**If there are only private keys** In this case we would recommend to setting up the node after installation cause it does not require to change configs and genesis after.
 
 ### Restore validator's keys
 
