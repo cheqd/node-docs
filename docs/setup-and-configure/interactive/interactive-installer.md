@@ -42,14 +42,14 @@ where default version is the latest release. The others just next even `pre-rele
 
 ### Clean installation
 
-In case of using installer on the clean machine the next group of questions is significant:
+If you are using the installer on a clean machine the next group of questions are significant:
 
 - `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:`. This options can be used in case of setting up the node.
 - `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`. For now, we have 2 networks, `testnet` and `mainnet`. Please, type here which chain you want to use or just keep the default by clicking `Enter`.
 - `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` . Default value is going to be `Yes`. We assume, that the next upgrades can be in an automative mode.
 - `CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:`. This can help you speed up the catchup to cheqd network.
 
-Questions in case of answering `Yes` for setting up the node after installation:
+Questions if you answered `Yes` for setting up the node after installation:
 
 - `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . (this is just a nickname for your node, used for things like block explorer).
 
@@ -65,11 +65,11 @@ After completely a successful installation, cheqd-noded is ready to be started a
 
 ### Upgrade case
 
-For running an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists.
+To run an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists.
 
 #### Install from scratch
 
-If there is `$HOME/.cheqdnode` directory, where `$HOME` is the answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , the installer assumes that there is current installation on such machine. In this case the next questions will be:
+If there is `$HOME/.cheqdnode` directory, where `$HOME` is the answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , the installer assumes that there is already an installation on the machine. In this case the next questions will be:
 
 - `Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]:`. Here there 2 possible ways, upgrade current installation and remove all and install from the scratch.
   In case of answering `No` the next question will be:
