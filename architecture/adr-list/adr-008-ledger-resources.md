@@ -58,6 +58,7 @@ The issues highlighted above **a material difference to the longevity of Verifia
 Despite these issues, many self-sovereign identity (SSI) implementations - *even ones that use ledgers / distributed systems for DIDs* -  often utilise centralised storage. From the [W3C Verifiable Credential Implementation Guide](https://w3c.github.io/vc-imp-guide/#creating-new-credential-types):
 
 > Example schema.org address with full URLs
+>
 > ```jsonc
 > {
 >   "@type": "http://schema.org/Person",
@@ -72,8 +73,11 @@ Despite these issues, many self-sovereign identity (SSI) implementations - *even
 > }
 > ```
 
+Using traditional web endpoints to store resources (such as schemas) that are critical for a Verifiable Credential to function undermines the benefits that persistently-accessible Decentralized Identifiers offer.
 
 ## Resources on cheqd ledger
+
+
 
 ### DID Resource Creation Flow
 
