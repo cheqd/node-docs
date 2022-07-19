@@ -1,4 +1,4 @@
-# ADR 002: cheqd DID method, identity entities, and transactions
+# ADR 002: cheqd DID method
 
 ## Status
 
