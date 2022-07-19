@@ -30,7 +30,7 @@ Extended information on [recommended hardware requirements is available in Tende
 
 ### Operating system
 
-Our [packaged releases](https://github.com/cheqd/cheqd-node/releases) are currently compiled and tested for `Ubuntu 20.04 LTS`, which is the recommended operating system for installation using Debian package or binaries.
+Our [packaged releases](https://github.com/cheqd/cheqd-node/releases) are currently compiled and tested for `Ubuntu 20.04 LTS`, which is the recommended operating system for installation using interactive installer or binaries.
 
 For other operating systems, we recommend using [pre-built Docker image releases for `cheqd-node`](https://github.com/orgs/cheqd/packages?repo_name=cheqd-node).
 
@@ -40,7 +40,7 @@ We plan on supporting other operating systems in the future, based on demand for
 
 We recommend using a storage path that can be kept persistent and restored/remounted (if necessary) for the configuration, data, and log directories associated with a node. This allows a node to be restored along with configuration files such as node keys and for the node's copy of the ledger to be restored without triggering a full chain sync.
 
-The default directory location for `cheqd-node` installations is `$HOME/.cheqdnode`, which computes to `/home/cheqd/.cheqdnode` when [using the Debian package installer](debian/README.md). Custom paths can be defined if desired.
+The default directory location for `cheqd-node` installations is `$HOME/.cheqdnode`, which computes to `/home/cheqd/.cheqdnode` when [using the interactive installer](interactive/interactive-installer.md). Custom paths can be defined if desired.
 
 ### Ports
 
@@ -80,7 +80,7 @@ While this setup is not compulsory, node operators with higher stakes or a need 
 
 Follow the guide for your preferred installation method:
 
-* [Debian package install](debian/deb-package-install.md)
+* [interactive installer](interactive/interactive-installer.md)
 * [Docker install](docker-install.md)
 * [Binary install](binary-install.md)
 
