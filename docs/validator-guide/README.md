@@ -10,7 +10,7 @@ You must already have a running `cheqd-node` instance installed using one of the
 
 Please also ensure the node is fully caught up with the latest ledger updates.
 
-1. [Interactive installer](../setup-and-configure/interative/../interactive/interactive-installer.md)
+1. [Interactive installer](../setup-and-configure/interactive/interactive-installer.md)
 2. [Docker install](../setup-and-configure/docker-install.md)
 3. [Binary install](../setup-and-configure/binary-install.md)
 
