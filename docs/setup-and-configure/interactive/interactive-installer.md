@@ -40,16 +40,16 @@ where default version is the latest release. The others just next even `pre-rele
 
 - `Set path for cheqd user's home directory [default: /home/cheqd]:`. This is essentialy a question about where the home directory,  `.cheqdnode`, is located or will be.
 
-### Installation from scratch
+### Clean installation
 
-In case of using installer on the clean machine the next group of questions is significant:
+If you are using the installer on a clean machine the next group of questions are significant:
 
 - `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:`. This options can be used in case of setting up the node.
 - `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`. For now, we have 2 networks, `testnet` and `mainnet`. Please, type here which chain you want to use or just keep the default by clicking `Enter`.
 - `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` . Default value is going to be `Yes`. We assume, that the next upgrades can be in an automative mode.
 - `CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:`. This can help you speed up the catchup to cheqd network.
 
-Questions in case of answering `Yes` for setting up the node after installation:
+Questions if you answered `Yes` for setting up the node after installation:
 
 - `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . (this is just a nickname for your node, used for things like block explorer).
 
@@ -65,18 +65,18 @@ After completely a successful installation, cheqd-noded is ready to be started a
 
 ### Upgrade case
 
-For running an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists.
+To run an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists.
 
 #### Install from scratch
 
-If there is `$HOME/.cheqdnode` directory, where `$HOME` is the answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , the installer assumes that there is current installation on such machine. In this case the next questions will be:
+If there is `$HOME/.cheqdnode` directory, where `$HOME` is the answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , the installer assumes that there is already an installation on the machine. In this case the next questions will be:
 
 - `Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]:`. Here there 2 possible ways, upgrade current installation and remove all and install from the scratch.
   In case of answering `No` the next question will be:
 
 - `WARNING: Doing a fresh installation of cheqd-node will remove ALL existing configuration and data. CAUTION: Please ensure you have a backup of your existing configuration and data before proceeding. Do you want to do fresh installation of cheqd-node? (yes/no) [default: no]:`.
   **Please make sure, that answer 'Yes' means removing all the ledger-related data with `config` and `data` directories. Please check that you have copied your private keys and configs**
-  After that installation process will complete as installation from the [beginning](#installation-from-scratch).
+  After that installation process will complete as installation from the [beginning](#clean-installation).
 
 #### Upgrade current installation
 
@@ -142,6 +142,72 @@ y
 Overwrite existing configuration for cheqd-node logging? (yes/no) [default: yes]:
 y
 Overwrite existing configuration for logrotate? (yes/no) [default: yes]:
+y
+```
+
+## Recover node using interactive installer
+
+If recovering or instantiating on another machine is required this installer also can be used. The main aasuption here that and operator already has private keys saved somewhere in safe place.
+
+The steps are:
+
+### Make sure that there is a copy of your private keys and `data/priv_validator_state.json` file somewhere in safe place and on another machine
+
+It's extreamely important cause during the installation process your `CHEQD_HOME/.cheqdnode` directory will be removed and all the configs and data will be lost.
+
+### Run installer in `installation from scratch` mode
+
+For running `installation from scratch` mode an operator should answer with current home directory for `cheqd` user (by default it `/home/cheqd`) and `No` on the question about `Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]`. After that the question about installation from scratch will be and answer `Yes` is needed here.
+
+### Installation from scratch
+
+After approving `installation from scratch` the list of questions will be the same as for [clean installation](#clean-installation).
+
+**If there is backup of whole `config` directory** If you backed up the whole `config` directory, it would be better to skip setting up the node after installation, answer on question `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:` no. Cause after installation you can just replace `CHEQD_HOME/.cheqdnode/config` with your own and start the service.
+
+**If there are only private keys** In this case we would recommend to setting up the node after installation cause it does not require to change configs and genesis after.
+
+### Restore validator's keys
+
+Before starting the service only one action is needed - copy your private keys and `data/priv_validator_state.json` back.
+Steps:
+
+- copy the whole `config` or only your `priv_validator_key.json` to `CHEQD_HOME/.cheqdnode/config`
+- copy your `priv_validator_key.json` to `CHEQD_HOME/.cheqdnode/data`
+
+### Start the service
+
+Here an operator only need to run the service. For this you can follow [postinstall steps](#postinstall-steps)
+
+
+### The example of questions/answers
+
+Here home directory is supposed to be `/home/cheqd` and for this example the whole `config` was backed up
+
+```text
+*********  Latest stable cheqd-noded release version is Name: v0.5.0
+*********  List of cheqd-noded releases: 
+1) v0.5.0
+2) v0.6.0
+3) v0.6.0-rc2
+4) v0.6.0-rc1
+5) v0.5.0-rc2
+Choose list option number above to select version of cheqd-node to install [default: 1]:
+2
+Set path for cheqd user's home directory [default: /home/cheqd]:
+
+Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]:
+n
+WARNING: Doing a fresh installation of cheqd-node will remove ALL existing configuration and data. CAUTION: Please ensure you have a backup of your existing configuration and data before proceeding. Do you want to do fresh installation of cheqd-node? (yes/no) [default: no]:
+y
+Do you want to setup a new cheqd-node? (yes/no) [default: yes]:
+n
+Select cheqd network to join (testnet/mainnet) [default: mainnet]:
+testnet
+*********  INFO: Installing cheqd-node with Cosmovisor allows for automatic unattended upgrades for valid software upgrade proposals.
+Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:
+y
+CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:
 y
 ```
 
