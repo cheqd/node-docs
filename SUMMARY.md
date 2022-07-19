@@ -6,7 +6,7 @@
 
 * [Setting up a new cheqd node](docs/setup-and-configure/README.md)
   * [Setting up a new cheqd node](docs/setup-and-configure/README.md)
-  * [Interactive installer](docs/setup-and-configure/interactive/interactive-installer.md):
+  * [Interactive installer](docs/setup-and-configure/interactive/interactive-installer.md)
   * [Installing cheqd-node with Docker](docs/setup-and-configure/docker-install.md)
   * [Installing a cheqd node from binary package releases](docs/setup-and-configure/binary-install.md)
 * [Setting up and configuring validators](docs/validator-guide/README.md)
