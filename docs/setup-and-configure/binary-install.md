@@ -104,7 +104,7 @@ The [node setup guide provides pre-requisites](README.md) needed before the step
 
 8. **Make the RPC endpoint available externally** (optional)
 
-      This step is necessary only if you want to allow incoming client application connections to your node. Otherwise, the node will be accessible only locally. Further details about the RPC endpoints is available in the [cheqd node setup guide](../README.md).
+      This step is necessary only if you want to allow incoming client application connections to your node. Otherwise, the node will be accessible only locally. Further details about the RPC endpoints is available in the [cheqd node setup guide](../setup-and-configure/README.md).
 
       ```bash
       cheqd-noded configure rpc-laddr "tcp://0.0.0.0:26657"
@@ -150,7 +150,7 @@ An alternative method to check a node's status is via the RPC interface, if it h
 
 ## Next steps
 
-At this stage, your node would be connected to the cheqd testnet as an observer node. Learn [how to configure your node as a validator node](../../validator-guide/README.md) to participate in staking rewards, block creation, and governance.
+At this stage, your node would be connected to the cheqd testnet as an observer node. Learn [how to configure your node as a validator node](../validator-guide/README.md) to participate in staking rewards, block creation, and governance.
 
 
 ## Further information
