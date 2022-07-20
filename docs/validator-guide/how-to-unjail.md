@@ -37,7 +37,7 @@ cheqd-noded version
 The expected response will be the latest cheqd-noded software release. At the time of writing, the expected response would be 
 
 ~~~
-0.5.0
+0.6.0
 ~~~
 
 ## Step 2: Upgrading to latest software
@@ -56,7 +56,7 @@ Additionally,, you can check this has worked:
 ~~~
 http://<your node ip or domain name>:26657/abci_info
 ~~~
-It shows you a page and field "version": "0.5.0"
+It shows you a page and field "version": "0.6.0"
 ____
 
 ## Step 4: Unjailing command
