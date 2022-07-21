@@ -42,7 +42,7 @@ The expected response will be the latest cheqd-noded software release. At the ti
 
 ## Step 2: Upgrading to latest software
 
-If your node is not up to date, please [follow the instructions here](https://github.com/cheqd/cheqd-node/blob/main/docs/setup-and-configure/debian/deb-package-upgrade.md)
+If your node is not up to date, please [follow the instructions here](https://github.com/cheqd/node-docs/blob/main/docs/setup-and-configure/interactive/0.5.0_to_0.6.0_upgrade.md)
 
 ## Step 3: Confirming the Node is up to date
 
