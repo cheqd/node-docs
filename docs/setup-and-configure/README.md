@@ -20,13 +20,13 @@ Extended information on [recommended hardware requirements is available in Tende
 
 * 2 GB RAM
 * x64 1.4 GHz 1 vCPU (or equivalent)
-* 200 GB of disk space
+* 300 GB of disk space
 
 #### Recommended specifications
 
 * 4 GB RAM
 * x64 2.0 GHz 2 vCPU (or equivalent)
-* 300 GB SSD
+* 400 GB SSD
 
 ### Operating system
 
