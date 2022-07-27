@@ -223,7 +223,7 @@ Each DID Document MUST have a metadata section when a representation is produced
 formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
 3. **`deactivated`** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
 4. **`versionId`** (string): Contains transaction hash of the current DIDDoc version.
-5. **`resources`** (list of string | optional): Identifiers with linked [resources](adr-008-ledger-resources.md) identifiers. Can't be change by CreateDID or UpdateDID transactions.
+5. **`resources`** (list of resources metadata | optional): [Resources header](adr-008-ledger-resources.md) with `resourceURI` instead of identifiers. Can not be changed by CreateDID or UpdateDID transactions. Cheqd ledger stores just resource identifiers in DID Doc metadata. Resource's metadata is added on the resolution stage.
 
 #### Example of DIDDoc metadata
 
@@ -234,8 +234,16 @@ formatting rules as the created property. The `updated` field is `null` if an Up
   "deactivated": false,
   "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
   "resources": [
-        "c197bfa3-687b-4dda-b308-2ba28742f962",
-        "6546019c-e727-11ec-8fea-0242ac120002"
+       {
+        "resourceURI":       "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue/resources/9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+        "name":              "CL-Schema1",
+        "resourceType":      "CL-Schema",
+        "mimeType":          "application/json"
+        "created":           "2022-04-20T20:19:19Z",
+        "checksum":          "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+        "previousVersionId:  null,
+        "nextVersionId:      null
+      }
   ]
 }
 ```

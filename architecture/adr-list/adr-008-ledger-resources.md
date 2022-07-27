@@ -499,7 +499,7 @@ We need to support resource resolution in the DID resolver.
   * `https://resolver.cheqd.net/1.0/identifiers/<did>/resources/<resource-id>`
 
 * Output:
-  * JSON encoded [QueryGetResourceResponse](#querygetresourcerequest)
+  * Resource `data` value
 
 * Processing logic:
   * Simply call [GetResource](#getresource) via GRPC
@@ -523,8 +523,13 @@ QueryGetDidResponse {
     "resources": [
       {
         "resourceURI":      "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue/resources/9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+        "name":               "CL-Schema1",
         "resourceType":      "CL-Schema",
         "mimeType":          "application/json"
+        "created":            "2022-04-20T20:19:19Z",
+        "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+        "previousVersionId: null,
+        "nextVersionId:     null
       }
     ]
   }
