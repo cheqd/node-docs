@@ -148,7 +148,7 @@ DID dereferencing result always has a following format: `( dereferencingMetadata
 - `/1.0/identifiers/<did>/resources/<resource_id>`
   - Return resources data
   - ContentType = MediaType
-- `/1.0/identifiers/<did>/resources/<resource_id>/matadata`
+- `/1.0/identifiers/<did>/resources/<resource_id>/metadata`
   - Return resource metadata (without data)
 
 ## cheqd full DID resolver
@@ -162,7 +162,7 @@ There are two ways to use the full cheqd DID Resolver to return compliant DID Do
 
 In the first case, the Go module can be imported simply into a client's own libraries by using the following:
 
-```golang
+```ignorelang
 import (
      "github.com/cheqd/cheqd-did-resolver/services"
 )
@@ -193,7 +193,7 @@ In this case:
 
 - A client launches the application with the command.
 
-```bash
+```commandline
 docker compose up
 ```
 
@@ -233,7 +233,7 @@ This will offer full oversight of the DID resolver, and as such, a higher level 
 - The client will need to set up additional services which is more complex.
 - If the client is security conscious, it is likely it would also want to set up its own node in addition to the Resolver to ensure oversight over requests to the gRPC endpoint.
 
-**Note.** While it is possible to set up both the Universal Resolver and the full cheqd resolver on the client side **without** setting up a node, we have not expressely considered this option in this ADR, since we believe it is unlikely to occur in practice.
+**Note.** While it is possible to set up both the Universal Resolver and the full cheqd resolver on the client side **without** setting up a node, we have not expressly considered this option in this ADR, since we believe it is unlikely to occur in practice.
 
 ## cheqd light DID resolver
 
@@ -245,7 +245,7 @@ A Universal Resolver Driver can be set up in a full or light mode. It is the sam
 
 ### 1. Universal resolver on DIF side
 
-The Decentralised Identity Foundation (DIF) has a publically accessible Universal Resolver, which can be found at <https://dev.uniresolver.io>
+The Decentralised Identity Foundation (DIF) has a publicly accessible Universal Resolver, which can be found at <https://dev.uniresolver.io>
 
 The flow of resolving a DID via the Universal Resolver on DIFs side is shown in the "Universal Resolver" section from [figure 1](#overall-architecture-of-did-resolvers) shows this flow.
 
@@ -284,7 +284,7 @@ Here, however, the client sets up Universal Resolver with drivers in their own e
 
 ### 3. Universal Resolver, cheqd full DID resolver and cheqd Node on a client side
 
-This final option includes both the Universal Resolver in combination with the full cheqd DID resolver. This option may be beneficial for a client which wants the full breadth of resolution options offered by the Universal Resolver, and is highly security conscious, and as such, routes resolution requests through their own infrastrcuture rather than relying on cheqd's hosted web service or the cheqd node.
+This final option includes both the Universal Resolver in combination with the full cheqd DID resolver. This option may be beneficial for a client which wants the full breadth of resolution options offered by the Universal Resolver, and is highly security conscious, and as such, routes resolution requests through their own infrastructure rather than relying on cheqd's hosted web service or the cheqd node.
 
 The client will need to set up:
 
@@ -295,7 +295,7 @@ The client will need to set up:
 
 #### Pros (full installation)
 
-- This is the combination for maxmimum trust and security for DID resolution.
+- This is the combination for maximum trust and security for DID resolution.
 
 #### Cons (full installation)
 
@@ -303,7 +303,7 @@ The client will need to set up:
 
 ## Decision
 
-This ADR will add a new application/library for did-resolution based on the DID resultion options listed in the sections above.
+This ADR will add a new application/library for did-resolution based on the DID resolution options listed in the sections above.
 
 ## References
 
