@@ -53,10 +53,98 @@ The overall DID resolver architecture is detailed by the following flow:
 ![cheqd did resolver](../../assets/adr-010-did-resolver/universal-resolver-sequence-diagram.png)
 [Figure 1: cheqd resolution sequence diagram.](../../assets/adr-010-did-resolver/universal-resolver-sequence-diagram.puml)
 
-cheqd DID Document resolultion is built to be lightweight and simple. Instead of needing to handle requests and threads in parallel, the resolover is built to handle all threads concurrently. This design principle will reduce the risk of large quantities of threads and requests blocking the efficiency of the service.
+cheqd DID Document resolution is built to be lightweight and simple. Instead of needing to handle requests and threads in parallel, the resolover is built to handle all threads concurrently. This design principle will reduce the risk of large quantities of threads and requests blocking the efficiency of the service.
 
 ![cheqd did resolver class diagram](../../assets/adr-010-did-resolver/resolver-class-diagram.png)
 [Figure 2: cheqd protobuf -> JSON marshalling.](../../assets/adr-010-did-resolver/resolver-class-diagram.puml)
+
+## Resolution rules
+
+Cheqd Resolver compiles with the rules defined in [Decentralized Identifier Resolution (DID Resolution) v0.2](https://w3c-ccg.github.io/did-resolution). This section clarifies and expands some descriptions specific to Cheqd.
+
+### Supported types
+
+[RFC 9110 HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html#name-accept) says:
+
+> The "Accept" header field can be used by user agents to specify their preferences regarding response media types.
+
+It means that a response "Content-Type" header field should contain one of types from a request "Accept" header field. 
+
+In the same time, [Resolution specification](https://w3c-ccg.github.io/did-resolution/#bindings-https) requires: 
+
+> The HTTP response body MUST contain the didDocumentStream, in the representation corresponding to the Accept HTTP header.
+ 
+There for `ContentType` from HTTP response body should be the same with HTTP response header `Content-Type` and should be one of types from `Accept` request HTTP header.
+[8.1 HTTP(S) Binding](https://w3c-ccg.github.io/did-resolution/#bindings-https) has been used for defining a list of available types for DID resolution. 
+
+* Accept request HTTP header contains `application/did+ld+json`
+  * Response HTTP header: `Content-Type: application/did+ld+json`
+  * Response HTTP body
+    * didDocument / contentStream contains `@context` section;
+    * didResolutionMetadata / dereferencingMetadata `ContentType` field is `application/did+ld+json`;
+* Accept request HTTP header contains `application/ld+json;profile="https://w3id.org/did-resolution"`
+  * Response HTTP header: `Content-Type: application/ld+json;profile="https://w3id.org/did-resolution`
+  * Response HTTP body
+    * didDocument / contentStream contains `@context` section;
+    * didResolutionMetadata / dereferencingMetadata `ContentType` field is `application/ld+json;profile="https://w3id.org/did-resolution`;
+* Accept request HTTP header contains `application/did+json`
+  * Response HTTP header: `Content-Type: application/did+json`
+  * Response HTTP body
+    * didDocument / contentStream DOES NOT contain `@context` section;
+    * didResolutionMetadata / dereferencingMetadata `ContentType` field is `application/did+json`;
+* Accept request HTTP header contains `*/*` 
+  * Response HTTP header: `Content-Type: application/did+ld+json`
+  * Response HTTP body
+    * didDocument / contentStream contains `@context` section;
+    * didResolutionMetadata / dereferencingMetadata `ContentType` field is `application/did+ld+json`;
+* Accept request HTTP header does not contain any of the types above
+  * Response HTTP header: `Content-Type: application/json`
+  * Response HTTP body
+    * didDocument / contentStream is `[]`;
+    * didResolutionMetadata / dereferencingMetadata contains a property error with value representationNotSupported
+    * didResolutionMetadata / dereferencingMetadata `ContentType` field is `application/json`;
+
+### Errors
+
+DID resolution result always has a following format: `( didResolutionMetadata, didDocument, didDocumentMetadata )`
+If resolution was unsuccessful, DID resolver returns the following result:
+
+* didResolutionMetadata contains `"error" : "<Error message>"`
+* didDocument: null
+* didDocumentMetadata: `[]`
+
+
+DID dereferencing result always has a following format: `( dereferencingMetadata, contentStream, contentMetadata )`
+
+* dereferencingMetadata contains `"error" : "<Error message>"`
+* contentStream: null
+* contentMetadata: `[]`
+
+#### Error list
+
+* **invalidDidUrl**
+  * response status code 400
+* **notFound** -> response status code 404
+* **representationNotSupported** -> response status code 406
+* **didDocumentMetadata** property deactivated with value true -> response status code 410
+* **internalError** -> response status code 500 (but still return ( dereferencingMetadata, contentStream, contentMetadata ) or ( didResolutionMetadata, didDocument, didDocumentMetadata ))
+
+### Resource resolution
+
+    /1.0/identifiers/did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/
+
+    Return collection resources metadata (without data)
+
+    /1.0/identifiers/did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4
+
+    Return resources data
+    ContentType = MediaType
+
+    /1.0/identifiers/did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4/matadata
+
+    Return collection resources metadata  (without data)
+
+
 
 ## cheqd full DID resolver
 
@@ -78,7 +166,7 @@ The flow for DID resolution is illustrated in the third "Client <-> Ledger" sect
 The flow can be summarised as follows:
 - A client sends a request directly to cheqd Node through the Cosmos SDK gRPC API.
 - A DID Doc is returned in protobuf which the client application can format to resolvable DID Document or DID fragment in JSON format.
-- This makes the DID resoltuion compliant with [W3C DID Core](https://www.w3.org/TR/did-core/).
+- This makes the DID resolution compliant with [W3C DID Core](https://www.w3.org/TR/did-core/).
 
 #### Pros
 
@@ -97,11 +185,10 @@ In this case:
 - A client launches the application with the command.
 
 ```bash
-docker compose --profile light up
+docker compose up
 ```
 
-or 
-launch light version on theirs Cloudflare 
+or launch light version on theirs Cloudflare 
 
 or send requests directly to the cheqd web service
 
@@ -123,7 +210,7 @@ or send requests directly to the cheqd web service
 If a client chooses, it may be in their interest to set up the full cheqd resolver web service on their own client side. 
 
 ```bash
-docker compose --profile full up
+docker compose up
 ```
 
 This will offer full oversight of the DID resolver, and as such, a higher level of security.
