@@ -113,7 +113,6 @@ If resolution was unsuccessful, DID resolver returns the following result:
 * didDocument: null
 * didDocumentMetadata: `[]`
 
-
 DID dereferencing result always has a following format: `( dereferencingMetadata, contentStream, contentMetadata )`
 
 * dereferencingMetadata contains `"error" : "<Error message>"`
@@ -122,29 +121,35 @@ DID dereferencing result always has a following format: `( dereferencingMetadata
 
 #### Error list
 
-* **invalidDidUrl**
+* **invalidDid** - DID does not conform to the rule of the [DID Syntax](https://www.w3.org/TR/did-core/#did-syntax)
   * response status code 400
-* **notFound** -> response status code 404
-* **representationNotSupported** -> response status code 406
-* **didDocumentMetadata** property deactivated with value true -> response status code 410
-* **internalError** -> response status code 500 (but still return ( dereferencingMetadata, contentStream, contentMetadata ) or ( didResolutionMetadata, didDocument, didDocumentMetadata ))
+* **invalidDidUrl** - DID URL does not conform to the rule of the [DID URL Syntax](https://www.w3.org/TR/did-core/#did-url-syntax)
+  * response status code 400
+* **notFound** - DID Doc, Resource or DID Doc fragment does not exist in a ledger
+  * response status code 404
+* **representationNotSupported** - Resolution `Accept` option or dereferencing for this DID URL is not supported 
+  * response status code 406
+* **methodNotSupported** - DID method of the input DID is not supported 
+  * response status code 406
+* **internalError** - an unexpected error occurs during DID Resolution or DID URL dereferencing
+  * response status code 500
+* `didDocumentMetadata` property deactivated with value `true`
+  * response status code 410
 
 ### Resource resolution
 
-    /1.0/identifiers/did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/
-
-    Return collection resources metadata (without data)
-
-    /1.0/identifiers/did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4
-
-    Return resources data
-    ContentType = MediaType
-
-    /1.0/identifiers/did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4/matadata
-
-    Return collection resources metadata  (without data)
-
-
+* `/1.0/identifiers/<did>/resources/all`
+  * Return collection resources metadata (without data)
+* `/1.0/identifiers/<did>/resources/`
+  * Status code 301
+  * Redirect to `/resources/all`
+* `/1.0/identifiers/<did>/resources`
+  * Error -> invalidDidUrl
+* `/1.0/identifiers/<did>/resources/<resource_id>`
+  * Return resources data
+  * ContentType = MediaType
+* `/1.0/identifiers/<did>/resources/<resource_id>/matadata`
+  * Return resource metadata (without data)
 
 ## cheqd full DID resolver
 
@@ -226,6 +231,9 @@ This will offer full oversight of the DID resolver, and as such, a higher level 
  
 **Note.** While it is possible to set up both the Universal Resolver and the full cheqd resolver on the client side **without** setting up a node, we have not expressely considered this option in this ADR, since we believe it is unlikely to occur in practice. 
 
+## cheqd light DID resolver
+
+[TODO: Should be defined]
 
 ## Universal Resolver Driver
 
