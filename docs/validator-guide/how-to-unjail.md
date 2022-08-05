@@ -22,23 +22,22 @@ The duration on how this is calculated is defined in the [genesis parameters of 
 #### What happens when a validator is temporarily jailed for downtime
 
 1. 1% of *all* of the stake delegated to the node is slashed, i.e., burned and disappears forever. This includes any stake delegated to the node by external parties. (If a validator gets jailed, delegators may decide to switch whom they delegate to.) The percentage of stake to be slashed is defined in the `slash_fraction_downtime` genesis parameter.
-2. 
 
 ## Step 1: Check your Node is up to date
 
-During the downtime of a Validator Node, it is common for the Node to miss important software upgrades, since they are no longer in the active set of nodes on the main ledger. 
+During the downtime of a Validator Node, it is common for the Node to miss important software upgrades, since they are no longer in the active set of nodes on the main ledger.
 
 Therefore, the first step is checking that your node is up to date. You can execute the command
 
-~~~
+```bash
 cheqd-noded version
-~~~
+```
 
-The expected response will be the latest cheqd-noded software release. At the time of writing, the expected response would be 
+The expected response will be the latest cheqd-noded software release. At the time of writing, the expected response would be
 
-~~~
+```text
 0.6.0
-~~~
+```
 
 ## Step 2: Upgrading to latest software
 
@@ -53,16 +52,17 @@ Expected response: In the output, look for the text ```latest_block_height``` an
 The node is fully caught up when the parameter ```catching_up``` returns the output false.
 
 Additionally,, you can check this has worked:
-~~~
+
+```text
 http://<your node ip or domain name>:26657/abci_info
-~~~
-It shows you a page and field "version": "0.6.0"
-____
+```
+
+It shows you a page and field "version": "0.6.0".
 
 ## Step 4: Unjailing command
 
 If everything is up to date, and the node has fully caught, you can now unjail your node using this command in the cheqd CLI:
 
-~~~
+```
 cheqd-noded tx slashing unjail --from <address_alias> --gas auto --gas-adjustment 1.2 --gas-prices 25ncheq --chain-id cheqd-mainnet-1
-~~~
+```
