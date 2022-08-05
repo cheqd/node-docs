@@ -34,7 +34,7 @@ Here you can pick up the version what you want.
 
 #### Home directory
 
-`Set path for cheqd user's home directory [default: /home/cheqd]:`. 
+`Set path for cheqd user's home directory [default: /home/cheqd]:`.
   
 This is essentialy a question about where the home directory,  `.cheqdnode`, is located or will be.
 I's also up to operator where they want to store `data`, `config` and `log` directories.
@@ -45,7 +45,7 @@ I's also up to operator where they want to store `data`, `config` and `log` dire
 
 Here the expected answer is `No`. The main idea is that our old `config` directory will be used and `data` will be restored from the snapshot. We don't need to setup the new one.
 
-#### Network selecting.
+#### Network selecting
 
 `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`
 
