@@ -1,25 +1,44 @@
 # Overview
 
-This document can help our validators to move thier node instance to another one, for example in case of changing VPS provider or something like this.
-As the main tool our [interactive installer](../setup-and-configure/interactive/interactive-installer.md) can be used.
+This document offers guidance for validators looking to move thier node instance to another one, for example in case of changing VPS provider or something like this.
+
+The main tool required for this is cheqd's [interactive installer](../setup-and-configure/interactive/interactive-installer.md).
 
 ## Preparations
 
-As for all important actions with your node, please make sure, that next steps/check were made:
+Before completing the move, ensure the following checks are completed:
 
-- Please check, that your `config` directory and `data/priv_validator_state.json` are copied to the safe place and and they are cannot be affected
-- Stop the service on your current node. `systemctl stop cheqd-cosmovisor`  in case of using installation with cosmovisor and `systemctl stop cheqd-noded`  for other case.
-- **Make sure that service was stopped. It's extremely significant cause if you run 2 nodes with the same private keys it will tombstone your account, you will lose your current delegated tokens and you will need to create another one in this case.**
+### 1. Copy `config` directory and `data/priv_validator_state.json` to safe place
+
+Check that your `config` directory and `data/priv_validator_state.json` are copied to a safe place where they will cannot affected by the migration
+
+### 2. Stop the service on your current node
+
+If you are using cosmosvisor, use `systemctl stop cheqd-cosmovisor`
+
+For all other cases, use  `systemctl stop cheqd-noded`.
+
+### 3. Confirm that your previous node / service was stopped
+
+> This step is of the utmost important
+
+If your node is not stopped correctly and two nodes are running with the same private keys, this will lead to a double signing infraction which results in your node being permemently jailed (tombstoned) resulting in a 5% slack of staked tokens.
+
+You will also be required to complete a fresh setup of your node.
 
 ## Installation
 
-After previous action, the installation can be started. In general, new installer allows us to install the binary and download/extract the latest snapshot from [https://snapshots.cheqd.net/](https://snapshots.cheqd.net/). Only moving back your keys and settings will be required after it.
+Only after you have completed the preparation steps to shut down the previous node, the installation should begin.
+
+In general, the installer allows you to install the binary and download/extract the latest snapshot from [https://snapshots.cheqd.net/](https://snapshots.cheqd.net/).
+
+Once this has been completed, you will be able to move your existing keys back and settings.
 
 ### Installation with the latest snapshot
 
 The answers for installer quiestion could be:
 
-#### Version
+#### 1. Select Version
 
 ```text
 1) v0.6.0
@@ -32,33 +51,41 @@ Choose the appropriate list option number above to select the version of cheqd-n
 
 Here you can pick up the version what you want.
 
-#### Home directory
+#### 2. Select Home directory
 
 `Set path for cheqd user's home directory [default: /home/cheqd]:`.
   
-This is essentialy a question about where the home directory,  `.cheqdnode`, is located or will be.
-I's also up to operator where they want to store `data`, `config` and `log` directories.
+This is essentialy a question about where the home directory,  `cheqdnode`, is located or will be.
 
-#### Setup node
+It is up to operator where they want to store `data`, `config` and `log` directories.
+
+#### 3. Setup node
 
 `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:`
 
-Here the expected answer is `No`. The main idea is that our old `config` directory will be used and `data` will be restored from the snapshot. We don't need to setup the new one.
+Here the expected answer is `No`.
 
-#### Network selecting
+The main idea is that our old `config` directory will be used and `data` will be restored from the snapshot.
+
+We don't need to setup the new one.
+
+#### 4. Select Network
 
 `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`
 
-For now, we have 2 networks, `testnet` and `mainnet`. Please, type here which chain you want to use or just keep the default by clicking `Enter`.
+For now, we have 2 networks, `testnet` and `mainnet`.
 
-#### Cosmovisor option
+Type whichever chain you want to use or just keep the default by clicking `Enter`.
 
-`Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` .
+#### 5. Specify Cosmovisor option
+
+`Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:`.
+
 This is also up to the operator.
 
-#### Snapshot using
+#### 6. Specify if you are using a snapshot
 
-`CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:`
+> CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]
 
 On this question we recommend to answer `Yes`, cause it will help you to catchup with other nodes in the network. That is the main feature from this installer.
 
@@ -89,17 +116,17 @@ yes
 
 ## Post-install steps
 
-### Copy your settings
+### 1. Copy your settings
 
-In case if installation process was successful, the next step is to get back the configurations from [preparation steps](#preparations):
+If the installation process was successful, the next step is to get back the configurations from [preparation steps](#preparations):
 
-- Copy `config` directory to the `CHEQD_HOME_DIRECTORY/.cheqdnode/`
-- Copy `data/priv_validator_state.json` to the `CHEQD_HOME_DIRECTORY/.cheqdnode/data`
-- Make sure that permissions are `cheqd:cheqd` for `CHEQD_HOME_DIRECTORY/.cheqdnode` directory. For setting it the next command can help `$ sudo chown -R cheqd:cheqd CHEQD_HOME_DIRECTORY/.cheqdnode`
+* Copy `config` directory to the `CHEQD_HOME_DIRECTORY/.cheqdnode/`
+* Copy `data/priv_validator_state.json` to the `CHEQD_HOME_DIRECTORY/.cheqdnode/data`
+* Make sure that permissions are `cheqd:cheqd` for `CHEQD_HOME_DIRECTORY/.cheqdnode` directory. For setting it the next command can help `$ sudo chown -R cheqd:cheqd CHEQD_HOME_DIRECTORY/.cheqdnode`
 
-Where `CHEQD_HOME_DIRECTORY` is the home directory for `cheqd` user. By default it's `/home/cheqd` or what you answered while installation for the 2nd question.
+Where `CHEQD_HOME_DIRECTORY` is the home directory for `cheqd` user. By default it's `/home/cheqd` or what you answered during the installation for the second question.
 
-### Set up external address
+### 2. Setup external address
 
 You need to specify here new external address by calling the next command under the `cheqd` user:
 
@@ -108,7 +135,7 @@ sudo su cheqd
 cheqd-noded configure p2p external-address <your-new-external-address>
 ```
 
-### Check that service works
+### 3. Check that service works
 
 The latest thing in this doc is to run the service and check that all works fine.
 
@@ -118,8 +145,8 @@ sudo systemctl start <service-name>
 
 where `<service-name>` is a name of service depending was `Install Cosmovisor` selected or not.
 
-- `cheqd-cosmovisor` if Cosmovisor was installed.
-- `cheqd-noded` in case of keeping `cheqd-noded` as was with debian package approach.
+* `cheqd-cosmovisor` if Cosmovisor was installed.
+* `cheqd-noded` in case of keeping `cheqd-noded` as was with debian package approach.
 
 For checking that service works, please run the next command:
 
