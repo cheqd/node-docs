@@ -15,7 +15,6 @@
 * [Setting up and configuring validators](docs/validator-guide/README.md)
   * [FAQs for validator operators](docs/validator-guide/validator-faq.md)
 * [cheqd Cosmos CLI](docs/cheqd-cli/README.md)
-  *
   * [Using cheqd Cosmos CLI to manage keys](docs/cheqd-cli/cheqd-cli-key-management.md)
   * [Using cheqd Cosmos CLI to manage accounts](docs/cheqd-cli/cheqd-cli-accounts.md)
   * [Using cheqd Cosmos CLI to manage a node](docs/cheqd-cli/cheqd-cli-node-management.md)
@@ -24,7 +23,6 @@
 ## 🧑‍💻 Developing on cheqd
 
 * [Building from source](docs/build-and-networks/README.md)
-  *
   * [Docker Based Localnet](docs/build-and-networks/local-docker-network.md)
   * [Docker Compose Based Localnet](docs/build-and-networks/local-docker-compose-network.md)
   * [Setting up a new network](docs/build-and-networks/manual-network-setup.md)
