@@ -30,11 +30,9 @@ Extended information on [recommended hardware requirements is available in Tende
 
 ### Operating system
 
-Our [packaged releases](https://github.com/cheqd/cheqd-node/releases) are currently compiled and tested for `Ubuntu 20.04 LTS`, which is the recommended operating system for installation using interactive installer or binaries.
+Our [packaged releases](https://github.com/cheqd/cheqd-node/releases) are currently compiled for Linux x86_64 and Linux ARM64 systems. We carry out our testing on **Ubuntu 20.04 LTS**, with plans to migrate this to Ubuntu 22.04 LTS in the future.
 
-For other operating systems, we recommend using [pre-built Docker image releases for `cheqd-node`](https://github.com/orgs/cheqd/packages?repo_name=cheqd-node).
-
-We plan on supporting other operating systems in the future, based on demand for specific platforms by the community.
+We also offer [pre-built Docker image releases for `cheqd-node`](https://github.com/orgs/cheqd/packages?repo_name=cheqd-node) for those who prefer Docker deployments or for other operating systems.
 
 ### Storage volumes
 
@@ -89,4 +87,3 @@ Follow the guide for your preferred installation method:
 ## Further information
 
 * Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.tendermint.com/v0.35/nodes/running-in-production.html).
-* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/master/run-node/cosmovisor.html); however in our testing so far this method has not been reliable and is therefore currently not recommended.
