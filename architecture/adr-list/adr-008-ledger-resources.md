@@ -100,7 +100,7 @@ We took the following design principles into consideration, along with an explan
 
 Resources on cheqd ledger are collated under *Resource Collections*, which are defined as a list of resources linked to and controlled using a DID Document ("DIDDoc").
 
-![Simplified on-ledger Resource creation flow on cheqd network](../../.gitbook/assets/adr008-resource-flow-simple.png)
+![Simplified on-ledger Resource creation flow on cheqd network](../../.gitbook/assets/adr008-resource-flow-simplified.png)
 
 *Figure 4: Overview of Resource and Resource Collection creation ([editable version](https://swimlanes.io/u/GI-Jxpnr5))*
 
