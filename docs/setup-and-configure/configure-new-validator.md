@@ -14,7 +14,7 @@ While the instructions listed here are specific to the cheqd testnet, a similar 
 
     Please also ensure the node is fully caught up with the latest ledger updates.
 
-    1. [Debian package install](debian/deb-package-install.md)
+    1. [Interactive installer](interactive/interactive-installer.md)
     2. [Docker install](docker-install.md)
     3. [Binary install](binary-install.md)
 2. **Generate a new account key**
