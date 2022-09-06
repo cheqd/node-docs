@@ -98,6 +98,7 @@ We took the following design principles into consideration, along with an explan
 Resources on cheqd ledger are collated under *Resource Collections*, which are defined as a list of resources linked to and controlled using a DID Document ("DIDDoc").
 
 ![Simplified on-ledger Resource creation flow on cheqd network](../../.gitbook/assets/adr008-resource-flow-simple.png)
+
 *Figure 4: Overview of Resource and Resource Collection creation ([editable version](https://swimlanes.io/u/GI-Jxpnr5))*
 
 To create a new Resource, a client application first needs to create a DID (or use an existing DID) along with its associated DIDDoc. This *resource-linked DID* is the lowest, direct level of create/update/deactivate operation control that exists.
@@ -161,6 +162,7 @@ The rationale for linking to Resources in this manner, instead of creating a new
 To create a new Resource, a client application first needs to create a DID (or use an existing DID) along with its associated DIDDoc. This *resource-linked DID* is the lowest, direct level of create/update/deactivate operation control that exits.
 
 ![Resource Creation Flow](../../.gitbook/assets/adr008-resource-flow-detailed.png)
+
 *Figure 5: Detailed sequence diagram of Resource creation on cheqd ([editable version](https://swimlanes.io/u/hjeucFOQA))*
 
 Resources must be under the maximum block size restrictions to be able to fit into a transaction. Currently this is [estimated to be ~190 KB on cheqd mainnet, based on the ~200 KB block size limit](adr-005-genesis-parameters.md) plus additional headroom for metadata that needs to be described in the `ResourceHeader`.
@@ -414,7 +416,7 @@ Example:
   * Compute **checksum**;
   * Persist the **resource** in state;
 
-CLI Example:
+cheqd Cosmos CLI Example:
 
 ```jsonc
 cheqd-noded tx resource create-resource "{
