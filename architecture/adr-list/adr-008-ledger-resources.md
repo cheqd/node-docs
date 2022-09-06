@@ -1,4 +1,4 @@
-# ADR 008: On-ledger Resources with DIDs
+# ADR 008: On-ledger Resources with DID URLs
 
 ## Status
 
@@ -8,11 +8,13 @@
 | **ADR Stage** | ACCEPTED |
 | **Implementation Status** | Implemented |
 | **Start Date** | 2021-09-23 |
-| **Last Updated** | 2022-07-19 |
+| **Last Updated** | 2022-09-06 |
 
 ## Summary
 
-This ADR defines how on-ledger resources (e.g., text, JSON, images, etc) can be referenced using [a persistent and unique `did:cheqd` identifier](adr-002-cheqd-did-method.md), with create/update operations controlled using the specified DIDs.
+This ADR defines how on-ledger resources (e.g., text, JSON, images, etc) can be created and referenced using [a persistent and unique `did:cheqd` DID URL](adr-002-cheqd-did-method.md).
+
+Each on-ledger resource will be linked with a DID Document, with create/update operations controlled using the specified verification methods in the associated DID Document.
 
 ## Context
 
@@ -86,7 +88,7 @@ Using traditional web endpoints to store resources (such as schemas) that are cr
 
 We took the following design principles into consideration, along with an explanation of how we addressed them:
 
-1. **Built using existing, familiar DID Core Spec patterns**: Wherever possible, our design attempts to utilise existing patterns and behaviours within the W3C DID Core specification instead of trying to implement proprietary/custom approaches. We believe that similar designs could be adopted by other DID methods if they choose.
+1. **Built using existing, familiar DID Core Spec patterns**: Wherever possible, our design attempts to utilise existing patterns and behaviours within the W3C DID Core specification (such as the use of DID URLs to identify resources), instead of trying to implement proprietary/custom approaches. We believe that similar designs could be adopted by other DID methods if they choose.
 2. **Protection against linkrot for long-term retrieval**: Any Resource stored on-ledger is replicated across multiple nodes.
    1. If any individual node or endpoint is down, lookup requests can be sent to any other node on the network.
    2. In a catastrophic scenario where the network itself stops to exist, e.g., companies shutting down, getting acquired etc the on-ledger data can still be restored by digital archivists using ledger snapshots. A practical example of this is how [Cosmos Hub makes historical chain archives available](https://github.com/cosmos/gaia/blob/main/docs/resources/archives.md) which can be restored. While this can be cumbersome, we wanted to design for this as a fail-safe.
@@ -112,37 +114,43 @@ This allows a *specific* Resource version to be referenced in a Verifiable Crede
 
 ### Discoverability via DIDDoc Metadata
 
-Once a Resource has been created under a Resource Collection, the parent DIDDoc will automatically have an updated *DID Document Metadata* section. 
+Once a Resource has been created under a Resource Collection, the parent DIDDoc will automatically have an updated *didDocumentMetadata* section, including *linkedResourceMetadata*. 
 
 The syntax of the linked Resource metadata is as follows:
 
 ```jsonc
-"linkedResourceMetadata": [
-  { // First version of a Resource called PassportSchema
-    "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4",
-    "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
-    "resourceId": "44547089-170b-4f5a-bcbc-06e46e0089e4", // Old Resource ID and version number
-    "resourceName": "PassportSchema", // Resource name must remain the same
-    "resourceType": "CL-Schema", // Resource type must remain the same
-    "mediaType": "application/json",
-    "created": "2022-07-19T08:40:00Z",
-    "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
-    "previousVersionId": null, // null, since no previous version
-    "nextVersionId": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // Points to next version below
-  },
-  { // Second version of a Resource called PassportSchema
-    "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/bb2118f3-5e55-4510-b420-33ef9e1726d2",
-    "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
-    "resourceId": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // New Resource ID and version number
-    "resourceName": "PassportSchema", // Resource name must remain the same
-    "resourceType": "CL-Schema", // Resource type must remain the same
-    "mediaType": "application/json",
-    "created": "2022-08-07T08:40:00Z",
-    "checksum": "9123dcbb0b42652b0e105956c68d3ca2ff34584f324fa41a29aedd32b883e131", // New version checksum
-    "previousVersionId": "44547089-170b-4f5a-bcbc-06e46e0089e4", // Points to previous version above
-    "nextVersionId": null // null if no new version
-  }
-]
+"didDocumentMetadata": {
+    "created": "2020-12-20T19:17:47Z",
+    "updated": "2020-12-20T19:19:47Z",
+    "deactivated": false,
+    "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
+    "linkedResourceMetadata": [
+      { // First version of a Resource called PassportSchema
+        "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4",
+        "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
+        "resourceId": "44547089-170b-4f5a-bcbc-06e46e0089e4", // Old Resource ID and version number
+        "resourceName": "PassportSchema", // Resource name must remain the same
+        "resourceType": "CL-Schema", // Resource type must remain the same
+        "mediaType": "application/json",
+        "created": "2022-07-19T08:40:00Z",
+        "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
+        "previousVersionId": null, // null, since no previous version
+        "nextVersionId": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // Points to next version below
+        },
+      { // Second version of a Resource called PassportSchema
+        "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/bb2118f3-5e55-4510-b420-33ef9e1726d2",
+        "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
+        "resourceId": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // New Resource ID and version number
+        "resourceName": "PassportSchema", // Resource name must remain the same
+        "resourceType": "CL-Schema", // Resource type must remain the same
+        "mediaType": "application/json",
+        "created": "2022-08-07T08:40:00Z",
+        "checksum": "9123dcbb0b42652b0e105956c68d3ca2ff34584f324fa41a29aedd32b883e131", // New version checksum
+        "previousVersionId": "44547089-170b-4f5a-bcbc-06e46e0089e4", // Points to previous version above
+        "nextVersionId": null // null if no new version
+        }
+      ]
+    }
 ```
 
 
