@@ -62,7 +62,9 @@ DIDs *can* be stored on traditional centralised-storage endpoints (e.g., [`did:w
 
 #### Risks applicable in the context of Verifiable Credentials
 
-The issues highlighted above **a material difference to the longevity of Verifiable Credentials**. For example, a passport ([which typically have a 5-10 year validity]((https://en.wikipedia.org/wiki/Passport_validity))) issued as a Verifiable Credential anchored to a DID (regardless of whether the DID was on-ledger or not) might stop working if the credential schema, visual presentation format, or other necessary resources were stored off-ledger on traditional centralised storage.
+The issues highlighted above **a material difference to the longevity of Verifiable Credentials**.
+
+For example, a passport ([which typically have a 5-10 year validity](https://en.wikipedia.org/wiki/Passport_validity) issued as a Verifiable Credential anchored to a DID (regardless of whether the DID was on-ledger or not) might stop working if the credential schema, visual presentation format, or other necessary resources were stored off-ledger on traditional centralised storage.
 
 Despite these issues, many self-sovereign identity (SSI) implementations - *even ones that use ledgers / distributed systems for DIDs* -  often utilise centralised storage. From the [W3C Verifiable Credential Implementation Guide](https://w3c.github.io/vc-imp-guide/#creating-new-credential-types):
 
@@ -114,7 +116,7 @@ This allows a *specific* Resource version to be referenced in a Verifiable Crede
 
 ### Discoverability via DIDDoc Metadata
 
-Once a Resource has been created under a Resource Collection, the parent DIDDoc will automatically have an updated *didDocumentMetadata* section, including *linkedResourceMetadata*. 
+Once a Resource has been created under a Resource Collection, the parent DIDDoc will automatically have an updated *didDocumentMetadata* section, including *linkedResourceMetadata*.
 
 The syntax of the linked Resource metadata is as follows:
 
@@ -153,7 +155,7 @@ The syntax of the linked Resource metadata is as follows:
     }
 ```
 
-Importantly, we decided not to populate the actual resource data into the didDocumentMetadata, but instead, what we refer to as a *Resource Preview* which contains all the metadata about the associated resources. 
+Importantly, we decided not to populate the actual resource data into the didDocumentMetadata, but instead, what we refer to as a *Resource Preview* which contains all the metadata about the associated resources.
 
 ### *Optional* Discoverability via DIDDoc Services
 
@@ -258,11 +260,11 @@ Example:
 
 #### MsgCreateResource
 
-* **Collection ID: (did:cheqd:...:)`<identifier>` (supplied client-side)** 
-* **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
-* **Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **ResourceType (supplied client-side)**
-* **Data: <resource-file>: Path to file with resource content**
+* Collection ID: (did:cheqd:...:)`<identifier>` (supplied client-side)
+* ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
+* Name: String (e.g., `CL-Schema1` (supplied client-side)
+* ResourceType (supplied client-side)**
+* Data: `resource-file` Path to file with resource content
 
 Example:
 
