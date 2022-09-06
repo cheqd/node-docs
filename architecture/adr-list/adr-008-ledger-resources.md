@@ -12,7 +12,7 @@
 
 ## Summary
 
-This ADR defines how on-ledger resources (e.g., text, JSON, images, etc) can be referenced using [a permanent and unique `did:cheqd` identifier](adr-002-cheqd-did-method.md), with create/update operations controlled using the specified DIDs.
+This ADR defines how on-ledger resources (e.g., text, JSON, images, etc) can be referenced using [a persistent and unique `did:cheqd` identifier](adr-002-cheqd-did-method.md), with create/update operations controlled using the specified DIDs.
 
 ## Context
 
@@ -27,6 +27,7 @@ Common types of resources that might be required to issue and validate Verifiabl
 * **Visual representations for Verifiable Credentials**: Although Verifiable Credentials can be exchanged digitally, in practice most identity wallets want to present "human-friendly" representations. This allows the credential representation to be shown according to the brand guidelines of the issuer, [internationalisation ("i18n") translations](https://en.wikipedia.org/wiki/Internationalization_and_localization), etc. Examples of this include the [Overlays Capture Architecture (OCA) specification](https://oca.colossi.network/), [Apple Wallet PassKit](https://developer.apple.com/documentation/walletpasses) ("`.pkpass`"), [Google Wallet Pass](https://developers.google.com/wallet/generic), etc.
 
 ![Mobile boarding passes for Apple Wallet from British Airways](../../.gitbook/assets/adr008-mobile-boarding-pass.jpeg)
+
 *Figure 1: Mobile boarding passes in Apple Wallet showing different visual styles (source: [British Airways media centre](https://mediacentre.britishairways.com/pressrelease/details/86/2016-72/6130))*
 
 Such visual representations can also be used to quickly communicate information visually during identity exchanges, such as airline mobile boarding passes. In the [example above from British Airways](https://mediacentre.britishairways.com/pressrelease/details/86/2016-72/6130), the pass at the front is for a "Gold" loyalty status member, whereas the pass at the back is for a "standard" loyalty status member. This information can be represented in a Verifiable Credential, of course, but the example here uses the Apple Wallet / Google Wallet formats to overlay a richer, "human-friendly" display.
@@ -49,10 +50,12 @@ DIDs *can* be stored on traditional centralised-storage endpoints (e.g., [`did:w
 3. **Single point-of-failure in resiliency**: Even for highly-trusted and sophisticated hosting providers who may not present a risk of infrastructure being compromised, a service outage at the hosting provider can make a DID anchored on their systems inaccessible.
    1. See [notable examples of service outages](https://totaluptime.com/notable-network-and-cloud-outages-of-2021/) from major cloud providers: [Amazon Web Services (AWS)](https://awsmaniac.com/aws-outages/), [Microsoft Azure](https://www.theregister.com/2018/09/17/azure_outage_report/), [Google Cloud](https://www.thousandeyes.com/blog/google-cloud-platform-outage-analysis), [Facebook / Meta](https://en.wikipedia.org/wiki/2021_Facebook_outage), [GitHub](https://github.blog/2022-03-23-an-update-on-recent-service-disruptions/), [Cloudflare](https://blog.cloudflare.com/cloudflare-outage-on-june-21-2022/)...
    ![Graph showing drop in Facebook traffic from their global service outage in 2021](../../.gitbook/assets/adr008-facebook-outage.png)
+
    *Figure 2: Graph showing drop in Facebook traffic from their global service outage in 2021 (source: [Kentik](https://www.kentik.com/blog/facebooks-historic-outage-explained/))*
    1. In particular, [the 2021 global Facebook outage](https://www.kentik.com/blog/facebooks-historic-outage-explained/) also [took down apps that used "Login with Facebook"](https://web.archive.org/web/20211005032128/https://www.wired.com/story/why-facebook-instagram-whatsapp-went-down-outage/) functionality. This highlights the risks of "contagion impact" (e.g., [a *different* Facebook outage took down Spotify, TikTok, Pinterest](https://www.engadget.com/facebook-sdk-spotify-tinder-tiktok-ios-outage-125806814.html)) of centralised digital systems - even ones run by extremely-capable tech providers.
 4. **Link rot**: "Link rot" happens when over time, URLs become inaccessible, either because the endpoint where the content was stored is no longer active, or the URL format itself changes. The graph below from [an analysis by *The New York Times* of linkrot](https://www.cjr.org/analysis/linkrot-content-drift-new-york-times.php) shows degradation over time of URLs.
   ![Linkrot analysis by New York Times](../../.gitbook/assets/adr008-linkrot.jpeg)
+
   *Figure 3: Linkrot analysis over 1996-2019 by New York Times (source: [Columbia Journalism Review / New York Times](https://www.cjr.org/analysis/linkrot-content-drift-new-york-times.php))*
 
 #### Risks applicable in the context of Verifiable Credentials
