@@ -223,7 +223,7 @@ Each DID Document MUST have a metadata section when a representation is produced
 formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
 3. **`deactivated`** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
 4. **`versionId`** (string): Contains transaction hash of the current DIDDoc version.
-5. **`resources`** (list of resources metadata | optional): [Resources preview](adr-008-ledger-resources.md). Can not be changed by CreateDID or UpdateDID transactions. cheqd ledger stores just resource identifiers in DID Doc metadata. The entirety of the resources' metadata is added when a DID is resolved.
+5. **`resources`** (list of resources metadata referred to as [Resource previews](adr-008-ledger-resources.md)| *optional*). Cannot be changed by CreateDID or UpdateDID transactions. cheqd ledger stores only the resource identifiers in the DID Doc metadata. The remainder of the resources' metadata is added when a DID is resolved.
 
 #### Example of DIDDoc metadata
 
