@@ -170,11 +170,14 @@ To create a new Resource, a client application first needs to create a DID (or u
 
 Resources must be under the maximum block size restrictions to be able to fit into a transaction. Currently this is [estimated to be ~190 KB on cheqd mainnet, based on the ~200 KB block size limit](adr-005-genesis-parameters.md) plus additional headroom for metadata that needs to be described in the `ResourceHeader`.
 
+<details>
+<summary>Resource</summary>
+
 #### Resource
 
 Each request to create a Resource *must* provide the following parameters, supplied by the client application:
 
-* **Resource Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
+* **Resource Collection ID: (did:cheqd:...:) (supplied client-side)**
 * **Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Resource Name: String (e.g., `CL-Schema1` (supplied client-side)**
 * **Resource Type (supplied client-side. It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/))**
@@ -212,11 +215,11 @@ Example using the Veramo CLI:
 
 #### ResourcePreview
 
-* **Resource Collection ID: UUID ➝** (did:cheqd:...:)**`UUID` (supplied client-side)**
+* **Resource Collection ID: (did:cheqd:...:) (supplied client-side)**
 * **Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Resource Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **Resource Type (supplied client-side)
-* **MediaType: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed ledger-side)**
+* **Resource Type (supplied client-side)**
+* MediaType: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed ledger-side)
 * Created: XMLDatetime (computed ledger-side)
 * Checksum: SHA-256 (computed ledger-side)
 * previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
@@ -227,14 +230,14 @@ Example:
 ```jsonc
 {
   "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
-  "resourceId":                 "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-  "resourceName":               "PassportSchema",
-  "resourceType":      "CL-SChema",
-  "mediaType":          "application/json",
-  "created":            "2022-04-20T20:19:19Z",
-  "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previousVersionId": null,
-  "nextVersionId":     null
+  "resourceId":                "bb2118f3-5e55-4510-b420-33ef9e1726d2",
+  "resourceName":              "PassportSchema",
+  "resourceType":              "CL-SChema",
+  "mediaType":                 "application/json",
+  "created":                   "2022-04-20T20:19:19Z",
+  "checksum":                  "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+  "previousVersionId":         null,
+  "nextVersionId":             null
 }
 ```
 
@@ -245,13 +248,10 @@ Example:
 
 #### MsgCreateResource
 
-* **Collection ID: UUID ➝** (did:cheqd:...:)`<identifier>` (supplied client-side)** - a parent DIDDoc identifier from `id` field
+* **Collection ID: (did:cheqd:...:)`<identifier>` (supplied client-side)** 
 * **ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
 * **Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **ResourceType (supplied client-side)** Possible values:
-  * `CL-Schema`
-  * `JSONSchema2020`
-* **MediaType: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed client-side)**
+* **ResourceType (supplied client-side)**
 * **Data: <resource-file>: Path to file with resource content**
 
 Example:
@@ -363,7 +363,6 @@ Example:
 * Collection ID: String - an identifier of linked DIDDoc
 * Name: String
 * ResourceType: String
-* MediaType: String
 
 Example:
 
@@ -412,10 +411,9 @@ Example:
   * Check that associated DIDDoc exists;
   * Authenticate request the same way as DIDDoc creation and updating;
   * Validate properties;
-  * Validate **data** for specific resource types (CL Schema);
   * Validate that **ID** is unique;
   * Set **created** date time;
-  * Set `previousVersion` and `nextVersion` if this is a new version (a resource with the same name, type ans resource-type exists);
+  * Set `previousVersion` and `nextVersion` if this is a new version (a resource with the same collection-id, resource-name and resource-type exists);
   * Compute **checksum**;
   * Persist the **resource** in state;
 
@@ -425,9 +423,9 @@ cheqd Cosmos CLI Example:
 cheqd-noded tx resource create-resource "{
                                           \"collection-id\":  \"DAzMQo4MDMxCjgwM\",
                                           \"resource-id\":             \"bb2118f3-5e55-4510-b420-33ef9e1726d2\",
-                                          \"resource-name"\":           \"PassportSchema\",
+                                          \"resource-name"\":  \"PassportSchema\",
                                           \"resource-type"\":  \"CL-Schema\",
-                                          \"resource-file" <resource-file>
+                                          \"resource-file"     <resource-file>
                                           <ver-method-id-1> <priv-key-1>
                                           <ver-method-id-N> <priv-key-N>
 
@@ -499,23 +497,23 @@ QueryGetDidResponse {
     "id": "did:cheqd:mainnet:DAzMQo4MDMxCjgwM",
     ...
   },
-  "DIDDocumentMetadata": {
+  "didDocumentMetadata": {
     "created": "2020-12-20T19:17:47Z",
     "updated": "2020-12-20T19:19:47Z",
     "deactivated": false,
     "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
     "linkedResourceMetadata": [
       {
-        "resourceURI":      "did:cheqd:mainnet:DAzMQo4MDMxCjgwM/resources/bb2118f3-5e55-4510-b420-33ef9e1726d2",
-        "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
-        "resourceId":       "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-        "resourceName":               "PassportSchema",
-        "resourceType":      "CL-Schema",
-        "mediaType":          "application/json"
-        "created":            "2022-04-20T20:19:19Z",
-        "checksum":           "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-        "previousVersionId": null,
-        "nextVersionId":     null
+        "resourceURI":            "did:cheqd:mainnet:DAzMQo4MDMxCjgwM/resources/bb2118f3-5e55-4510-b420-33ef9e1726d2",
+        "resourceCollectionId":   "DAzMQo4MDMxCjgwM",
+        "resourceId":             "bb2118f3-5e55-4510-b420-33ef9e1726d2",
+        "resourceName":           "PassportSchema",
+        "resourceType":           "CL-Schema",
+        "mediaType":              "application/json",
+        "created":                "2022-04-20T20:19:19Z",
+        "checksum":               "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+        "previousVersionId":      null,
+        "nextVersionId":          null
       }
     ]
   }
