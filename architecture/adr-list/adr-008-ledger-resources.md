@@ -153,20 +153,35 @@ The syntax of the linked Resource metadata is as follows:
     }
 ```
 
+Importantly, we decided not to populate the actual resource data into the didDocumentMetadata, but instead, what we refer to as a *Resource Preview* which contains all the metadata about the associated resources. 
 
 ### *Optional* Discoverability via DIDDoc Services
 
-Once a Resource has been created under a Resource Collection, the linked DIDDoc can be updated to provide a link to access it.
+Once a Resource has been created under a Resource Collection, the linked DIDDoc can be updated to provide a link to access it in the [service section](https://w3c.github.io/did-core/#services).
 
 The rationale for linking to Resources in this manner, instead of creating a new top-level section, are as follows:
 
 1. Client applications capable of doing [DID Resolution](https://w3c.github.io/did-core/#resolution) may have strong architectural assumptions to *only* expect the default DID Core specification sections in a response. We considered the possibility that such applications might (incorrectly) reject the entire DIDDoc as malformed, or crash in the process of trying to parse the DIDDoc.
-2. On the other hand, [the *Services* section in a DIDDoc](https://w3c.github.io/did-core/#services) is designed to be flexible and extensible by design. New DID Service types can be registered through [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/) by anyone.
+2. On the other hand, [the *Service* section in a DIDDoc](https://w3c.github.io/did-core/#services) is designed to be flexible and extensible by design. New DID Service types can be registered through [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/) by anyone. We suggest a new service type called *LinkedResource* should be used to reference any resource on cheqd within the service section. This is conceptually similar to the existing [*LinkedDomains*](https://www.w3.org/TR/did-spec-registries/#linkeddomains).
 3. In practice, we noted that client applications capable of DID Resolution will gracefully fail/ignore unknown Service types. Client applications that *do* understand a particular Service type can continue parsing/resolving content they are designed to handle.
 4. DIDDocs can reference other DIDDocs, such as when the [DID Controller](https://w3c.github.io/did-core/#did-controller) in one DIDDoc is specified as a [Verification Method](https://w3c.github.io/did-core/#verification-methods) in another DIDDoc. These links can be traversed using [DID URL dereferencing](https://w3c-ccg.github.io/did-resolution/#dereferencing).
 5. Historical versions of Resources can always be accessed by traversing forwards/backwards in the Resource Collection by checking if a particular Service ID has old/new versions.
 6. Multi-party control on Resource Collection updates is possible, since DIDs with multiple controllers specified in them *already* handle this scenario. In the normal process of updating a DIDDoc with multiple controllers, rules can be defined by client applications and/or the ledger on whether all controllers sign an update, or whether an *m-of-n* threshold needs to be applied. (Currently, the cheqd ledger requires all controllers to sign off on updates.)
 7. Since the [cheqd ledger does not co-relate the on-ledger cheqd/Cosmos accounts to keys that control DIDDocs](adr-003-cli-tools.md), this provides another layer of access control by allowing DIDDoc controllers to rotate keys, if required.
+
+  Example of referencing a resource using the *service* section:
+
+
+```jsonc
+  {
+    "service": [{
+      "id":"did:cheqd:testnet:DAzMQo4MDMxCjgwM#PassportSchema",
+      "type": "LinkedResource",
+      "serviceEndpoint": "https://resolver.cheqd.net/1.0/identifiers/did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/bb2118f3-5e55-4510-b420-33ef9e1726d2"
+    }]
+  }
+```
+
 
 ### Creating a new Resource within a Resource Collection
 
