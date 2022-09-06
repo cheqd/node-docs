@@ -171,7 +171,6 @@ The rationale for linking to Resources in this manner, instead of creating a new
 
   Example of referencing a resource using the *service* section:
 
-
 ```jsonc
   {
     "service": [{
@@ -181,7 +180,6 @@ The rationale for linking to Resources in this manner, instead of creating a new
     }]
   }
 ```
-
 
 ### Creating a new Resource within a Resource Collection
 
@@ -193,10 +191,7 @@ To create a new Resource, a client application first needs to create a DID (or u
 
 Resources must be under the maximum block size restrictions to be able to fit into a transaction. Currently this is [estimated to be ~190 KB on cheqd mainnet, based on the ~200 KB block size limit](adr-005-genesis-parameters.md) plus additional headroom for metadata that needs to be described in the `ResourceHeader`.
 
-<details>
-<summary>Resource</summary>
-
-#### Resource
+#### Resource creation
 
 Each request to create a Resource *must* provide the following parameters, supplied by the client application:
 
@@ -233,15 +228,12 @@ Example using the Veramo CLI:
 }
 ```
 
-<details>
-<summary>ResourcePreview</summary>
-
 #### ResourcePreview
 
-* **Resource Collection ID: (did:cheqd:...:) (supplied client-side)**
-* **Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
-* **Resource Name: String (e.g., `CL-Schema1` (supplied client-side)**
-* **Resource Type (supplied client-side)**
+* Resource Collection ID: (did:cheqd:...:) (supplied client-side)**
+* Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
+* Resource Name: String (e.g., `CL-Schema1` (supplied client-side)
+* Resource Type (supplied client-side)
 * MediaType: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed ledger-side)
 * Created: XMLDatetime (computed ledger-side)
 * Checksum: SHA-256 (computed ledger-side)
@@ -263,11 +255,6 @@ Example:
   "nextVersionId":             null
 }
 ```
-
-</details>
-
-<details>
-<summary>MsgCreateResource</summary>
 
 #### MsgCreateResource
 
@@ -297,11 +284,6 @@ Example:
 }
 ```
 
-</details>
-
-<details>
-<summary>MsgCreateResourceResponse</summary>
-
 #### MsgCreateResourceResponse
 
 * Resource: [Resource](#resource)
@@ -311,11 +293,6 @@ Example:
 ```jsonc
 { "resource":  <Resource> }
 ```
-
-</details>
-
-<details>
-<summary>QueryGetCollectionResourcesRequest</summary>
 
 #### QueryGetCollectionResourcesRequest
 
@@ -327,11 +304,6 @@ Example:
 { "collectionId": "DAzMQo4MDMxCjgwM" }
 ```
 
-</details>
-
-<details>
-<summary>QueryGetCollectionResourcesResponse</summary>
-
 #### QueryGetCollectionResourcesResponse
 
 * Resources: [ResourceHeader\[\]](#resourceheader)
@@ -341,11 +313,6 @@ Example:
 ```jsonc
 { "resources":  [<ResourceHeader1>, <ResourceHeader2>] }
 ```
-
-</details>
-
-<details>
-<summary>QueryGetResourceRequest</summary>
 
 #### QueryGetResourceRequest
 
@@ -361,11 +328,6 @@ Example:
 }
 ```
 
-</details>
-
-<details>
-<summary>QueryGetResourceResponse</summary>
-
 #### QueryGetResourceResponse
 
 * Resource: [Resource](#resource)
@@ -375,11 +337,6 @@ Example:
 ```jsonc
 { "resource":  <Resource> }
 ```
-
-</details>
-
-<details>
-<summary>QueryGetAllResourceVersionsRequest</summary>
 
 #### QueryGetAllResourceVersionsRequest
 
@@ -397,11 +354,6 @@ Example:
 }
 ```
 
-</details>
-
-<details>
-<summary>QueryGetAllResourceVersionsResponse</summary>
-
 #### QueryGetAllResourceVersionsResponse
 
 * Resources: [ResourceHeader\[\]](#resourceheader)
@@ -411,8 +363,6 @@ Example:
 ```jsonc
 { "resources":  [<ResourceHeader1>, <ResourceHeader2>] }
 ```
-
-</details>
 
 ### State
 
@@ -653,4 +603,5 @@ A new module will be created: `resource`.
   * [Indy identity-domain transactions](https://github.com/hyperledger/indy-node/blob/master/docs/source/transactions.md)
 * [Hyperledger Aries](https://wiki.hyperledger.org/display/ARIES/Hyperledger+Aries) official project background on Hyperledger Foundation wiki
   * [`aries`](https://github.com/hyperledger/aries) GitHub repository: Provides links to implementations in various programming languages
-  * [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour
+  * [`aries-rfcs`](https://github.com/hyperledger/aries-rfcs) GitHub repository: Contains Requests for Comment (RFCs) that define the Aries protocol behaviour.
+  
