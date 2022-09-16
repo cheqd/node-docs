@@ -83,6 +83,8 @@ Any client application can generate these UUIDs using their own preferred implem
 
 Alternatively, [the `unique-id` can also be generated similar to the `did:indy method`](https://hyperledger.github.io/indy-did-method/#indy-did-method-identifiers) from the initial public key of the DID (e.g., base58 encoding of the first 16 bytes of the SHA256 of the first Verification Method `Ed25519` public key). This `unique-id` format is referred to as the "Indy-style" unique identifier in our documentation.
 
+In addition, Unique Identifiers can be up to 32 base58 characters long.
+
 Support for Indy-style unique identifiers makes compatibility with Indy-based client SDKs, such as those based on [Hyperledger Aries](https://www.hyperledger.org/use/aries).
 
 #### Namespace
