@@ -8,7 +8,7 @@
 | **ADR Stage** | ACCEPTED |
 | **Implementation Status** | Implemented |
 | **Start Date** | 2021-09-23 |
-| **Last Updated** | 2022-06-24 |
+| **Last Updated** | 2022-09-28 |
 
 ## Summary
 
@@ -385,6 +385,34 @@ WriteRequest{
       "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
       "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E"
   },
+  "signatures": {
+      "Verification Method URI": "<signature>"
+      // Multiple verification methods and corresponding signatures can be added here
+  }
+}
+```
+
+### Deactivate DID
+
+This operation deactivates the DID for a given `did:cheqd:<namespace>`. Once deactivated, a DID cannot be re-activated or any DIDDoc update operations carried out.
+
+- **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`signatures`**: `DeactivateDidRequest` should be signed by all `controller` private keys. This field contains controller key URIs and signature values.
+
+#### Client request format for deactivate DID
+
+```jsonc
+WriteRequest (DeactivateDidRequest(id), signatures)
+```
+
+#### Example of a deactivate DID client request
+
+```jsonc
+WriteRequest{
+  "data": 
+    "DeactivateDidRequest" {   
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
+    },
   "signatures": {
       "Verification Method URI": "<signature>"
       // Multiple verification methods and corresponding signatures can be added here
