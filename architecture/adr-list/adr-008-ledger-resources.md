@@ -185,7 +185,7 @@ The rationale for linking to Resources in this manner, instead of creating a new
 
 ### Creating a new Resource within a Resource Collection
 
-To create a new Resource, a client application first needs to create a DID (or use an existing not [deactivated](adr-002-cheqd-did-method.md#deactivate-did) DID) along with its associated DIDDoc. This *resource-linked DID* is the lowest, direct level of create/update/deactivate operation control that exits.
+To create a new Resource, a client application first needs to create a DID (or use an existing [non-deactivated](adr-002-cheqd-did-method.md#deactivate-did) DID) along with its associated DIDDoc. This *resource-linked DID* is the lowest, direct level of create/update/deactivate operation control that exits.
 
 ![Resource Creation Flow](../../.gitbook/assets/adr008-resource-flow-detailed.png)
 
