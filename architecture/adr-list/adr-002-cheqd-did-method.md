@@ -394,10 +394,10 @@ WriteRequest{
 
 ### Deactivate DID
 
-This operation deactivates the DID Document associated with an existing DID of type `did:cheqd:<namespace>`. Deactivated DID Document can not be activated or updated.
+This operation deactivates the DID for a given `did:cheqd:<namespace>`. Once deactivated, a DID cannot be re-activated or any DIDDoc update operations carried out.
 
-- **`signatures`**: `DeactivateDidRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
 - **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`signatures`**: `DeactivateDidRequest` should be signed by all `controller` private keys. This field contains controller key URIs and signature values.
 
 #### Client request format for deactivate DID
 
