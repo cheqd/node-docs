@@ -18,12 +18,11 @@ We're going to assume that we have a vault cluster deployment running for us.
 > If you don't have an existing deployment of Hashicorp Vault, [Learn by Hashicorp Vault](https://learn.hashicorp.com/vault)
 is a good starting point to get your own cluster running
 
-How To:
--------
+## How To
 
 First of all, we to install Vault CLI on our machine, the best way to do this is by following the guide on Hashicorp's Website:
 
-[Install Vault ![](https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.vaultproject.io%2Fdocs%2Finstall)
+[Install Vault ![Vault Logo](https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.vaultproject.io%2Fdocs%2Finstall)
 https://www.vaultproject.io/docs/install](https://www.vaultproject.io/docs/install)
 
 After installing the CLI, we need to do some setup, set some environment variables in your shell environment, so that
