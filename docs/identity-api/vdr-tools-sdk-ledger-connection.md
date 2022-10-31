@@ -127,7 +127,7 @@ Broadcast a signed cheqd/Cosmos transaction to node(s) in a defined pool. This w
 
 ### indy_cheqd_pool_abci_query
 
-Send a [Tendermint ABCI query](https://docs.cosmos.network/v0.44/intro/sdk-app-architecture.html#abci) to specified pool `alias`. ABCI queries allow custom queries to be constructed and resultant answers fetched from the cheqd network ledger, for any data that may not be covered under the usual RPC/REST API endpoints.
+Send a [Tendermint ABCI query](https://docs.cosmos.network/main/intro/sdk-app-architecture.html#abci) to specified pool `alias`. ABCI queries allow custom queries to be constructed and resultant answers fetched from the cheqd network ledger, for any data that may not be covered under the usual RPC/REST API endpoints.
 
 #### Input parameters
 

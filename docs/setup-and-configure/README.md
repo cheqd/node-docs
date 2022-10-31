@@ -63,7 +63,7 @@ Further details on [how P2P settings work is defined in Tendermint documentation
 
 The RPC port is intended to be used by client applications as well as the cheqd-node CLI. Your RPC port **must** be active and available on localhost to be able to use the CLI. It is up to a node operator whether they want to expose the RPC port to public internet.
 
-The [RPC endpoints for a node](https://docs.tendermint.com/master/rpc/) provide REST, JSONRPC over HTTP, and JSONRPC over WebSockets. These API endpoints can provide useful information for node operators, such as healthchecks, network information, validator information etc.
+The [RPC endpoints for a node](https://docs.tendermint.com/main/rpc/) provide REST, JSONRPC over HTTP, and JSONRPC over WebSockets. These API endpoints can provide useful information for node operators, such as healthchecks, network information, validator information etc.
 
 * By default, the RPC port is set to `26657`
 * Inbound and outbound TCP connections should be allowed from destinations desired by the node operator. The default is to allow this from any IPv4 address range.
