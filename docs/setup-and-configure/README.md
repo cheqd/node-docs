@@ -14,7 +14,7 @@ For most nodes, the RAM/vCPU requirements are relatively static and do not chang
 
 It is recommended to provide the disk storage as an expandable volume/partition that is mounted on your node configuration data path (the default is under `/home/cheqd`) so that it can be expanded independent of the root volume.
 
-Extended information on [recommended hardware requirements is available in Tendermint documentation](https://docs.tendermint.com/v0.35/nodes/running-in-production.html#hardware). The figures below have been updated from the default Tendermint recommendations to account for current cheqd network chain size, real-world usage accounting for requests nodes need to handle, etc.
+Extended information on [recommended hardware requirements is available in Tendermint documentation](https://docs.tendermint.com/main/tendermint-core/running-in-production.html#hardware). The figures below have been updated from the default Tendermint recommendations to account for current cheqd network chain size, real-world usage accounting for requests nodes need to handle, etc.
 
 #### Minimum specifications
 
@@ -57,13 +57,13 @@ The P2P port is used for peer-to-peer communication between nodes. This port is 
 * Outbound TCP connections must be allowed on *all* ports to *any* IP address range.
 * The default P2P port can be changed in `$HOME/.cheqdnode/config/config.toml`.
 
-Further details on [how P2P settings work is defined in Tendermint documentation](https://docs.tendermint.com/v0.35/nodes/configuration.html#p2p-settings).
+Further details on [how P2P settings work is defined in Tendermint documentation](https://docs.tendermint.com/main/tendermint-core/running-in-production.html#p2p).
 
 #### RPC port
 
 The RPC port is intended to be used by client applications as well as the cheqd-node CLI. Your RPC port **must** be active and available on localhost to be able to use the CLI. It is up to a node operator whether they want to expose the RPC port to public internet.
 
-The [RPC endpoints for a node](https://docs.tendermint.com/master/rpc/) provide REST, JSONRPC over HTTP, and JSONRPC over WebSockets. These API endpoints can provide useful information for node operators, such as healthchecks, network information, validator information etc.
+The [RPC endpoints for a node](https://docs.tendermint.com/main/rpc/) provide REST, JSONRPC over HTTP, and JSONRPC over WebSockets. These API endpoints can provide useful information for node operators, such as healthchecks, network information, validator information etc.
 
 * By default, the RPC port is set to `26657`
 * Inbound and outbound TCP connections should be allowed from destinations desired by the node operator. The default is to allow this from any IPv4 address range.
@@ -72,7 +72,7 @@ The [RPC endpoints for a node](https://docs.tendermint.com/master/rpc/) provide 
 
 ### Sentry nodes (optional)
 
-Tendermint allows more complex setups in production, where the ingress/egress to a validator node is [proxied behind a "sentry" node](https://docs.tendermint.com/v0.35/nodes/validators.html#setting-up-a-validator).
+Tendermint allows more complex setups in production, where the ingress/egress to a validator node is [proxied behind a "sentry" node](https://docs.tendermint.com/main/tendermint-core/validators.html).
 
 While this setup is not compulsory, node operators with higher stakes or a need to have more robust network security may consider setting up a sentry-validator node architecture.
 
@@ -88,5 +88,5 @@ Follow the guide for your preferred installation method:
 
 ## Further information
 
-* Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.tendermint.com/v0.35/nodes/running-in-production.html).
-* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/master/run-node/cosmovisor.html); however in our testing so far this method has not been reliable and is therefore currently not recommended.
+* Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.tendermint.com/main/tendermint-core/running-in-production.html).
+* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/main/tooling/cosmovisor); however in our testing so far this method has not been reliable and is therefore currently not recommended.

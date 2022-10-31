@@ -1,12 +1,10 @@
 # cheqd: Node Documentation
 
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/cheqd/cheqd-node/Build%20and%20Test/main?style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/test.yml) [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/cheqd/cheqd-node/Lint/main?label=lint&style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/lint.yml)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/cheqd/cheqd-node?color=green&label=stable%20release&style=flat-square)](https://github.com/cheqd/cheqd-node/releases/latest) ![GitHub Release Date](https://img.shields.io/github/release-date/cheqd/cheqd-node?color=green&style=flat-square) [![GitHub license](https://img.shields.io/github/license/cheqd/cheqd-node?color=blue&style=flat-square)](https://github.com/cheqd/cheqd-node/blob/main/LICENSE)
 
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/cheqd/cheqd-node?color=green&label=stable&sort=semver&style=flat-square)](https://github.com/cheqd/cheqd-node/releases/latest) ![GitHub Release Date](https://img.shields.io/github/release-date/cheqd/cheqd-node?style=flat-square)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/cheqd/cheqd-node?include_prereleases&label=dev%20release&style=flat-square)](https://github.com/cheqd/cheqd-node/releases/) ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/cheqd/cheqd-node/latest?style=flat-square) [![GitHub contributors](https://img.shields.io/github/contributors/cheqd/cheqd-node?label=contributors%20%E2%9D%A4%EF%B8%8F&style=flat-square)](https://github.com/cheqd/cheqd-node/graphs/contributors)
 
-[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/cheqd/cheqd-node?include_prereleases&label=latest%20%28incl.%20pre-release%29&sort=semver&style=flat-square)](https://github.com/cheqd/cheqd-node/releases/) ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/cheqd/cheqd-node/latest?style=flat-square)
-
-[![GitHub contributors](https://img.shields.io/github/contributors/cheqd/cheqd-node?style=flat-square)](https://github.com/cheqd/cheqd-node/graphs/contributors) ![GitHub repo size](https://img.shields.io/github/repo-size/cheqd/cheqd-node?style=flat-square)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cheqd/cheqd-node/Workflow%20Dispatch?label=workflows&style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/dispatch.yml) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cheqd/cheqd-node/CodeQL?label=CodeQL&style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/codeql.yml) ![GitHub repo size](https://img.shields.io/github/repo-size/cheqd/cheqd-node?style=flat-square)
 
 ## ℹ️ Overview
 
@@ -60,7 +58,7 @@ We plan on adding new functionality rapidly and on a regular basis and welcome f
 
 ## 🛠 Developing & contributing to cheqd
 
-`cheqd-node` is written in Go and built using Cosmos SDK. The [Cosmos SDK Developer Guide](https://docs.cosmos.network/) explains a lot of the [basic concepts](https://docs.cosmos.network/v0.44/basics/app-anatomy.html) of how the cheqd network functions.
+`cheqd-node` is written in Go and built using Cosmos SDK. The [Cosmos SDK Developer Guide](https://docs.cosmos.network/) explains a lot of the [basic concepts](https://docs.cosmos.network/main/basics/app-anatomy) of how the cheqd network functions.
 
 If you want to build a node from source or contribute to the code, please read our guide to [building and testing](docs/build-and-networks/README.md).
 
