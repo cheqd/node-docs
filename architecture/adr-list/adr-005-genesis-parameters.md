@@ -47,7 +47,7 @@ Tendermint requires [genesis parameters](https://docs.tendermint.com/main/tender
 
 ## Cosmos SDK module parameters
 
-Cosmos application is divided [into a list of modules](https://docs.cosmos.network/main/modules/). Each module has parameters that help to adjust the module's behaviour.
+Cosmos application is divided [into a list of modules](https://docs.cosmos.network/main/modules). Each module has parameters that help to adjust the module's behaviour.
 
 ### `auth` module
 
@@ -164,5 +164,5 @@ The parameters above were agreed separate the cheqd mainnet and testnet paramete
 
 ## References
 
-* [List of Cosmos modules](https://docs.cosmos.network/main/modules/)
+* [List of Cosmos modules](https://docs.cosmos.network/main/modules)
 * [Tendermint genesis parameters](https://docs.tendermint.com/main/tendermint-core/using-tendermint.html#genesis)
