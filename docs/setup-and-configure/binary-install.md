@@ -21,7 +21,7 @@ The [node setup guide provides pre-requisites](README.md) needed before the step
 
    It is highly recommended to run the `cheqd-node` as a system service using a supervisor such as `systemd`.
 
-   You can use such [postinst](https://github.com/cheqd/cheqd-node/blob/main/build-tools/postinst) script for setting up our binary as a service. The same tool can be used to set up the binary as a service.
+   You can use such [postinst](https://github.com/cheqd/cheqd-node/blob/main/build-tools/node-standalone.service) script for setting up our binary as a service. The same tool can be used to set up the binary as a service.
 
    There is only one input parameter for `postinst` script, it's a path to where binary is.
 
