@@ -58,4 +58,4 @@ It was decided to go with **10^-9** as the smallest fraction, with the whole num
 
 ## References
 
-* [Cosmos ADR proposal to add coin metadata](https://https://docs.cosmos.network/main/architecture/adr-024-coin-metadata.html)
+* [Cosmos ADR proposal to add coin metadata](https://docs.cosmos.network/main/architecture/adr-024-coin-metadata.html)

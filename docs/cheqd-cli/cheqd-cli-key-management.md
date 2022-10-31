@@ -8,7 +8,7 @@ Account addresses are on a cheqd node are an encoded version of a public key. Ea
 
 To submit a transaction on behalf of an account, it must be signed with an account's private key.
 
-Cosmos supports [multiple keyring backends](https://https://docs.cosmos.network/main/run-node/keyring.html) for the storage and management of keys. Each node operator is free to use the key management method they prefer.
+Cosmos supports [multiple keyring backends](https://docs.cosmos.network/main/run-node/keyring.html) for the storage and management of keys. Each node operator is free to use the key management method they prefer.
 
 By default, the `cheqd-noded` binary is configured to use the `os` keyring backend, as it is a safe default compared to file-based key management methods.
 
