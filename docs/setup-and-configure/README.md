@@ -89,4 +89,4 @@ Follow the guide for your preferred installation method:
 ## Further information
 
 * Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.tendermint.com/v0.35/nodes/running-in-production.html).
-* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/master/run-node/cosmovisor.html); however in our testing so far this method has not been reliable and is therefore currently not recommended.
+* [Сosmovisor could be used for automatic upgrades](https://https://docs.cosmos.network/main/run-node/cosmovisor.html); however in our testing so far this method has not been reliable and is therefore currently not recommended.

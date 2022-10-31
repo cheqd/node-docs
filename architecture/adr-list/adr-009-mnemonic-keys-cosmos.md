@@ -21,7 +21,7 @@ For example, an identity wallet application or backend application would need to
 
 ### Assumptions / Considerations
 
-Cosmos SDK uses [known algorithms for deriving private keys from mnemonics](https://docs.cosmos.network/master/basics/accounts.html#keyring). This can be replicated using standard crypto libraries to carry out the same steps as in Cosmos SDK:
+Cosmos SDK uses [known algorithms for deriving private keys from mnemonics](https://https://docs.cosmos.network/main/basics/accounts.html#keyring). This can be replicated using standard crypto libraries to carry out the same steps as in Cosmos SDK:
 
 ```text
 rounds of iteration :    2048
@@ -64,4 +64,4 @@ N/A
 
 ## References
 
-* [Cosmos SDK account generation and keyrings](https://docs.cosmos.network/master/basics/accounts.html)
+* [Cosmos SDK account generation and keyrings](https://https://docs.cosmos.network/main/basics/accounts.html)

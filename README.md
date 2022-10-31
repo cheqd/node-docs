@@ -58,7 +58,7 @@ We plan on adding new functionality rapidly and on a regular basis and welcome f
 
 ## 🛠 Developing & contributing to cheqd
 
-`cheqd-node` is written in Go and built using Cosmos SDK. The [Cosmos SDK Developer Guide](https://docs.cosmos.network/) explains a lot of the [basic concepts](https://docs.cosmos.network/v0.44/basics/app-anatomy.html) of how the cheqd network functions.
+`cheqd-node` is written in Go and built using Cosmos SDK. The [Cosmos SDK Developer Guide](https://docs.cosmos.network/) explains a lot of the [basic concepts](https://docs.cosmos.network/main/basics/app-anatomy) of how the cheqd network functions.
 
 If you want to build a node from source or contribute to the code, please read our guide to [building and testing](docs/build-and-networks/README.md).
 

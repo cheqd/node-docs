@@ -27,7 +27,7 @@ Tokens collected through this process accumulate in the **community pool**. The 
 
 ### Community tax collection
 
-From [Cosmos SDK documentation, `distribution` module](https://docs.cosmos.network/master/modules/distribution/03_begin_block.html#reward-to-the-community-pool):
+From [Cosmos SDK documentation, `distribution` module](https://https://docs.cosmos.network/main/modules/distribution/03_begin_block.html#reward-to-the-community-pool):
 
 > The community pool gets `community_tax * fees`, plus any remaining dust after validators get their rewards that are always rounded down to the nearest integer value.
 
@@ -46,7 +46,7 @@ To spend tokens from the **community pool**:
 2. If proposal is approved using the voting process, the recipient address specified will receive the requested tokens.
 3. The expectation on the recipient is that they spend the tokens for the purpose specified in their proposal.
 
-More information about fee distribution is available in the [**End Block** section of Cosmos's `distribution` module](https://docs.cosmos.network/master/modules/distribution/03_begin_block.html) documentation.
+More information about fee distribution is available in the [**End Block** section of Cosmos's `distribution` module](https://https://docs.cosmos.network/main/modules/distribution/03_begin_block.html) documentation.
 
 ## Decision
 
