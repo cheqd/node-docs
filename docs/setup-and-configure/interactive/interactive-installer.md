@@ -364,12 +364,6 @@ cosmovisor-v1.1.0-linux-amd64.tar.gz               100%[========================
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   234  100   234    0     0   1170      0 --:--:-- --:--:-- --:--:--  1170
-*********  Executing command: sudo su -c 'cheqd-noded configure p2p seeds 658453f9578d82f0897f13205ca2e7ad37279f95@seed1.eu.testnet.cheqd.network:26656,eec97b12f7271116deb888a8d62e0739b4350fbd@seed1.us.testnet.cheqd.network:26656,32d626260f74f3c824dfa15a624c078f27fc31a2@seed1.ap.testnet.cheqd.network:26656' cheqd
-*********  Executing command: sudo su -c 'cheqd-noded configure rpc-laddr "tcp://0.0.0.0:26657"' cheqd
-*********  Executing command: sudo su -c 'cheqd-noded configure p2p laddr "tcp://0.0.0.0:26656"' cheqd
-*********  Executing command: sudo su -c 'cheqd-noded configure min-gas-prices 25ncheq' cheqd
-*********  Downloading snapshot and extracting archive. This can take a *really* long time...
-*********  Directory /home/cheqd/.cheqdnode/data already exists
 *********  Executing command: curl -s --head https://cheqd-node-backups.ams3.cdn.digitaloceanspaces.com/testnet/latest/cheqd-testnet-4_2022-07-06.tar.gz | awk '/Length/ {print $2}'
 *********  Executing command: df -P -B1 /home/cheqd/.cheqdnode | tail -1 | awk '{print $4}'
 *********  Downloading snapshot archive. This may take a while...
