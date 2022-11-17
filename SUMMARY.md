@@ -8,7 +8,6 @@
   *
   * [Interactive installer](docs/setup-and-configure/interactive/interactive-installer.md)
   * [Installing cheqd-node with Docker](docs/setup-and-configure/docker-install.md)
-  * [Installing a cheqd node from binary package releases](docs/setup-and-configure/binary-install.md)
 * [Setting up and configuring validators](docs/validator-guide/README.md)
   * [FAQs for validator operators](docs/validator-guide/validator-faq.md)
   * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore-node-keys.md)

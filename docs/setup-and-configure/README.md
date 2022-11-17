@@ -82,7 +82,6 @@ Follow the guide for your preferred installation method:
 
 * [interactive installer](interactive/interactive-installer.md)
 * [Docker install](docker-install.md)
-* [Binary install](binary-install.md)
 
 [Configure your node as a validator](../validator-guide/README.md) after successful installation.
 

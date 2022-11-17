@@ -16,7 +16,6 @@ While the instructions listed here are specific to the cheqd testnet, a similar 
 
     1. [Interactive installer](interactive/interactive-installer.md)
     2. [Docker install](docker-install.md)
-    3. [Binary install](binary-install.md)
 2. **Generate a new account key**
 
     Follow the guidance on [using cheqd CLI to manage keys](../cheqd-cli/cheqd-cli-key-management.md) to create a new account key.
