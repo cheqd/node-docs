@@ -65,6 +65,16 @@ Cosmos application is divided [into a list of modules](https://docs.cosmos.netwo
 | - | - | - | - |
 | `default_send_enabled` | The default send enabled value allows send transfers for all coin denominations | True    | True    |
 
+### `cheqd` module
+
+| Parameter | Description | Mainnet | Testnet |
+| - | - | - | - |
+| `create_did` | The specified transaction fee  for **creating** a Decentralized Identifier (DID) on the cheqd network | 50,000,000,000 ncheq (50 CHEQ)    | 50,000,000,000 ncheq (50 CHEQ)   |
+| `update_did` | The specified transaction fee for **updating** an existing Decentralized Identifier (DID) on the cheqd network | 25,000,000,000 ncheq (25 CHEQ)   | 25,000,000,000 ncheq (25 CHEQ)   |
+| `deactivate_did` | The specified transaction fee for **deactivating** an existing Decentralized Identifier (DID) on the cheqd network | 25,000,000,000 ncheq (25 CHEQ)   | 25,000,000,000 ncheq (25 CHEQ)   |
+| `burn_factor` | The percentage of the transaction fee for `create_did`, `update_did` or `deactivate_did` that is burnt, i.e., destroyed from the cheqd network | 50%    | 50%    |
+
+
 ### `crisis` module
 
 | Parameter | Description | Mainnet | Testnet |
@@ -104,6 +114,15 @@ Cosmos application is divided [into a list of modules](https://docs.cosmos.netwo
 | `inflation_min`         | Inflation aims to this value if `bonded_ratio` > `bonded_goal`                                                                                                                                                               | 0.01 (1%)                              | 0.01 (1%)                              |
 | `goal_bonded`           | Percentage of bonded tokens at which inflation rate will neither increase nor decrease                                                                                                                                       | 0.60 (60%)                             | 0.60 (60%)                             |
 | `blocks_per_year`       | Number of blocks generated per year                                                                                                                                                                                          | 3,155,760 (1 block every \~10 seconds) | 3,155,760 (1 block every \~10 seconds) |
+
+### `resource` module
+
+| Parameter | Description | Mainnet | Testnet |
+| - | - | - | - |
+| `image` | The specified transaction fee  for **creating** an image as a DID-Linked Resource on the cheqd network | 2,500,000,000 ncheq (2.5 CHEQ)    | 2,500,000,000 ncheq (2.5 CHEQ)   |
+| `json` | The specified transaction fee  for **creating** a JSON file as a DID-Linked Resource on the cheqd network | 2,500,000,000 ncheq (2.5 CHEQ)   | 2,500,000,000 ncheq (2.5 CHEQ)   |
+| `default` | The specified transaction fee  for **creating** any other DID-Linked Resource on the cheqd network | 2,500,000,000 ncheq (2.5 CHEQ)   | 2,500,000,000 ncheq (2.5 CHEQ)   |
+| `burn_factor` | The percentage of the transaction fee for `image`, `json` or `default` DID-Linked Resources that are burnt, i.e., destroyed from the cheqd network | 50%    | 50%    |
 
 ### `slashing` module
 
