@@ -43,8 +43,6 @@ That way:
 1. The second node doesn't need to sync the full blockchain; and
 2. You can separate out the keys/wallets, since the IP address of your actual node will be public by definition and people can attack it or try to break in
 
-
-
 ## **How much storage should I provision?**
 
 \
@@ -53,17 +51,23 @@ I’d recommend at least 250 GB at the current chain size. You can choose to go 
 ## **Is there any way to use less storage?**
 
 \
-Yes, you can, [by setting the pruning settings to more aggressive parameters in ](https://cheqd-community.slack.com/archives/C02NWSZ6S5D/p1655158283824199?thread\_ts=1655156299.525379\&cid=C02NWSZ6S5D)`app.toml`. Here’s the relevant section in the file:\
+Yes, you can. You can do this by [setting the pruning settings](https://cheqd-community.slack.com/archives/C02NWSZ6S5D/p1655158283824199?thread\_ts=1655156299.525379\&cid=C02NWSZ6S5D) to more aggressive parameters in the `app.toml` file.
 
+ Here’s the relevant section in the file:
 
-```
-# default: the last 100 states are kept in addition to every 500th state; pruning at 10 block intervals
-# nothing: all historic states will be saved, nothing will be deleted (i.e. archiving node)
-# everything: all saved states will be deleted, storing only the current state; pruning at 10 block intervals
-# custom: allow pruning options to be manually specified through 'pruning-keep-recent', 'pruning-keep-every', and 'pruning-interval'
+```bash
+default: the last 100 states are kept in addition to every 500th state; pruning at 10 block intervals
+
+nothing: all historic states will be saved, nothing will be deleted (i.e. archiving node)
+
+everything: all saved states will be deleted, storing only the current state; pruning at 10 block intervals
+
+custom: allow pruning options to be manually specified through 'pruning-keep-recent', 'pruning-keep-every', and 'pruning-interval'
+
 pruning = "default"
 
-# These are applied if and only if the pruning strategy is custom.
+These are applied if and only if the pruning strategy is custom.
+
 pruning-keep-recent = "0"
 pruning-keep-every = "0"
 pruning-interval = "0"
@@ -80,7 +84,7 @@ One of the simplest ways to do this is to [look at the validator “Condition”
 * **Amber**: 70-90% blocks signed
 * **Red**: 1-70% blocks signed
 
-We **** have also[ built a tool internally that takes the output of this from condition score](https://github.com/cheqd/validator-status) from the block explorer GraphQL API and makes it available as a simple REST API that can be used to send alerts on Slack, Discord etc which we have [open sourced](https://github.com/cheqd/validator-status) and set up on our Slack/Discord.&#x20;
+We have also [built a tool](https://github.com/cheqd/validator-status) internally that takes the output of this from condition score from the block explorer GraphQL API and makes it available as a simple REST API that can be used to send alerts on Slack, Discord etc which we have [open sourced](https://github.com/cheqd/validator-status) and set up on our Slack/Discord.&#x20;
 
 Please join the channel 'mainnet-alerts' on the cheqd community slack.
 
@@ -94,8 +98,8 @@ Yes! Here are a few other suggestions:
 * You can check the current status of disk storage used on all mount points manually through the output of `df -hT`
 * The default storage path for cheqd-node is on `/home/cheqd`. By default, most hosting/cloud providers will set this up on a single disk volume under the `/` (root) path. If you move and mount `/home` on a separate disk volume, this will allow you to expand the storage independent of the main volume. This can sometimes make a difference, because if you leave `/home` tree mounted on `/` mount path, many cloud providers will force you to bump the _whole_ virtual machine category - including the CPU and RAM - to a more expensive tier in order to get additional disk storage on `/`. This can also result in over-provisioning since the additional CPU/RAM is likely not required.
 * You can also optimise the amount of logs stored, in case the logs are taking up too much space. There’s a few techniques here:
-* In `config.toml` you can set the logging level to `error` for less logging than the default which is `info`. (The other possible value for this is `debug`.)
-* [Set the log rotation configuration to use different/custom parameters](https://docs.cheqd.io/node/docs/setup-and-configure/debian#log-rotation-configuration) such as what file-size to rotate at, number of days to retain etc.
+* In `config.toml` you can set the logging level to `error` for less logging than the default which is `info`. (The other possible value for this is `debug`)
+* [Set the log rotation configuration to use different/custom parameters such as what file-size to rotate at, number of days to retain etc.
 
 ## What is Commission rate and is it important?
 
@@ -103,7 +107,7 @@ As a Validator Node, you should be familiar with the concept of commission. This
 
 There are three commission values you should be familiar with:
 
-```
+```bash
 max_commission_rate
 
 max_commission_rate_change
@@ -131,13 +135,13 @@ When setting up the Validator, the Gas parameter is the amount of tokens you are
 
 For simplicity, we suggest setting:
 
-```
+```bash
 --gas: auto
 ```
 
 AND setting:
 
-```
+```bash
 --gas-adjustment: 1.2
 ```
 
@@ -147,7 +151,7 @@ Gas prices also come into play here too, the lower your gas price, the more like
 
 We suggest the set:
 
-```
+```bash
 --gas-price
 ```
 
@@ -170,9 +174,3 @@ cheqd-noded tx staking edit-validator --from validator1-eu --moniker "cheqd" --d
 ## Should I set my firewall port 26656 open to the world?
 
 Yes, this is how you should do it. Since it's a public permissionless network, there's no way of pre-determining what the set of IP addresses will be, as entities may leave and join the network. We suggest using a TCP/network load balancer and keeping your VM/node in a private subnet though for security reasons. The LB then becomes your network edge which if you're hosting on a cloud provider they manage/patch/run.
-
-
-
-
-
-## ****

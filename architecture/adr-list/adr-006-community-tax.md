@@ -15,7 +15,7 @@ description: This is the suggested template to be used for ADRs on the cheqd-nod
 
 ## Summary
 
-The aim of this ADR is to define how ["community tax" as described in the Cosmos blockchain framework](https://docs.cosmos.network/v0.44/modules/distribution/07_params.html#parameters) will work on cheqd network.
+The aim of this ADR is to define how ["community tax" as described in the Cosmos blockchain framework](https://docs.cosmos.network/main/modules/distribution#the-distribution-scheme) will work on cheqd network.
 
 ## Context
 
@@ -23,11 +23,11 @@ The aim of this ADR is to define how ["community tax" as described in the Cosmos
 
 `communityTax` is a value set in genesis for each Cosmos network and defined as a percentage that is applied to the fees collected in each block.
 
-Tokens collected through this process accumulate in the **community pool**. The percentage charged as `communityTax` can be changed by [making proposals on the network and voting for acceptance](https://docs.cosmos.network/v0.44/modules/gov/) by the network.
+Tokens collected through this process accumulate in the **community pool**. The percentage charged as `communityTax` can be changed by [making proposals on the network and voting for acceptance](https://docs.cosmos.network/main/modules/gov) by the network.
 
 ### Community tax collection
 
-From [Cosmos SDK documentation, `distribution` module](https://docs.cosmos.network/master/modules/distribution/03_begin_block.html#reward-to-the-community-pool):
+From [Cosmos SDK documentation, `distribution` module](https://docs.cosmos.network/main/modules/distribution#reward-to-the-community-pool):
 
 > The community pool gets `community_tax * fees`, plus any remaining dust after validators get their rewards that are always rounded down to the nearest integer value.
 
@@ -46,7 +46,7 @@ To spend tokens from the **community pool**:
 2. If proposal is approved using the voting process, the recipient address specified will receive the requested tokens.
 3. The expectation on the recipient is that they spend the tokens for the purpose specified in their proposal.
 
-More information about fee distribution is available in the [**End Block** section of Cosmos's `distribution` module](https://docs.cosmos.network/master/modules/distribution/03_begin_block.html) documentation.
+More information about fee distribution is available in the [**End Block** section of Cosmos's `distribution` module](https://docs.cosmos.network/main/modules/distribution#the-distribution-scheme) documentation.
 
 ## Decision
 
@@ -73,5 +73,5 @@ More information about fee distribution is available in the [**End Block** secti
 
 ## References
 
-* [Cosmos SDK `distribution` module parameters](https://docs.cosmos.network/v0.44/modules/distribution/07_params.html#parameters)
-* [Cosmos SDK `governance` module](https://docs.cosmos.network/v0.44/modules/gov/)
+* [Cosmos SDK `distribution` module parameters](https://docs.cosmos.network/main/modules/distribution#the-distribution-scheme)
+* [Cosmos SDK `governance` module](https://docs.cosmos.network/main/modules/gov)

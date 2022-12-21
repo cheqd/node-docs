@@ -21,7 +21,7 @@ Genesis consists of Tendermint consensus engine parameters and Cosmos app-specif
 
 ## Tendermint consensus parameters
 
-Tendermint requires [genesis parameters](https://docs.tendermint.com/master/tendermint-core/using-tendermint.html#genesis) to be defined for basic consensus conditions on any Cosmos network.
+Tendermint requires [genesis parameters](https://docs.tendermint.com/main/tendermint-core/using-tendermint.html#genesis) to be defined for basic consensus conditions on any Cosmos network.
 
 ### Block parameters
 
@@ -47,7 +47,7 @@ Tendermint requires [genesis parameters](https://docs.tendermint.com/master/tend
 
 ## Cosmos SDK module parameters
 
-Cosmos application is divided [into a list of modules](https://docs.cosmos.network/v0.44/modules/). Each module has parameters that help to adjust the module's behaviour.
+Cosmos application is divided [into a list of modules](https://docs.cosmos.network/main/modules). Each module has parameters that help to adjust the module's behaviour.
 
 ### `auth` module
 
@@ -69,7 +69,7 @@ Cosmos application is divided [into a list of modules](https://docs.cosmos.netwo
 
 | Parameter | Description | Mainnet | Testnet |
 | - | - | - | - |
-| `constant_fee` | The fee is used to verify the [invariant(s)](https://docs.cosmos.network/v0.44/building-modules/invariants.html) | 10,000,000,000,000 ncheq (10,000 CHEQ) | 10,000,000,000,000 ncheq (10,000 CHEQ) |
+| `constant_fee` | The fee is used to verify the [invariant(s)](https://docs.cosmos.network/main/building-modules/invariants.html) | 10,000,000,000,000 ncheq (10,000 CHEQ) | 10,000,000,000,000 ncheq (10,000 CHEQ) |
 
 ### `distribution` module
 
@@ -164,5 +164,5 @@ The parameters above were agreed separate the cheqd mainnet and testnet paramete
 
 ## References
 
-* [List of Cosmos modules](https://docs.cosmos.network/v0.44/modules/)
-* [Tendermint genesis parameters](https://docs.tendermint.com/master/tendermint-core/using-tendermint.html#genesis)
+* [List of Cosmos modules](https://docs.cosmos.network/main/modules)
+* [Tendermint genesis parameters](https://docs.tendermint.com/main/tendermint-core/using-tendermint.html#genesis)

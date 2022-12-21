@@ -1,4 +1,4 @@
-# ADR 002: cheqd DID method, identity entities, and transactions
+# ADR 002: cheqd DID method
 
 ## Status
 
@@ -8,7 +8,7 @@
 | **ADR Stage** | ACCEPTED |
 | **Implementation Status** | Implemented |
 | **Start Date** | 2021-09-23 |
-| **Last Updated** | 2022-06-24 |
+| **Last Updated** | 2022-09-28 |
 
 ## Summary
 
@@ -81,7 +81,9 @@ Any client application can generate these UUIDs using their own preferred implem
 
 #### Indy-style Unique Identifiers
 
-Alternatively, [the `unique-id` can also be generated similar to the `did:indy method`](https://hyperledger.github.io/indy-did-method/#indy-did-method-identifiers) from the initial public key of the DID (e.g., the first 16 or 32 bytes of the `Ed25519` public key's Base58 representation). This `unique-id` format is referred to as the "Indy-style" unique identifier in our documentation.
+Alternatively, [the `unique-id` can also be generated similar to the `did:indy method`](https://hyperledger.github.io/indy-did-method/#indy-did-method-identifiers) from the initial public key of the DID (e.g., base58 encoding of the first 16 bytes of the SHA256 of the first Verification Method `Ed25519` public key). This `unique-id` format is referred to as the "Indy-style" unique identifier in our documentation.
+
+In addition, Unique Identifiers can be up to 32 base58 characters long.
 
 Support for Indy-style unique identifiers makes compatibility with Indy-based client SDKs, such as those based on [Hyperledger Aries](https://www.hyperledger.org/use/aries).
 
@@ -188,23 +190,23 @@ describing specifications that this DID Document is following to.
     "https://www.w3.org/ns/did/v1",
     "https://w3id.org/security/suites/ed25519-2020/v1"
   ],
-  "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
+  "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
   "verificationMethod": [
     {
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1",
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1",
       "type": "Ed25519VerificationKey2020", // external (property value)
-      "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+      "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
       "publicKeyMultibase": "zAKJP3f7BD6W4iWEQ9jwndVTCBq8ua2Utt8EEjJ6Vxsf"
     },
     {
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey",
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey",
       "type": "Ed25519VerificationKey2020", // external (property value)
-      "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+      "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
       "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
     }
   ],
-  "authentication": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1"],
-  "capabilityInvocation": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey"],
+  "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
+  "capabilityInvocation": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey"],
 }
 ```
 
@@ -221,8 +223,9 @@ Each DID Document MUST have a metadata section when a representation is produced
 1. **`created`** (string): Formatted as an XML Datetime normalized to UTC 00:00:00 and without sub-second decimal precision, e.g., `2020-12-20T19:17:47Z`.
 2. **`updated`** (string): The value of the property MUST follow the same
 formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
-3. **`deactivated`** (strings): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
-4. **`versionId`** (strings): Contains transaction hash of the current DIDDoc version.
+3. **`deactivated`** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
+4. **`versionId`** (string): Contains transaction hash of the current DIDDoc version.
+5. **`resources`** (list of resources metadata referred to as [Resource previews](adr-008-ledger-resources.md)| *optional*). Cannot be changed by CreateDID or UpdateDID transactions. cheqd ledger stores only the resource identifiers in the DID Doc metadata. The remainder of the resources' metadata is added when a DID is resolved.
 
 #### Example of DIDDoc metadata
 
@@ -232,6 +235,20 @@ formatting rules as the created property. The `updated` field is `null` if an Up
   "updated": "2020-12-20T19:19:47Z",
   "deactivated": false,
   "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
+  "linkedResourceMetadata": [
+       {
+        "resourceURI":          "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue/resources/9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+        "resourceCollectionId": "N22KY2Dyvmuu2PyyqSFKue",
+        "resourceId":            "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
+        "resourceName":         "PassportSchema",
+        "resourceType":         "CL-Schema",
+        "mediaType":            "application/json",
+        "created":              "2022-04-20T20:19:19Z",
+        "checksum":             "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+        "previousVersionId":     null,
+        "nextVersionId":         null
+      }
+  ]
 }
 ```
 
@@ -252,9 +269,9 @@ encoded public key.
 
 ```jsonc
 {
-  "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#key-0",
+  "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#key-0",
   "type": "JsonWebKey2020",
-  "controller": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
+  "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
   "publicKeyJwk": {
     "kty": "OKP",
     // external (property name)
@@ -279,7 +296,7 @@ Services can be defined in a DIDDoc to express means of communicating with the D
 
 ```jsonc
 {
-  "id":"did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#linked-domain",
+  "id":"did:cheqd:mainnet:N22N22KY2Dyvmuu2#linked-domain",
   "type": "LinkedDomains",
   "serviceEndpoint": "https://bar.example.com"
 }
@@ -311,17 +328,17 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
-      "controller": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue"],
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
+      "controller": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2"],
       "verificationMethod": [
         {
-          "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey",
+          "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1",
           "type": "Ed25519VerificationKey2020", // external (property value)
-          "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+          "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
           "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
         }
       ],
-      "authentication": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1"],
+      "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -355,19 +372,47 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue",
-      "controller": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue"],
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
+      "controller": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2"],
       "verificationMethod": [
         {
-          "id": "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#capabilityInvocationKey",
+          "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey",
           "type": "Ed25519VerificationKey2020", // external (property value)
-          "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2PyyqSFKue",
+          "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
           "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
         }
       ],
-      "authentication": ["did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue#authKey1"],
+      "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
       "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E"
   },
+  "signatures": {
+      "Verification Method URI": "<signature>"
+      // Multiple verification methods and corresponding signatures can be added here
+  }
+}
+```
+
+### Deactivate DID
+
+This operation deactivates the DID for a given `did:cheqd:<namespace>`. Once deactivated, a DID cannot be re-activated or any DIDDoc update operations carried out.
+
+- **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`signatures`**: `DeactivateDidRequest` should be signed by all `controller` private keys. This field contains controller key URIs and signature values.
+
+#### Client request format for deactivate DID
+
+```jsonc
+WriteRequest (DeactivateDidRequest(id), signatures)
+```
+
+#### Example of a deactivate DID client request
+
+```jsonc
+WriteRequest{
+  "data": 
+    "DeactivateDidRequest" {   
+      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
+    },
   "signatures": {
       "Verification Method URI": "<signature>"
       // Multiple verification methods and corresponding signatures can be added here
@@ -397,25 +442,25 @@ The response is returned as a [Protobuf](https://developers.google.com/protocol-
 ```jsonc
 {
   "did":{
-    "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC",
+    "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK",
     "controller":[
-        "did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC"
+        "did:cheqd:mainnet:2PRyVHmkXQnQzJQK"
     ],
     "verification_method":[
         {
-          "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC#verkey",
+          "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK#verkey",
           "type":"Ed25519VerificationKey2020",
-          "controller":"did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC",
+          "controller":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK",
           "public_key_multibase":"zkqa2HyagzfMAq42H5f9u3UMwnSBPQx2QfrSyXbUPxMn"
         }
     ],
     "authentication":[
-        "did:cheqd:mainnet:2PRyVHmkXQnQzJQKxHxnXC#verkey"
+        "did:cheqd:mainnet:2PRyVHmkXQnQzJQK#verkey"
     ]
   },
   "metadata":{
-    "created":"2021-10-26 13:35:17.8230284 +0000 UTC",
-    "updated":"2021-10-26 13:35:17.8230284 +0000 UTC",
+    "created":"2022-04-20T20:19:19Z",
+    "updated":"2022-04-20T20:19:19Z",
     "deactivated":false,
     "version_id":"1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E"
   }
@@ -456,6 +501,10 @@ Hyperledger Indy is a public-permissioned distributed ledger and therefore use t
 #### `ATTRIB` transactions dropped
 
 `ATTRIB` was originally used in Hyperledger Indy to add document content similar to DID Documents (DIDDocs). The cheqd DID method replaces this by implementing DIDDocs for most transaction types.
+
+#### Included resource metadata within DIDDoc metadata
+
+To support the [cheqd Resource Module](adr-008-ledger-resources.md), cheqd ledger includes a reference to resource previews within the DIDDoc metadata.
 
 ## Decision
 
