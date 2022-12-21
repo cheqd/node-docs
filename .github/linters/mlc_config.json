@@ -9,5 +9,11 @@
             "pattern": "&quot; %}",
             "replacement": ""
         }
-    ]
+    ],
+    "ignorePatterns": [
+        {
+          "pattern": "^https://resolver.cheqd.net/"
+        }
+    ],
+    "retryOn429": true
 }
