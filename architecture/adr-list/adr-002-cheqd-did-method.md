@@ -560,6 +560,29 @@ QueryGetDidDocResponse(did)
 The response is returned as a [Protobuf](https://developers.google.com/protocol-buffers/docs/overview), which can be converted to JSON client-side.
 
 ```jsonc
+"didDocument": {
+    "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+    "verification_method": [
+        {
+            "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+            "verification_method_type": "Ed25519VerificationKey2018",
+            "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+            "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
+        }
+    ],
+    "authentication": [
+        "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
+    ]
+},
+"didDocumentMetadata": {
+    "created": "2023-01-16T13:09:18.995088591Z",
+    "updated": "2023-01-16T13:09:20.123096781Z",
+    "version_id": "c4ffc8de-8bf9-4c6b-9457-3c5ee13c40c9",
+    "previous_version_id": "57e760fd-6b9c-4da8-aabc-48c65a32ace3"
+}
+```
+
+```jsonc
 {
   "didDocument": {
     "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
@@ -582,6 +605,29 @@ The response is returned as a [Protobuf](https://developers.google.com/protocol-
       "previous_version_id": "fc020ad9-b1d0-4feb-aebb-bd6815c500df",
       "next_version_id": null
   }
+}
+```
+
+```jsonc
+"didDocument": {
+    "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+    "verification_method": [
+        {
+            "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+            "verification_method_type": "JsonWebKey2020",
+            "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+            "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
+        }
+    ],
+    "authentication": [
+        "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
+    ]
+},
+"didDocumentMetadata": {
+    "created": "2023-01-16T13:09:14.551420248Z",
+    "updated": "2023-01-16T13:09:15.67479948Z",
+    "version_id": "1049f853-d4fb-46b7-84e2-3f0770e98907",
+    "previous_version_id": "c15d40ea-f9a3-4747-9fa6-27b03d07561d"
 }
 ```
 
