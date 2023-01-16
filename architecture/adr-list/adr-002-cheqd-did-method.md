@@ -213,7 +213,6 @@ describing specifications that this DID Document is following to.
             "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1"
         ],
   "capability_delegation": [
-            "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-4",
             "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-2"
         ],
 }
@@ -297,7 +296,7 @@ This operation creates a new DID using the `did:cheqd` method along with associa
 
 - **`signatures`**: `CreateDidDocRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
 - **`id`**: Fully qualified DIDDoc of type `did:cheqd:<namespace>`.
-- **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
+- **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context, versionId`**: Optional parameters in accordance with DID Core specification properties.
 
 #### Client request format for create DIDDoc
 
@@ -343,7 +342,7 @@ This operation updates the DID Document associated with an existing DID of type 
 - **`signatures`**: `UpdateDidDocRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
 - **`id`**: Fully qualified DIDDoc of type `did:cheqd:<namespace>`.
 - **`versionId`**: Transaction hash of the previous DIDDoc version. This is necessary to provide replay protection. The previous DIDDoc `versionId` can fetched using a get DID query.
-- **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
+- **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context, versionId`**: Optional parameters in accordance with DID Core specification properties.
 
 #### Client request format for update DIDDoc
 
@@ -384,7 +383,7 @@ WriteRequest{
 
 ### Deactivate DIDDoc
 
-This operation deactivates the DIDDoc for a given `did:cheqd:<namespace>`. Once deactivated, a DIDDoc cannot be re-activated or any DIDDoc update operations carried out.
+This operation deactivates the DID for a given `did:cheqd:<namespace>`. Once deactivated, a DID cannot be re-activated or any DIDDoc update operations carried out.
 
 - **`id`**: Fully qualified DIDDoc of type `did:cheqd:<namespace>`.
 - **`signatures`**: `DeactivateDidRequest` should be signed by all `controller` private keys. This field contains controller key URIs and signature values.
