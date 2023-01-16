@@ -547,7 +547,7 @@ DIDDocs associated with a DID of type `did:cheqd:<namespace>` can be resolved us
 - **`did_doc`**: DIDDoc associated with the specified DID in a W3C specification compliant [DIDDoc structure](#did-documents-diddocs).
 - **`metadata`**: Contains the MUST have [DIDDoc metadata](#diddoc-metadata) associated with a DIDDOc.
 
-#### Client request format for get/resolve DID
+#### Client request format for get/resolve DIDDoc
 
 DID resolution requests can be sent to the Tendermint RPC interface for a node by passing the fully-qualified DID.
 
@@ -555,7 +555,7 @@ DID resolution requests can be sent to the Tendermint RPC interface for a node b
 QueryGetDidDocResponse(did)
 ```
 
-#### Example of an get/resolve DID client request
+#### Example of an get/resolve DIDDoc client request
 
 The response is returned as a [Protobuf](https://developers.google.com/protocol-buffers/docs/overview), which can be converted to JSON client-side.
 
