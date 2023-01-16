@@ -179,7 +179,8 @@ The following elements are needed for a W3C specification compliant DIDDoc repre
 8. **`keyAgreement`** (optional): A list of strings with key aliases or IDs
 9. **`service`** (optional): A set of Service Endpoint maps
 10. **`alsoKnownAs`** (optional): A list of strings. A DID subject can have multiple identifiers for different purposes, or at different times. The assertion that two or more DIDs refer to the same DID subject can be made using the `alsoKnownAs` property.
-11. **`@context`** (optional): A list of strings with links or JSONs for
+11. **`versionId`** (optional): A UUID string that represents the version ID of the DID Document to be created
+12. **`@context`** (optional): A list of strings with links or JSONs for
 describing specifications that this DID Document is following to.
 
 #### Example of DIDDoc representation
@@ -190,23 +191,31 @@ describing specifications that this DID Document is following to.
     "https://www.w3.org/ns/did/v1",
     "https://w3id.org/security/suites/ed25519-2020/v1"
   ],
-  "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
-  "verificationMethod": [
-    {
-      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1",
-      "type": "Ed25519VerificationKey2020", // external (property value)
-      "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
-      "publicKeyMultibase": "zAKJP3f7BD6W4iWEQ9jwndVTCBq8ua2Utt8EEjJ6Vxsf"
-    },
-    {
-      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey",
-      "type": "Ed25519VerificationKey2020", // external (property value)
-      "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
-      "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
-    }
+  "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+  "controller": [
+      "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg"
   ],
-  "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
-  "capabilityInvocation": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey"],
+  "verification_method": [
+      {
+          "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1",
+          "verification_method_type": "Ed25519VerificationKey2020",
+          "controller": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+          "verification_material": "z6MkpqEAYo7Ri8WYt6Kx4efLQdVJNgh4QzDf8ptVxJoexXdx"
+      },
+      {
+          "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-2",
+          "verification_method_type": "Ed25519VerificationKey2020",
+          "controller": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+          "verification_material": "z6MkqX2qR3rvt9UQpXsaYKFqGjX79ooFfwhhpZo8HfVXiDMP"
+      },
+  ],
+  "authentication": [
+            "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1"
+        ],
+  "capability_delegation": [
+            "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-4",
+            "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-2"
+        ],
 }
 ```
 
@@ -225,7 +234,8 @@ Each DID Document MUST have a metadata section when a representation is produced
 formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
 3. **`deactivated`** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
 4. **`versionId`** (string): Contains transaction hash of the current DIDDoc version.
-5. **`resources`** (list of resources metadata referred to as [Resource previews](adr-008-ledger-resources.md)| *optional*). Cannot be changed by CreateDID or UpdateDID transactions. cheqd ledger stores only the resource identifiers in the DID Doc metadata. The remainder of the resources' metadata is added when a DID is resolved.
+5. **`previousVersionId`** (string): A UUID string that represents the version identifier of the previous version of the DID Document. The `previousVersionId` field is `null` if an Update operation has never been performed on the DID document
+6. **`nextVersionId`** (string): A UUID string that represents the version identifier of the next version of the DID Document. The `nextVersionId` field is `null` if an Update operation has never been performed on the DID document
 
 #### Example of DIDDoc metadata
 
@@ -235,20 +245,8 @@ formatting rules as the created property. The `updated` field is `null` if an Up
   "updated": "2020-12-20T19:19:47Z",
   "deactivated": false,
   "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
-  "linkedResourceMetadata": [
-       {
-        "resourceURI":          "did:cheqd:mainnet:N22KY2Dyvmuu2PyyqSFKue/resources/9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-        "resourceCollectionId": "N22KY2Dyvmuu2PyyqSFKue",
-        "resourceId":            "9cc97dc8-ab3a-4a2e-a18a-13f5a54e9096",
-        "resourceName":         "PassportSchema",
-        "resourceType":         "CL-Schema",
-        "mediaType":            "application/json",
-        "created":              "2022-04-20T20:19:19Z",
-        "checksum":             "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-        "previousVersionId":     null,
-        "nextVersionId":         null
-      }
-  ]
+  "previousVersionId": null,
+  "nextVersionId": null
 }
 ```
 
@@ -258,28 +256,17 @@ Verification methods are used to define how to authenticate / authorise interact
 
 1. **`id`** (string): A string with format `did:cheqd:<namespace>#<key-alias>`
 2. **`controller`**: A string with fully qualified DID. DID must exist.
-3. **`type`** (string)
-4. **`publicKeyJwk`** (`map[string,string]`, optional): A map representing a JSON Web Key that conforms to [RFC7517](https://tools.ietf.org/html/rfc7517). See definition of `publicKeyJwk` for additional constraints.
-5. **`publicKeyMultibase`** (optional): A base58-encoded string that conforms to a [MULTIBASE](https://datatracker.ietf.org/doc/html/draft-multiformats-multibase-03)
-encoded public key.
-
-**Note**: A single verification method entry cannot contain both `publicKeyJwk` and `publicKeyMultibase`, but must contain at least one of them.
+3. **`verificationMethodType`** (string): A string that represents type of verification method. Supported: `Ed25519VerificationKey2018`, `Ed25519VerificationKey2020`, `JsonWebKey2020`.
+4. **`VerificationMaterial`** (string): A string that represents the public key of the verification method. Supported: `publicKeyBase58`, `publicKeyMultibase`, `publicJwk`.
 
 #### Example of Verification method in a DIDDoc
 
 ```jsonc
 {
-  "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#key-0",
-  "type": "JsonWebKey2020",
-  "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
-  "publicKeyJwk": {
-    "kty": "OKP",
-    // external (property name)
-    "crv": "Ed25519",
-    // external (property name)
-    "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ"
-    // external (property name)
-  }
+  "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1",
+  "verification_method_type": "Ed25519VerificationKey2020",
+  "controller": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+  "verification_material": "z6MkpqEAYo7Ri8WYt6Kx4efLQdVJNgh4QzDf8ptVxJoexXdx"
 }
 ```
 
@@ -288,7 +275,7 @@ encoded public key.
 Services can be defined in a DIDDoc to express means of communicating with the DID subject or associated entities.
 
 1. **`id`** (string): The value of the `id` property for a Service MUST be a URI conforming to [RFC3986](https://www.rfc-editor.org/rfc/rfc3986). A conforming producer MUST NOT produce multiple service entries with the same ID. A conforming consumer MUST produce an error if it detects multiple service entries with the same ID. It has a follow formats: `<DIDDoc-id>#<service-alias>` or `#<service-alias>`.
-2. **`type`** (string): The service type and its associated properties SHOULD be registered in the [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/)
+2. **`serviceType`** (string): The service type and its associated properties SHOULD be registered in the [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/)
 3. **`serviceEndpoint`** (strings): A string that conforms to the rules of [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs, a map, or a set composed of a one or more strings that conform to the rules of
 [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs and/or maps.
 
@@ -297,48 +284,50 @@ Services can be defined in a DIDDoc to express means of communicating with the D
 ```jsonc
 {
   "id":"did:cheqd:mainnet:N22N22KY2Dyvmuu2#linked-domain",
-  "type": "LinkedDomains",
+  "serviceType": "LinkedDomains",
   "serviceEndpoint": "https://bar.example.com"
 }
 ```
 
-## DID transactions
+## DIDDoc transactions
 
-### Create DID
+### Create DIDDoc
 
 This operation creates a new DID using the `did:cheqd` method along with associated DID Document representation.
 
-- **`signatures`**: `CreateDidRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
-- **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`signatures`**: `CreateDidDocRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
+- **`id`**: Fully qualified DIDDoc of type `did:cheqd:<namespace>`.
 - **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
 
-#### Client request format for create DID
+#### Client request format for create DIDDoc
 
 ```jsonc
-WriteRequest (CreateDidRequest(id, controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context), signatures)
+WriteRequest (CreateDidDocRequest(id, controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context, versionId), signatures)
 ```
 
-#### Example of a create DID client request
+#### Example of a create DIDDoc client request
 
 ```jsonc
 WriteRequest{
   "data": 
-    "CreateDidRequest" {   
+    "CreateDidDocRequest" {   
       "context": [
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
-      "controller": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2"],
-      "verificationMethod": [
+      "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+      "verification_method": [
         {
-          "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1",
-          "type": "Ed25519VerificationKey2020", // external (property value)
-          "controller": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
-          "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
+            "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
+            "verification_method_type": "Ed25519VerificationKey2020",
+            "controller": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+            "verification_material": "z6Mku99WnVSLEtUccqYRUZhxXQu29C68fukKMuoXoGkUqh8W"
         }
       ],
-      "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
+      "authentication": [
+        "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
+      ],
+      "versionId": "fc020ad9-b1d0-4feb-aebb-bd6815c500df"
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -347,43 +336,44 @@ WriteRequest{
 }
 ```
 
-### Update DID
+### Update DIDDoc
 
 This operation updates the DID Document associated with an existing DID of type `did:cheqd:<namespace>`.
 
-- **`signatures`**: `UpdateDidRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
-- **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`signatures`**: `UpdateDidDocRequest` should be signed by all `controller` private keys. This field contains a `dict` structure with the key URI from `DIDDoc.authentication`, as well as signature values.
+- **`id`**: Fully qualified DIDDoc of type `did:cheqd:<namespace>`.
 - **`versionId`**: Transaction hash of the previous DIDDoc version. This is necessary to provide replay protection. The previous DIDDoc `versionId` can fetched using a get DID query.
 - **`controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context`**: Optional parameters in accordance with DID Core specification properties.
 
-#### Client request format for update DID
+#### Client request format for update DIDDoc
 
 ```jsonc
-WriteRequest(UpdateDidRequest(id, controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context, versionId), signatures)
+WriteRequest(UpdateDidDocRequest(id, controller, verificationMethod, authentication, assertionMethod, capabilityInvocation, capabilityDelegation, keyAgreement, service, alsoKnownAs, context, versionId), signatures)
 ```
 
-#### Example of an update DID client request
+#### Example of an update DIDDoc client request
 
 ```jsonc
 WriteRequest{
   "data": 
-    "UpdateDidRequest" {   
+    "UpdateDidDocRequest" {   
       "context": [
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
-      "controller": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2"],
-      "verificationMethod": [
-        {
-          "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2#capabilityInvocationKey",
-          "type": "Ed25519VerificationKey2020", // external (property value)
-          "controller": "did:cheqd:mainnet:N22N22N22KY2Dyvmuu2",
-          "publicKeyMultibase": "z4BWwfeqdp1obQptLLMvPNgBw48p7og1ie6Hf9p5nTpNN"
-        }
+      "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+      "verification_method": [
+          {
+              "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
+              "verification_method_type": "Ed25519VerificationKey2020",
+              "controller": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+              "verification_material": "z6Mku99WnVSLEtUccqYRUZhxXQu29C68fukKMuoXoGkUqh8W"
+          }
       ],
-      "authentication": ["did:cheqd:mainnet:N22N22KY2Dyvmuu2#authKey1"],
-      "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E"
+      "authentication": [
+          "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
+      ],
+      "versionId": "f382b9e1-f7b6-443c-bfd2-c85826ce2b43"
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -392,25 +382,25 @@ WriteRequest{
 }
 ```
 
-### Deactivate DID
+### Deactivate DIDDoc
 
-This operation deactivates the DID for a given `did:cheqd:<namespace>`. Once deactivated, a DID cannot be re-activated or any DIDDoc update operations carried out.
+This operation deactivates the DIDDoc for a given `did:cheqd:<namespace>`. Once deactivated, a DIDDoc cannot be re-activated or any DIDDoc update operations carried out.
 
-- **`id`**: Fully qualified DID of type `did:cheqd:<namespace>`.
+- **`id`**: Fully qualified DIDDoc of type `did:cheqd:<namespace>`.
 - **`signatures`**: `DeactivateDidRequest` should be signed by all `controller` private keys. This field contains controller key URIs and signature values.
 
-#### Client request format for deactivate DID
+#### Client request format for deactivate DIDDoc
 
 ```jsonc
-WriteRequest (DeactivateDidRequest(id), signatures)
+WriteRequest (DeactivateDidDocRequest(id), signatures)
 ```
 
-#### Example of a deactivate DID client request
+#### Example of a deactivate DIDDoc client request
 
 ```jsonc
 WriteRequest{
   "data": 
-    "DeactivateDidRequest" {   
+    "DeactivateDidDocRequest" {   
       "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
     },
   "signatures": {
