@@ -4,11 +4,11 @@
 
 | Category | Status |
 | :--- | :--- |
-| **Authors** | Ankur Banerjee, Alexandr Kolesov, Alex Tweeddale, Brent Zundel, Renata Toktar, Richard Esplin   |
+| **Authors** | Ankur Banerjee, Abdulla Ashurov, Alexandr Kolesov, Alex Tweeddale, Brent Zundel, Renata Toktar, Richard Esplin   |
 | **ADR Stage** | ACCEPTED |
 | **Implementation Status** | Implemented |
 | **Start Date** | 2021-09-23 |
-| **Last Updated** | 2022-09-28 |
+| **Last Updated** | 2023-01-17 |
 
 ## Summary
 
