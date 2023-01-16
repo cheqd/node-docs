@@ -410,11 +410,11 @@ WriteRequest{
 }
 ```
 
-### Get/Resolve DID
+### Get/Resolve DIDDoc
 
-DIDDocs associated with a DID of type `did:cheqd:<namespace>` can be resolved using the `GetDid` query to fetch a response from the ledger. The response contains:
+DIDDocs associated with a DID of type `did:cheqd:<namespace>` can be resolved using the `GetDidDoc` query to fetch a response from the ledger. The response contains:
 
-- **`did`**: DIDDoc associated with the specified DID in a W3C specification compliant [DIDDoc structure](#did-documents-diddocs).
+- **`did_doc`**: DIDDoc associated with the specified DID in a W3C specification compliant [DIDDoc structure](#did-documents-diddocs).
 - **`metadata`**: Contains the MUST have [DIDDoc metadata](#diddoc-metadata) associated with a DIDDOc.
 
 #### Client request format for get/resolve DID
@@ -422,7 +422,7 @@ DIDDocs associated with a DID of type `did:cheqd:<namespace>` can be resolved us
 DID resolution requests can be sent to the Tendermint RPC interface for a node by passing the fully-qualified DID.
 
 ```jsonc
-QueryGetDidResponse(did)
+QueryGetDidDocResponse(did)
 ```
 
 #### Example of an get/resolve DID client request
@@ -431,28 +431,26 @@ The response is returned as a [Protobuf](https://developers.google.com/protocol-
 
 ```jsonc
 {
-  "did":{
-    "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK",
-    "controller":[
-        "did:cheqd:mainnet:2PRyVHmkXQnQzJQK"
+  "didDocument": {
+    "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+    "verification_method": [
+      {
+          "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
+          "verification_method_type": "Ed25519VerificationKey2020",
+          "controller": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+          "verification_material": "z6Mku99WnVSLEtUccqYRUZhxXQu29C68fukKMuoXoGkUqh8W"
+      }
     ],
-    "verification_method":[
-        {
-          "id":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK#verkey",
-          "type":"Ed25519VerificationKey2020",
-          "controller":"did:cheqd:mainnet:2PRyVHmkXQnQzJQK",
-          "public_key_multibase":"zkqa2HyagzfMAq42H5f9u3UMwnSBPQx2QfrSyXbUPxMn"
-        }
-    ],
-    "authentication":[
-        "did:cheqd:mainnet:2PRyVHmkXQnQzJQK#verkey"
+    "authentication": [
+        "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
     ]
   },
-  "metadata":{
-    "created":"2022-04-20T20:19:19Z",
-    "updated":"2022-04-20T20:19:19Z",
-    "deactivated":false,
-    "version_id":"1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E"
+  "didDocumentMetadata": {
+      "created": "2023-01-16T12:22:54.063863795Z",
+      "updated": "2023-01-16T12:22:56.293234597Z",
+      "version_id": "f382b9e1-f7b6-443c-bfd2-c85826ce2b43",
+      "previous_version_id": "fc020ad9-b1d0-4feb-aebb-bd6815c500df",
+      "next_version_id": null
   }
 }
 ```
