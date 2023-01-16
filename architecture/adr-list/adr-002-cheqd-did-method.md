@@ -262,10 +262,28 @@ Verification methods are used to define how to authenticate / authorise interact
 
 ```jsonc
 {
+    "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+    "verification_method_type": "Ed25519VerificationKey2018",
+    "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+    "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
+}
+```
+
+```jsonc
+{
   "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1",
   "verification_method_type": "Ed25519VerificationKey2020",
   "controller": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
   "verification_material": "z6MkpqEAYo7Ri8WYt6Kx4efLQdVJNgh4QzDf8ptVxJoexXdx"
+}
+```
+
+```jsonc
+{
+    "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+    "verification_method_type": "JsonWebKey2020",
+    "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+    "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
 }
 ```
 
@@ -312,6 +330,35 @@ WriteRequest{
     "CreateDidDocRequest" {   
       "context": [
           "https://www.w3.org/ns/did/v1",
+          "https://w3id.org/security/suites/ed25519-2018/v1"
+      ],
+      "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+      "verification_method": [
+          {
+              "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+              "verification_method_type": "Ed25519VerificationKey2018",
+              "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+              "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
+          }
+      ],
+      "authentication": [
+          "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
+      ],
+      "versionId": "c4ffc8de-8bf9-4c6b-9457-3c5ee13c40c9"
+  },
+  "signatures": {
+      "Verification Method URI": "<signature>"
+      // Multiple verification methods and corresponding signatures can be added here
+  }
+}
+```
+
+```jsonc
+WriteRequest{
+  "data": 
+    "CreateDidDocRequest" {   
+      "context": [
+          "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
       "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
@@ -327,6 +374,35 @@ WriteRequest{
         "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
       ],
       "versionId": "fc020ad9-b1d0-4feb-aebb-bd6815c500df"
+  },
+  "signatures": {
+      "Verification Method URI": "<signature>"
+      // Multiple verification methods and corresponding signatures can be added here
+  }
+}
+```
+
+```jsonc
+WriteRequest{
+  "data": 
+    "CreateDidDocRequest" {   
+      "context": [
+          "https://www.w3.org/ns/did/v1",
+          "https://w3id.org/security/suites/jws-2020/v1"
+      ],
+      "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+      "verification_method": [
+          {
+              "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+              "verification_method_type": "JsonWebKey2020",
+              "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+              "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
+          }
+      ],
+      "authentication": [
+          "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
+      ],
+      "versionId": "1049f853-d4fb-46b7-84e2-3f0770e98907"
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -358,6 +434,34 @@ WriteRequest{
     "UpdateDidDocRequest" {   
       "context": [
           "https://www.w3.org/ns/did/v1",
+          "https://w3id.org/security/suites/ed25519-2018/v1"
+      ],
+      "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+      "verification_method": [
+          {
+              "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+              "verification_method_type": "Ed25519VerificationKey2018",
+              "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+              "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
+          }
+      ],
+      "authentication": [
+          "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
+      ],
+  },
+  "signatures": {
+      "Verification Method URI": "<signature>"
+      // Multiple verification methods and corresponding signatures can be added here
+  }
+}
+```
+
+```jsonc
+WriteRequest{
+  "data": 
+    "UpdateDidDocRequest" {   
+      "context": [
+          "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
       "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
@@ -372,7 +476,34 @@ WriteRequest{
       "authentication": [
           "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
       ],
-      "versionId": "f382b9e1-f7b6-443c-bfd2-c85826ce2b43"
+  },
+  "signatures": {
+      "Verification Method URI": "<signature>"
+      // Multiple verification methods and corresponding signatures can be added here
+  }
+}
+```
+
+```jsonc
+WriteRequest{
+  "data": 
+    "UpdateDidDocRequest" {   
+      "context": [
+          "https://www.w3.org/ns/did/v1",
+          "https://w3id.org/security/suites/jws-2020/v1"
+      ],
+      "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+      "verification_method": [
+          {
+              "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+              "verification_method_type": "JsonWebKey2020",
+              "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+              "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
+          }
+      ],
+      "authentication": [
+          "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
+      ],
   },
   "signatures": {
       "Verification Method URI": "<signature>"
