@@ -146,7 +146,7 @@ To create a new Resource, a client application first needs to create a DID (or u
 
 ![Resource Creation Flow](../../.gitbook/assets/adr008-resource-flow-detailed.png)
 
-*Figure 5: Detailed sequence diagram of Resource creation on cheqd ([editable version](https://swimlanes.io/u/dWCZzMbWb))*
+*Figure 5: Detailed sequence diagram of Resource creation on cheqd ([editable version](https://swimlanes.io/u/x2fQLlEM2))*
 
 Resources must be under the maximum block size restrictions to be able to fit into a transaction. Currently this is [estimated to be ~190 KB on cheqd mainnet, based on the ~200 KB block size limit](adr-005-genesis-parameters.md) plus additional headroom for metadata that needs to be described in the `ResourceHeader`.
 
