@@ -156,8 +156,10 @@ Each request to create a Resource *must* provide the following parameters, suppl
 
 * **Resource Collection ID: (did:cheqd:...:) (supplied client-side)**
 * **Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
-* **Resource Name: String (e.g., `CL-Schema1` (supplied client-side)**
+* **Resource Name: String (e.g., `CL-Schema1` (supplied client-side))**
+* **Resource Version: String (OPTIONAL) ➝ is a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))**
 * **Resource Type (supplied client-side. It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/))**
+* **Also Known As: AlternativeUri array ➝ is a list of URIs that can be used to get the resource**
 
 In addition to the above client-provided parameters, the ledger-side code will populate the following additional header fields (for properly-authenticated requests):
 
@@ -218,22 +220,27 @@ Example:
 #### MsgCreateResource
 
 * Collection ID: (did:cheqd:...:)`<identifier>` (supplied client-side)
-* ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
-* Name: String (e.g., `CL-Schema1` (supplied client-side)
-* ResourceType (supplied client-side)**
-* Data: `resource-file` Path to file with resource content
+* Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
+* Resource Name: String (e.g., `CL-Schema1` (supplied client-side)
+* Resource Type (supplied client-side) (**OPTIONAL**) is a human-readable semantic version for the Resource (e.g. **1.0.0**)
+* Also Known As (supplied client-side) is list of alternative URIs for the SAME Resource
+* Resource File: `resource-file` Path to file with resource content
 
 Example:
 
 ```jsonc
 {
-    "kms": "local",
     "payload": { // example of resource header
-        "collectionId": "DAzMQo4MDMxCjgwM",
-        "id": "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-        "name": "PassportSchema",
-        "resourceType": "CL-Schema",
-        "data": "SGVsbG8sIHdvcmxk" // file with resource encoded into base64
+        "collection_id": "DAzMQo4MDMxCjgwM",
+        "resource_id": "bb2118f3-5e55-4510-b420-33ef9e1726d2",
+        "resource_name": "PassportSchema",
+        "resource_version": "1.0",
+        "resource_type": "CL-Schema",
+        "also_known_as": {
+          "uri": "did:cheqd:testnet:54d19225-7915-4a79-a83a-8f9aa1f0c6ee/resources/ca9f08bd-7bc8-4464-885c-9caa54abcf8d",
+          "description": "did-url"
+        },
+        "resource_file": "SGVsbG8sIHdvcmxk" // file with resource encoded into base64
     },
     "signInputs": [{
         "verificationMethodId": "did:cheqd:testnet:DAzMQo4MDMxCjgwM#key-1",
@@ -245,7 +252,7 @@ Example:
 
 #### MsgCreateResourceResponse
 
-* Resource: [Resource](#resource)
+* Resource: [Resource](#resource-creation)
 
 Example:
 
@@ -253,7 +260,7 @@ Example:
 { "resource":  <Resource> }
 ```
 
-#### QueryGetCollectionResourcesRequest
+#### QueryCollectionResourcesRequest
 
 * Collection ID: String - an identifier of linked DIDDoc
   
@@ -263,9 +270,9 @@ Example:
 { "collectionId": "DAzMQo4MDMxCjgwM" }
 ```
 
-#### QueryGetCollectionResourcesResponse
+#### QueryCollectionResourcesResponse
 
-* Resources: [ResourceHeader\[\]](#resourceheader)
+* Resources: [ResourceHeader\[\]](#resourcepreview)
 
 Example:
 
@@ -273,7 +280,7 @@ Example:
 { "resources":  [<ResourceHeader1>, <ResourceHeader2>] }
 ```
 
-#### QueryGetResourceRequest
+#### QueryResourceRequest
 
 * Collection ID: String - an identifier of linked DIDDoc
 * ID: String - unique resource id
@@ -287,40 +294,14 @@ Example:
 }
 ```
 
-#### QueryGetResourceResponse
+#### QueryResourceResponse
 
-* Resource: [Resource](#resource)
+* Resource: [Resource](#resourcepreview)
 
 Example:
 
 ```jsonc
 { "resource":  <Resource> }
-```
-
-#### QueryGetAllResourceVersionsRequest
-
-* Collection ID: String - an identifier of linked DIDDoc
-* Name: String
-* ResourceType: String
-
-Example:
-
-```jsonc
-{ 
-  "collectionId":  "DAzMQo4MDMxCjgwM",
-  "name":          "PassportSchema",
-  "resourceType":  "CL-Schema"
-}
-```
-
-#### QueryGetAllResourceVersionsResponse
-
-* Resources: [ResourceHeader\[\]](#resourceheader)
-
-Example:
-
-```jsonc
-{ "resources":  [<ResourceHeader1>, <ResourceHeader2>] }
 ```
 
 ### State
@@ -424,7 +405,7 @@ We need to support resource resolution in the DID resolver.
 A list of resources related to DIDDoc can be found in its metadata:
 
 ```jsonc
-QueryGetDidResponse {
+QueryDidResponse {
   "did": {
     "id": "did:cheqd:mainnet:DAzMQo4MDMxCjgwM",
     ...
