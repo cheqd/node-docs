@@ -8,7 +8,7 @@
 | **ADR Stage** | ACCEPTED |
 | **Implementation Status** | Implemented |
 | **Start Date** | 2021-09-23 |
-| **Last Updated** | 2023-01-17 |
+| **Last Updated** | 2023-01-19 |
 
 ## Summary
 
@@ -179,8 +179,7 @@ The following elements are needed for a W3C specification compliant DIDDoc repre
 8. **`keyAgreement`** (optional): A list of strings with key aliases or IDs
 9. **`service`** (optional): A set of Service Endpoint maps
 10. **`alsoKnownAs`** (optional): A list of strings. A DID subject can have multiple identifiers for different purposes, or at different times. The assertion that two or more DIDs refer to the same DID subject can be made using the `alsoKnownAs` property.
-11. **`versionId`** (optional): A UUID string that represents the version ID of the DID Document to be created
-12. **`@context`** (optional): A list of strings with links or JSONs for
+11. **`@context`** (optional): A list of strings with links or JSONs for
 describing specifications that this DID Document is following to.
 
 #### Example of DIDDoc representation
@@ -256,7 +255,7 @@ Verification methods are used to define how to authenticate / authorise interact
 1. **`id`** (string): A string with format `did:cheqd:<namespace>#<key-alias>`
 2. **`controller`**: A string with fully qualified DID. DID must exist.
 3. **`verificationMethodType`** (string): A string that represents type of verification method. Supported: `Ed25519VerificationKey2018`, `Ed25519VerificationKey2020`, `JsonWebKey2020`.
-4. **`VerificationMaterial`** (string): A string that represents the public key of the verification method. Supported: `publicKeyBase58`, `publicKeyMultibase`, `publicJwk`.
+4. **`VerificationMaterial`** (string): It represents the exact decoded string value of public key for the verification method. Supported types of public key representations are: `publicKeyBase58`, `publicKeyMultibase`, `publicJwk`.
 
 #### Example of Verification method in a DIDDoc
 
