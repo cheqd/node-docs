@@ -334,11 +334,13 @@ cheqd Cosmos CLI Example:
 
 ```jsonc
 cheqd-noded tx resource create-resource "{
-                                          \"collection-id\":  \"DAzMQo4MDMxCjgwM\",
-                                          \"resource-id\":             \"bb2118f3-5e55-4510-b420-33ef9e1726d2\",
-                                          \"resource-name"\":  \"PassportSchema\",
-                                          \"resource-type"\":  \"CL-Schema\",
-                                          \"resource-file"     <resource-file>
+                                          \"collection_id\":  \"DAzMQo4MDMxCjgwM\",
+                                          \"resource_id\":             \"bb2118f3-5e55-4510-b420-33ef9e1726d2\",
+                                          \"resource_name"\":  \"PassportSchema\",
+                                          \"resource_version"\":  \"1.0\",
+                                          \"resource_type"\":  \"CL-Schema\",
+                                          \"also_known_as"\": {\"uri\": \"did:cheqd:testnet:54d19225-7915-4a79-a83a-8f9aa1f0c6ee/resources/ca9f08bd-7bc8-4464-885c-9caa54abcf8d\", \"description\": \"did-url\"},
+                                          \"resource_file"     <resource-file>
                                           <ver-method-id-1> <priv-key-1>
                                           <ver-method-id-N> <priv-key-N>
 
@@ -349,11 +351,11 @@ cheqd-noded tx resource create-resource "{
 #### GetCollectionResources
 
 * Input:
-  * [QueryGetCollectionResourcesRequest](#querygetcollectionresourcesrequest)
+  * [QueryCollectionResourcesRequest](#querycollectionresourcesrequest)
 
 * Output:
 
-  * [QueryGetCollectionResourcesResponse](#querygetcollectionresourcesresponse)
+  * [QueryCollectionResourcesResponse](#querycollectionresourcesresponse)
 
 * Processing logic:
 
@@ -363,26 +365,26 @@ cheqd-noded tx resource create-resource "{
 #### GetResource
 
 * Input:
-  * [QueryGetResourceRequest](#querygetresourcerequest)
+  * [QueryResourceRequest](#queryresourcerequest)
 
 * Output:
 
-  * [QueryGetResourceResponse](#querygetresourceresponse)
+  * [QueryResourceResponse](#queryresourceresponse)
 
 * Processing logic:
   * Retrieves a specific resource by Collection-ID and resource ID;
 
-#### GetAllResourceVersions
+#### QueryResourceMetadata
 
 * Input:
-  * [QueryAllResourceVersionsRequest](#querygetallresourceversionsrequest)
+  * [QueryResourceMetadataRequest](#querygetallresourceversionsrequest)
 
 * Output:
-  * [QueryAllResourceVersionsResponse](#querygetallresourceversionsresponse)
+  * [QueryResourceMetadataResponse](#querygetallresourceversionsresponse)
 
 * Processing logic:
-  * Retrieves all resource versions by collection id, resource name, resource type and mime type;
-  * Returns only resource headers (without `data` field);
+  * Retrieves all resource versions by collection id, resource id
+  * Returns a resource's metadata from a collection with a given collection_id and id
   
 ### DID Resolver
 
