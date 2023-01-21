@@ -322,14 +322,14 @@ Example:
 
 ```jsonc
 { 
-  "collectionId": "DAzMQo4MDMxCjgwM",
-  "id": "bb2118f3-5e55-4510-b420-33ef9e1726d2"
+  "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+  "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f"
 }
 ```
 
 #### QueryResourceResponse
 
-* Returns `Resource` created by the specific `collectionID` and `ID`.
+* Returns `Resource` with a given `collection ID` and `ID`.
 
 Example:
 
@@ -363,6 +363,46 @@ Example:
 }
 ```
 
+#### QueryResourceMetadataRequest
+
+* `Collection ID`: String - an identifier of linked DIDDoc
+* `ID`: String - unique resource id
+
+Example:
+
+```jsonc
+{ 
+  "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+  "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f"
+}
+```
+
+#### QueryResourceMetadataResponse
+
+Returns `resource's metadata` with a given `collection ID` and `ID`.
+
+```jsonc
+{
+    "resource": {
+        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+        "name": "PassportScheme",
+        "version": "1.0",
+        "resourceType": "CL-Schema",
+        "alsoKnownAs": [
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": ""
+            },
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": "Alternative URI description"
+            }
+        ]
+    }
+}
+```
+
 ### State
 
 * `resources:<collection-id>:<resource-id>` ➝ **Resource**
@@ -391,19 +431,11 @@ Example:
 
 cheqd Cosmos CLI Example:
 
-```jsonc
-cheqd-noded tx resource create-resource "{
-                                          \"collection_id\":  \"DAzMQo4MDMxCjgwM\",
-                                          \"resource_id\":             \"bb2118f3-5e55-4510-b420-33ef9e1726d2\",
-                                          \"resource_name"\":  \"PassportSchema\",
-                                          \"resource_version"\":  \"1.0\",
-                                          \"resource_type"\":  \"CL-Schema\",
-                                          \"also_known_as"\": {\"uri\": \"did:cheqd:testnet:54d19225-7915-4a79-a83a-8f9aa1f0c6ee/resources/ca9f08bd-7bc8-4464-885c-9caa54abcf8d\", \"description\": \"did-url\"},
-                                          \"resource_file"     <resource-file>
-                                          <ver-method-id-1> <priv-key-1>
-                                          <ver-method-id-N> <priv-key-N>
-
+```bash
+cheqd-noded tx resource create [payload-file]
 ```
+
+* `payload-file`: path to the [payload file](#msgcreateresource)
 
 ### Queries
 
@@ -420,6 +452,12 @@ cheqd-noded tx resource create-resource "{
 
   * Retrieves the whole resource collection for the specified DID;
   * Returns only resource headers (without `data` field);
+
+cheqd Cosmos CLI Example:
+
+```bash
+cheqd-noded query resource collection-resources [collection-id]
+```
   
 #### GetResource
 
@@ -433,17 +471,29 @@ cheqd-noded tx resource create-resource "{
 * Processing logic:
   * Retrieves a specific resource by Collection-ID and resource ID;
 
+cheqd Cosmos CLI Example:
+
+```bash
+cheqd-noded query resource resource [collectionId] [id]
+```
+
 #### QueryResourceMetadata
 
 * Input:
-  * [QueryResourceMetadataRequest](#querygetallresourceversionsrequest)
+  * [QueryResourceMetadataRequest](#queryresourcemetadatarequest)
 
 * Output:
-  * [QueryResourceMetadataResponse](#querygetallresourceversionsresponse)
+  * [QueryResourceMetadataResponse](#queryresourcemetadataresponse)
 
 * Processing logic:
   * Retrieves all resource versions by collection id, resource id
   * Returns a resource's metadata from a collection with a given collection_id and id
+
+cheqd Cosmos CLI Example:
+
+```bash
+cheqd-noded query resource resource-metadata [collectionId] [id]
+```
   
 ### DID Resolver
 
@@ -459,40 +509,6 @@ We need to support resource resolution in the DID resolver.
 
 * Processing logic:
   * Simply call [GetResource](#getresource) via GRPC
-
-### Linked DIDDoc
-
-`CollectionId` field is an identifier of existing DIDDoc. There are no restrictions on the fields of this DIDDoc other than those described in [cheqd DID Method ADR](adr-002-cheqd-did-method.md) and [W3C DID specification](https://www.w3.org/TR/did-core/). DIDDoc must be located in the same ledger where the resource is created.
-A list of resources related to DIDDoc can be found in its metadata:
-
-```jsonc
-QueryDidResponse {
-  "did": {
-    "id": "did:cheqd:mainnet:DAzMQo4MDMxCjgwM",
-    ...
-  },
-  "didDocumentMetadata": {
-    "created": "2020-12-20T19:17:47Z",
-    "updated": "2020-12-20T19:19:47Z",
-    "deactivated": false,
-    "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
-    "linkedResourceMetadata": [
-      {
-        "resourceURI":            "did:cheqd:mainnet:DAzMQo4MDMxCjgwM/resources/bb2118f3-5e55-4510-b420-33ef9e1726d2",
-        "resourceCollectionId":   "DAzMQo4MDMxCjgwM",
-        "resourceId":             "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-        "resourceName":           "PassportSchema",
-        "resourceType":           "CL-Schema",
-        "mediaType":              "application/json",
-        "created":                "2022-04-20T20:19:19Z",
-        "checksum":               "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-        "previousVersionId":      null,
-        "nextVersionId":          null
-      }
-    ]
-  }
-}
-```
 
 ### Resource versioning
 
@@ -580,7 +596,7 @@ Step 3. After the transaction applying
 * Limitations
   * Introduce module level resource size limit that can be changed by voting
 
-### 'Resources' module on ledger
+### Resources module on ledger
 
 A new module will be created: `resource`.
 
