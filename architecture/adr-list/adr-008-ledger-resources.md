@@ -521,7 +521,7 @@ Example:
 
 Step 1. Resource exists in the ledger:
 
-  ```jsonc
+```jsonc
   { 
     "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4",
       "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
@@ -534,6 +534,31 @@ Step 1. Resource exists in the ledger:
       "previousVersionId": null, // null, since no previous version
      "nextVersionId": null // null, since no next version
     }
+
+{
+  "resource": {
+      "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",  // Common collection ID
+      "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Old Resource ID and version number
+      "name": "PassportScheme", // Resource name must remain the same
+      "version": "1.0", // Resource version
+      "resourceType": "CL-Schema", // Resource type must remain the same
+      "alsoKnownAs": [
+          {
+              "uri": "https://example.com/alternative-uri",
+              "description": ""
+          },
+          {
+              "uri": "https://example.com/alternative-uri",
+              "description": "Alternative URI description"
+          }
+      ],
+      "mediaType": "application/json",
+      "created": "2022-07-19T08:40:00Z",
+      "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
+      "previousVersionId": null, // null, since no previous version
+     "nextVersionId": null // null, since no next version
+  }
+}
 
   ```
 
@@ -554,13 +579,23 @@ Step 2. Client send request for creating a new resource with a transaction MsgCr
 Step 3. After the transaction applying
 
 ```jsonc
-"linkedResourceMetadata": [
+"resources": [
   { // First version of a Resource called PassportSchema
-    "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4",
-    "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
-    "resourceId": "44547089-170b-4f5a-bcbc-06e46e0089e4", // Old Resource ID and version number
-    "resourceName": "PassportSchema", // Resource name must remain the same
+    "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",  // Common collection ID
+    "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Old Resource ID and version number
+    "name": "PassportScheme", // Resource name must remain the same
+    "version": "1.0", // Resource version
     "resourceType": "CL-Schema", // Resource type must remain the same
+    "alsoKnownAs": [
+        {
+            "uri": "https://example.com/alternative-uri",
+            "description": ""
+        },
+        {
+            "uri": "https://example.com/alternative-uri",
+            "description": "Alternative URI description"
+        }
+    ],
     "mediaType": "application/json",
     "created": "2022-07-19T08:40:00Z",
     "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
@@ -568,16 +603,26 @@ Step 3. After the transaction applying
     "nextVersionId": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // Points to next version below
   },
   { // Second version of a Resource called PassportSchema
-    "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/bb2118f3-5e55-4510-b420-33ef9e1726d2",
-    "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
-    "resourceId": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // New Resource ID and version number
-    "resourceName": "PassportSchema", // Resource name must remain the same
+    "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4", // Common collection ID
+    "id": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // New Resource ID and version number
+     "name": "PassportScheme", // Resource name must remain the same
+    "version": "1.0", // Resource version
     "resourceType": "CL-Schema", // Resource type must remain the same
+    "alsoKnownAs": [
+        {
+            "uri": "https://example.com/alternative-uri",
+            "description": ""
+        },
+        {
+            "uri": "https://example.com/alternative-uri",
+            "description": "Alternative URI description"
+        }
+    ],
     "mediaType": "application/json",
-    "created": "2022-08-07T08:40:00Z",
-    "checksum": "9123dcbb0b42652b0e105956c68d3ca2ff34584f324fa41a29aedd32b883e131", // New version checksum
-    "previousVersionId": "44547089-170b-4f5a-bcbc-06e46e0089e4", // Points to previous version above
-    "nextVersionId": null // null if no new version
+    "created": "2022-07-19T08:40:00Z",
+    "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
+    "previousVersionId": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Points to previous version above
+    "nextVersionId": null // null, since no next version
   }
 ]
 ```
