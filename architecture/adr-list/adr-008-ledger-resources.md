@@ -154,20 +154,21 @@ Resources must be under the maximum block size restrictions to be able to fit in
 
 Each request to create a Resource *must* provide the following parameters, supplied by the client application:
 
-* **Resource Collection ID: (did:cheqd:...:) (supplied client-side)**
-* **Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)**
-* **Resource Name: String (e.g., `CL-Schema1` (supplied client-side))**
-* **Resource Version: String (OPTIONAL) ➝ is a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))**
-* **Resource Type (supplied client-side. It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/))**
-* **Also Known As: AlternativeUri array ➝ is a list of URIs that can be used to get the resource**
+* `Resource Collection ID`: (did:cheqd:...:) (supplied client-side)
+* `Resource ID`: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
+* `Resource Name`: String (e.g., `CL-Schema1` (supplied client-side))
+* `Resource Version`: String (OPTIONAL) ➝ is a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))
+* `Resource Type` (supplied client-side. It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/))
+* `Resource Contents`: passed as file
+* `Also Known As`: AlternativeUri array type ➝ is a list of URIs that can be used to get the resource
 
 In addition to the above client-provided parameters, the ledger-side code will populate the following additional header fields (for properly-authenticated requests):
 
-* MediaType: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed ledger-side) This is based on the file extension of the associated resource file.
-* Created: XMLDatetime (computed ledger-side)
-* Checksum: SHA-256 (computed ledger-side)
-* previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
-* nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+* `MediaType`: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed ledger-side) This is based on the file extension of the associated resource file.
+* `Created`: XMLDatetime (computed ledger-side)
+* `Checksum`: SHA-256 (computed ledger-side)
+* `previousVersionId`: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+* `nextVersionId`: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
 
 Example using the Veramo CLI:
 
@@ -189,101 +190,133 @@ Example using the Veramo CLI:
 }
 ```
 
-#### ResourcePreview
-
-* Resource Collection ID: (did:cheqd:...:) (supplied client-side)**
-* Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
-* Resource Name: String (e.g., `CL-Schema1` (supplied client-side)
-* Resource Type (supplied client-side)
-* MediaType: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed ledger-side)
-* Created: XMLDatetime (computed ledger-side)
-* Checksum: SHA-256 (computed ledger-side)
-* previousVersionId: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
-* nextVersionId: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
-
-Example:
-
-```jsonc
-{
-  "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
-  "resourceId":                "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-  "resourceName":              "PassportSchema",
-  "resourceType":              "CL-SChema",
-  "mediaType":                 "application/json",
-  "created":                   "2022-04-20T20:19:19Z",
-  "checksum":                  "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-  "previousVersionId":         null,
-  "nextVersionId":             null
-}
-```
-
 #### MsgCreateResource
 
-* Collection ID: (did:cheqd:...:)`<identifier>` (supplied client-side)
-* Resource ID: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
-* Resource Name: String (e.g., `CL-Schema1` (supplied client-side)
-* Resource Type (supplied client-side) (**OPTIONAL**) is a human-readable semantic version for the Resource (e.g. **1.0.0**)
-* Also Known As (supplied client-side) is list of alternative URIs for the SAME Resource
-* Resource File: `resource-file` Path to file with resource content
+* `collectionId`: (did:cheqd:...:)`<identifier>` (supplied client-side)
+* `id`: UUID represents resource ID ➝ specific to resource, also effectively a version number (supplied client-side)
+* `name`: String (e.g., `CL-Schema1` (supplied client-side)
+* `version`: String (**OPTIONAL**) ➝ is a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))
+* `resourceType`: a string represents type of resource (supplied client-side. It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/))
+* `data`: Bytes represent a user data (supplied client-side)
+* `alsoKnownAs` (supplied client-side) is list of alternative URIs for the SAME Resource
+* `signInputs`: Signatures of the corresponding DID Document's controller(s) (supplied client-side).
 
 Example:
 
 ```jsonc
 {
-    "payload": { // example of resource header
-        "collection_id": "DAzMQo4MDMxCjgwM",
-        "resource_id": "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-        "resource_name": "PassportSchema",
-        "resource_version": "1.0",
-        "resource_type": "CL-Schema",
-        "also_known_as": {
-          "uri": "did:cheqd:testnet:54d19225-7915-4a79-a83a-8f9aa1f0c6ee/resources/ca9f08bd-7bc8-4464-885c-9caa54abcf8d",
-          "description": "did-url"
-        },
-        "resource_file": "SGVsbG8sIHdvcmxk" // file with resource encoded into base64
+    "payload": {
+        "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0=",
+        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+        "name": "PassportScheme",
+        "version": "1.0",
+        "resourceType": "CL-Schema",
+        "alsoKnownAs": [
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": ""
+            },
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": "Alternative URI description"
+            }
+        ]
     },
-    "signInputs": [{
-        "verificationMethodId": "did:cheqd:testnet:DAzMQo4MDMxCjgwM#key-1",
-        "keyType": "Ed25519",
-        "privateKeyHex": "0f5c124886178037952e87e0cdc55d185732577fca19ae877e64ac9ab24a0cc534e5326e70f1a42d785d93048aee806c359ec75a7b06f39253befd1746708438"
-    }]
+    "signInputs": [
+        {
+            "verificationMethodId": "did:cheqd:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
+            "privKey": "tBjxEJCqSkj7u+iTWRqAVZwtcl2XBZrlaMfhxYIRc4wj7epbmDkJ35sCin3MWnAxvHJNDY0yyPafVspsrgb1Ng=="
+        }
+    ]
 }
 ```
 
 #### MsgCreateResourceResponse
 
-* Resource: [Resource](#resource-creation)
+* Return created `Resource`.
 
 Example:
 
 ```jsonc
-{ "resource":  <Resource> }
+{
+    "resource": {
+        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+        "name": "PassportScheme",
+        "version": "1.0",
+        "resourceType": "CL-Schema",
+        "alsoKnownAs": [
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": ""
+            },
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": "Alternative URI description"
+            }
+        ]
+    }
+}
 ```
 
 #### QueryCollectionResourcesRequest
 
-* Collection ID: String - an identifier of linked DIDDoc
+* `Collection ID`: String - an identifier of linked DIDDoc.
   
 Example:
 
 ```jsonc
-{ "collectionId": "DAzMQo4MDMxCjgwM" }
+{ "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4" }
 ```
 
 #### QueryCollectionResourcesResponse
 
-* Resources: [ResourceHeader\[\]](#resourcepreview)
+* Return `collection resources` created by the specific `collection ID`.
 
 Example:
 
 ```jsonc
-{ "resources":  [<ResourceHeader1>, <ResourceHeader2>] }
+{
+    "resources": [
+        {
+            "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+            "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+            "name": "TicketScheme",
+            "version": "1.0",
+            "resourceType": "CL-Schema",
+            "alsoKnownAs": [
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": ""
+                }
+            ]
+        },
+        {
+            "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+            "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+            "name": "PassportScheme",
+            "version": "1.0",
+            "resourceType": "CL-Schema",
+            "alsoKnownAs": [
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": ""
+                },
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": "Alternative URI description"
+                }
+            ]
+        }
+    ]
+}
 ```
 
 #### QueryResourceRequest
 
-* Collection ID: String - an identifier of linked DIDDoc
-* ID: String - unique resource id
+* `Collection ID`: String - an identifier of linked DIDDoc
+* `ID`: String - unique resource id
 
 Example:
 
@@ -296,12 +329,38 @@ Example:
 
 #### QueryResourceResponse
 
-* Resource: [Resource](#resourcepreview)
+* Return `Resource` created by the specific `collectionID` and `ID`.
 
 Example:
 
 ```jsonc
-{ "resource":  <Resource> }
+{
+    "resource": {
+        "resource": {
+            "data": "eyJ0ZXN0IjogInRlc3QifQ=="
+        },
+        "metadata": {
+            "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+            "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+            "name": "PassportScheme",
+            "version": "1.0",
+            "resourceType": "CL-Schema",
+            "alsoKnownAs": [
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": ""
+                },
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": "Alternative URI description"
+                }
+            ],
+            "media_type": "application/json",
+            "created": "2023-01-21T20:02:55.664985039Z",
+            "checksum": "a7cd6c222ea5fc1463c0ca3f70b93035196c8c4f34d89181ff5086bd7b58bfff"
+        }
+    }
+}
 ```
 
 ### State
