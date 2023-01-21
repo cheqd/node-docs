@@ -15,12 +15,9 @@ description: >-
 5. [ADR 005: **Genesis parameters**](adr-005-genesis-parameters.md)
 6. [ADR 006: **Community tax**](adr-006-community-tax.md)
 7. [ADR 008: **cheqd On-ledger Resources with DID URLs**](adr-008-ledger-resources.md)
-
-## Proposed
-
-1. [ADR 009: **Importing/exporting mnemonic keys from Cosmos**](adr-009-mnemonic-keys-cosmos.md)
+8. [ADR 009: Mnemonic keys Cosmos](adr-009-mnemonic-keys-cosmos.md)
 
 ## Draft
 
 1. [ADR 007: **Revocation registry**](adr-007-revocation-registry.md)
-2. [ADR 011: **AnonCreds: Schemas and Credential Definitions**](adr-011-anoncreds.md)
+2. [ADR 011: **AnonCreds: Schemas and Credential Definitions**](adr-010-anoncreds.md)
