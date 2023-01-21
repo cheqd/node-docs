@@ -159,7 +159,7 @@ Each request to create a Resource *must* provide the following parameters, suppl
 * `Resource Name`: String (e.g., `CL-Schema1` (supplied client-side))
 * `Resource Version`: String (OPTIONAL) ➝ is a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))
 * `Resource Type` (supplied client-side. It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/))
-* `Resource Contents`: passed as file
+* `Resource Contents`: passed as file or bytes data
 * `Also Known As`: AlternativeUri array type ➝ is a list of URIs that can be used to get the resource
 
 In addition to the above client-provided parameters, the ledger-side code will populate the following additional header fields (for properly-authenticated requests):
@@ -234,7 +234,7 @@ Example:
 
 #### MsgCreateResourceResponse
 
-* Return created `Resource`.
+* Returns created `Resource`.
 
 Example:
 
@@ -272,7 +272,7 @@ Example:
 
 #### QueryCollectionResourcesResponse
 
-* Return `collection resources` created by the specific `collection ID`.
+* Returns `collection of resources` created by the specific `collection ID`.
 
 Example:
 
@@ -329,7 +329,7 @@ Example:
 
 #### QueryResourceResponse
 
-* Return `Resource` created by the specific `collectionID` and `ID`.
+* Returns `Resource` created by the specific `collectionID` and `ID`.
 
 Example:
 
