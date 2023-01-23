@@ -193,12 +193,12 @@ Example using the Veramo CLI:
 #### MsgCreateResource
 
 * `collectionId`: (did:cheqd:...:)`<identifier>` (supplied client-side)
-* `id`: UUID represents resource ID ➝ specific to resource, also effectively a version number (supplied client-side)
+* `id`: UUID representing resource ID ➝ specific to resource, also effectively a version number (supplied client-side)
 * `name`: String (e.g., `CL-Schema1` (supplied client-side)
-* `version`: String (**OPTIONAL**) ➝ is a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))
-* `resourceType`: a string represents type of resource (supplied client-side. It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/))
-* `data`: Bytes represent a user data (supplied client-side)
-* `alsoKnownAs` (supplied client-side) is list of alternative URIs for the SAME Resource
+* `version`: String (**OPTIONAL**) ➝ a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))
+* `resourceType`: a string representing type of resource (supplied client-side). It is recommended that new Resource Types are included in the [DID Spec Registries](https://www.w3.org/TR/did-spec-registries/).
+* `data`: Bytes representing a user data (supplied client-side)
+* `alsoKnownAs` (supplied client-side) a list of alternative URIs for the SAME Resource
 * `signInputs`: Signatures of the corresponding DID Document's controller(s) (supplied client-side).
 
 Example:
