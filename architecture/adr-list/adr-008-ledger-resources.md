@@ -205,14 +205,14 @@ Example:
 
 ```jsonc
 {
-    "payload": {
+    "Payload": {
         "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0=",
-        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
         "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
         "name": "PassportScheme",
         "version": "1.0",
-        "resourceType": "CL-Schema",
-        "alsoKnownAs": [
+        "resource_type": "CL-Schema",
+        "also_known_as": [
             {
                 "uri": "https://example.com/alternative-uri",
                 "description": ""
@@ -223,10 +223,10 @@ Example:
             }
         ]
     },
-    "signInputs": [
+    "SignInputs": [
         {
-            "verificationMethodId": "did:cheqd:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
-            "privKey": "tBjxEJCqSkj7u+iTWRqAVZwtcl2XBZrlaMfhxYIRc4wj7epbmDkJ35sCin3MWnAxvHJNDY0yyPafVspsrgb1Ng=="
+            "VerificationMethodID": "did:cheqd:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
+            "PrivKey": "tBjxEJCqSkj7u+iTWRqAVZwtcl2XBZrlaMfhxYIRc4wj7epbmDkJ35sCin3MWnAxvHJNDY0yyPafVspsrgb1Ng=="
         }
     ]
 }
@@ -241,12 +241,12 @@ Example:
 ```jsonc
 {
     "resource": {
-        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
         "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
         "name": "PassportScheme",
         "version": "1.0",
-        "resourceType": "CL-Schema",
-        "alsoKnownAs": [
+        "resource_type": "CL-Schema",
+        "also_known_as": [
             {
                 "uri": "https://example.com/alternative-uri",
                 "description": ""
@@ -280,12 +280,12 @@ Example:
 {
     "resources": [
         {
-            "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+            "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
             "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
             "name": "TicketScheme",
             "version": "1.0",
-            "resourceType": "CL-Schema",
-            "alsoKnownAs": [
+            "resource_type": "CL-Schema",
+            "also_known_as": [
                 {
                     "uri": "https://example.com/alternative-uri",
                     "description": ""
@@ -293,12 +293,12 @@ Example:
             ]
         },
         {
-            "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+            "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
             "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
             "name": "PassportScheme",
             "version": "1.0",
-            "resourceType": "CL-Schema",
-            "alsoKnownAs": [
+            "resource_type": "CL-Schema",
+            "also_known_as": [
                 {
                     "uri": "https://example.com/alternative-uri",
                     "description": ""
@@ -340,12 +340,12 @@ Example:
             "data": "eyJ0ZXN0IjogInRlc3QifQ=="
         },
         "metadata": {
-            "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+            "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
             "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
             "name": "PassportScheme",
             "version": "1.0",
-            "resourceType": "CL-Schema",
-            "alsoKnownAs": [
+            "resource_type": "CL-Schema",
+            "also_known_as": [
                 {
                     "uri": "https://example.com/alternative-uri",
                     "description": ""
@@ -357,7 +357,9 @@ Example:
             ],
             "media_type": "application/json",
             "created": "2023-01-21T20:02:55.664985039Z",
-            "checksum": "a7cd6c222ea5fc1463c0ca3f70b93035196c8c4f34d89181ff5086bd7b58bfff"
+            "checksum": "a7cd6c222ea5fc1463c0ca3f70b93035196c8c4f34d89181ff5086bd7b58bfff",
+            "previous_version_id": "",
+            "next_version_id": ""
         }
     }
 }
@@ -384,12 +386,12 @@ Returns `resource's metadata` with a given `collection ID` and `ID`.
 ```jsonc
 {
     "resource": {
-        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
         "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
         "name": "PassportScheme",
         "version": "1.0",
-        "resourceType": "CL-Schema",
-        "alsoKnownAs": [
+        "resource_type": "CL-Schema",
+        "also_known_as": [
             {
                 "uri": "https://example.com/alternative-uri",
                 "description": ""
@@ -512,9 +514,9 @@ We need to support resource resolution in the DID resolver.
 
 ### Resource versioning
 
-Resource are immutable, but it is possible to create new versions of it under a new identifier(`id` field). When creating a resource whose fields `collectionId`, `name` and `resourceType` match an existing resource:
+Resource are immutable, but it is possible to create new versions of it under a new identifier(`id` field). When creating a resource whose fields `collection_id`, `name` and `resource_type` match an existing resource:
 
-* The latest version of the current resource will be added with a link to the new one. That is, field `nextVersionId` will contain the new resource identifier.
+* The latest version of the current resource will be added with a link to the new one. That is, field `next_version_id` will contain the new resource identifier.
 * A new resource with data from the transaction will be created with the previous version resource id in field `previousVersionId`.
 
 Example:
@@ -522,41 +524,28 @@ Example:
 Step 1. Resource exists in the ledger:
 
 ```jsonc
-  { 
-    "resourceURI": "did:cheqd:testnet:DAzMQo4MDMxCjgwM/resources/44547089-170b-4f5a-bcbc-06e46e0089e4",
-      "resourceCollectionId": "DAzMQo4MDMxCjgwM", // Common collection ID
-      "resourceId": "44547089-170b-4f5a-bcbc-06e46e0089e4", // Old Resource ID and version number
-      "resourceName": "PassportSchema", // Resource name must remain the same
-      "resourceType": "CL-Schema", // Resource type must remain the same
-      "mediaType": "application/json",
-      "created": "2022-07-19T08:40:00Z",
-      "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
-      "previousVersionId": null, // null, since no previous version
-     "nextVersionId": null // null, since no next version
-    }
-
 {
   "resource": {
-      "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",  // Common collection ID
-      "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Old Resource ID and version number
-      "name": "PassportScheme", // Resource name must remain the same
-      "version": "1.0", // Resource version
-      "resourceType": "CL-Schema", // Resource type must remain the same
-      "alsoKnownAs": [
-          {
-              "uri": "https://example.com/alternative-uri",
-              "description": ""
-          },
-          {
-              "uri": "https://example.com/alternative-uri",
-              "description": "Alternative URI description"
-          }
-      ],
-      "mediaType": "application/json",
-      "created": "2022-07-19T08:40:00Z",
-      "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
-      "previousVersionId": null, // null, since no previous version
-     "nextVersionId": null // null, since no next version
+    "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",  // Common collection ID
+    "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Old Resource ID and version number
+    "name": "PassportScheme", // Resource name must remain the same
+    "version": "1.0", // Resource version
+    "resource_type": "CL-Schema", // Resource type must remain the same
+    "also_known_as": [
+        {
+            "uri": "https://example.com/alternative-uri",
+            "description": ""
+        },
+        {
+            "uri": "https://example.com/alternative-uri",
+            "description": "Alternative URI description"
+        }
+    ],
+    "media_type": "application/json",
+    "created": "2022-07-19T08:40:00Z",
+    "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
+    "previous_version_id": null, // null, since no previous version
+    "next_version_id": null // null, since no next version
   }
 }
 
@@ -581,12 +570,12 @@ Step 3. After the transaction applying
 ```jsonc
 "resources": [
   { // First version of a Resource called PassportSchema
-    "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",  // Common collection ID
+    "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",  // Common collection ID
     "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Old Resource ID and version number
     "name": "PassportScheme", // Resource name must remain the same
     "version": "1.0", // Resource version
-    "resourceType": "CL-Schema", // Resource type must remain the same
-    "alsoKnownAs": [
+    "resource_type": "CL-Schema", // Resource type must remain the same
+    "also_known_as": [
         {
             "uri": "https://example.com/alternative-uri",
             "description": ""
@@ -596,19 +585,19 @@ Step 3. After the transaction applying
             "description": "Alternative URI description"
         }
     ],
-    "mediaType": "application/json",
+    "media_type": "application/json",
     "created": "2022-07-19T08:40:00Z",
     "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
-    "previousVersionId": null, // null, since no previous version
-    "nextVersionId": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // Points to next version below
+    "previous_version_id": null, // null, since no previous version
+    "next_version_id": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // Points to next version below
   },
   { // Second version of a Resource called PassportSchema
-    "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4", // Common collection ID
+    "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4", // Common collection ID
     "id": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // New Resource ID and version number
-     "name": "PassportScheme", // Resource name must remain the same
+    "name": "PassportScheme", // Resource name must remain the same
     "version": "1.0", // Resource version
-    "resourceType": "CL-Schema", // Resource type must remain the same
-    "alsoKnownAs": [
+    "resource_type": "CL-Schema", // Resource type must remain the same
+    "also_known_as": [
         {
             "uri": "https://example.com/alternative-uri",
             "description": ""
@@ -618,11 +607,11 @@ Step 3. After the transaction applying
             "description": "Alternative URI description"
         }
     ],
-    "mediaType": "application/json",
+    "media_type": "application/json",
     "created": "2022-07-19T08:40:00Z",
     "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
-    "previousVersionId": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Points to previous version above
-    "nextVersionId": null // null, since no next version
+    "previous_version_id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Points to previous version above
+    "next_version_id": null // null, since no next version
   }
 ]
 ```
