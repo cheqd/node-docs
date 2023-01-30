@@ -45,7 +45,7 @@ Decentralized Identifiers (DIDs) are often stored on ledgers (e.g., [cheqd](adr-
 
 #### Drawbacks of hosting resources on traditional web endpoints
 
-DIDs *can* be stored on traditional centralised-storage endpoints (e.g., [`did:web`](https://w3c-ccg.github.io/did-method-web/), [`did:git`](https://github-did.com/)) but this comes with certain drawbacks:
+DIDs *can* be stored on traditional centralised-storage endpoints (e.g., [`did:web`](https://w3c-ccg.github.io/did-method-web/), [`did:git`](https://github.com/decentralized-identity/github-did)) but this comes with certain drawbacks:
 
 1. **DIDs could be tampered by compromising the hosting provider**: DIDs and DID Documents ("DIDDocs") stored at a centralised web endpoint can be compromised and replaced by malicious actors.
 2. **Hosting providers could unilaterally cease to host particular clients**: Hosting providers could terminate accounts due to factors such as non-payment of fees, violation of Terms of Service, etc.
