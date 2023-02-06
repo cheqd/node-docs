@@ -83,13 +83,11 @@ Any client application can generate these UUIDs using their own preferred implem
 
 Alternatively, [the `unique-id` can also be generated similar to the `did:indy method`](https://hyperledger.github.io/indy-did-method/#indy-did-method-identifiers) from the initial public key of the DID (e.g., base58 encoding of the first 16 bytes of the SHA256 of the first Verification Method `Ed25519` public key). This `unique-id` format is referred to as the "Indy-style" unique identifier in our documentation.
 
-In addition, Unique Identifiers can be up to 32 base58 characters long.
-
 Support for Indy-style unique identifiers makes compatibility with Indy-based client SDKs, such as those based on [Hyperledger Aries](https://www.hyperledger.org/use/aries).
 
 #### Namespace
 
-If no `namespace` is specified, it assumed to be default `namespace` for the network/ledger the request is targetted at. This will generally be `mainnet` for the primary production cheqd network.
+If no `namespace` is specified, it assumed to be default `namespace` for the network/ledger the request is targeted at. This will generally be `mainnet` for the primary production cheqd network.
 
 ### Syntax for `did:cheqd` method
 
@@ -99,9 +97,11 @@ The cheqd DID method ABNF to conform with [DID syntax guidelines](https://www.w3
 cheqd-did       = "did:cheqd:" [namespace]
 namespace       = 1*namespace-char ":" unique-id
 namespace-char  = ALPHA / DIGIT
-unique-id       = 16*id-char / 32*id-char / UUID
+unique-id       = *id-char / UUID
 id-char         = ALPHA / DIGIT
 ```
+
+>**Note:** The `*id-char unique-id` must be 16 bytes of Indy-style base58 encoded identifier.
 
 #### ABNF syntax for UUID-style identifiers
 
@@ -129,30 +129,31 @@ hexDigit =
 
 #### Indy-style
 
-A DID written to the cheqd "mainnet" ledger `namespace` with a 32-character Indy-style identifier:
+A DID written to the cheqd `mainnet`/`testnet` ledger `namespace` with a 16 bytes of Indy-style base58 encoded identifier:
 
 ```text
-did:cheqd:mainnet:zF7rhDBfUt9d1gJPjx7s1JXfUY7oVWkY
+did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg
 ```
-
-A DID written to the cheqd "testnet" ledger `namespace` with a 16-character Indy-style identifier:
 
 ```text
-did:cheqd:testnet:7Tqg6BwSSWapxgUD
-```
+did:cheqd:testnet:VwZmDHc9vHtJe8W3wofzQk
 
 An Indy-style DID where no namespace is defined, where the `namespace` would default to the one defined on ledger where it's published (typically, `mainnet`):
 
 ```text
-did:cheqd:6cgbu8ZPoWTnR5Rv
+did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg
 ```
 
 #### UUID-style
 
-A UUID-style DID on cheqd "mainnet" `namespace`:
+A UUID-style DID on cheqd `mainnet`/`testnet` `namespace`:
 
 ```text
 did:cheqd:mainnet:de9786cd-ec53-458c-857c-9342cf264f80
+```
+
+```text
+did:cheqd:testnet:02493991-d6be-4d40-aacd-95ad92e8b19b
 ```
 
 A UUID-style DID where no namespace is defined, where the `namespace` would default to the one defined on ledger where it's published (typically, `mainnet`):
@@ -190,29 +191,29 @@ describing specifications that this DID Document is following to.
     "https://www.w3.org/ns/did/v1",
     "https://w3id.org/security/suites/ed25519-2020/v1"
   ],
-  "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+  "id": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg",
   "controller": [
-      "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg"
+      "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg"
   ],
   "verification_method": [
       {
-          "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1",
+          "id": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg#key-1",
           "verification_method_type": "Ed25519VerificationKey2020",
-          "controller": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+          "controller": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg",
           "verification_material": "z6MkpqEAYo7Ri8WYt6Kx4efLQdVJNgh4QzDf8ptVxJoexXdx"
       },
       {
-          "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-2",
+          "id": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg#key-2",
           "verification_method_type": "Ed25519VerificationKey2020",
-          "controller": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+          "controller": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg",
           "verification_material": "z6MkqX2qR3rvt9UQpXsaYKFqGjX79ooFfwhhpZo8HfVXiDMP"
       },
   ],
   "authentication": [
-            "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1"
+            "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg#key-1"
         ],
   "capability_delegation": [
-            "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-2"
+            "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg#key-2"
         ],
 }
 ```
@@ -230,8 +231,8 @@ Each DID Document MUST have a metadata section when a representation is produced
 1. **`created`** (string): Formatted as an XML Datetime normalized to UTC 00:00:00 and without sub-second decimal precision, e.g., `2020-12-20T19:17:47Z`.
 2. **`updated`** (string): The value of the property MUST follow the same
 formatting rules as the created property. The `updated` field is `null` if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
-3. **`deactivated`** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
-4. **`versionId`** (string): Contains transaction hash of the current DIDDoc version.
+3. **`deactivated`** (bool): If DID has been deactivated, DID document metadata MUST include this property with the boolean value `true`. By default this is set to `false`.
+4. **`versionId`** (string): A UUID string that represents the version identifier of the DID Document.
 5. **`previousVersionId`** (string): A UUID string that represents the version identifier of the previous version of the DID Document. The `previousVersionId` field is `null` if an Update operation has never been performed on the DID document
 6. **`nextVersionId`** (string): A UUID string that represents the version identifier of the next version of the DID Document. The `nextVersionId` field is `null` if an Update operation has never been performed on the DID document
 
@@ -242,7 +243,7 @@ formatting rules as the created property. The `updated` field is `null` if an Up
   "created": "2020-12-20T19:17:47Z",
   "updated": "2020-12-20T19:19:47Z",
   "deactivated": false,
-  "versionId": "1B3B00849B4D50E8FCCF50193E35FD6CA5FD4686ED6AD8F847AC8C5E466CFD3E",
+  "versionId": "b459d3a4-5f02-565b-b137-d9f8436edc5b",
   "previousVersionId": null,
   "nextVersionId": null
 }
@@ -261,27 +262,27 @@ Verification methods are used to define how to authenticate / authorise interact
 
 ```jsonc
 {
-    "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+    "id": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
     "verification_method_type": "Ed25519VerificationKey2018",
-    "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+    "controller": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
     "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
 }
 ```
 
 ```jsonc
 {
-  "id": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg#key-1",
+  "id": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg#key-1",
   "verification_method_type": "Ed25519VerificationKey2020",
-  "controller": "did:cheqd:testnet:5rjaLzcffhGUH4nt4fyfAg",
+  "controller": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg",
   "verification_material": "z6MkpqEAYo7Ri8WYt6Kx4efLQdVJNgh4QzDf8ptVxJoexXdx"
 }
 ```
 
 ```jsonc
 {
-    "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+    "id": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
     "verification_method_type": "JsonWebKey2020",
-    "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+    "controller": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
     "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
 }
 ```
@@ -299,7 +300,7 @@ Services can be defined in a DIDDoc to express means of communicating with the D
 
 ```jsonc
 {
-  "id":"did:cheqd:mainnet:N22N22KY2Dyvmuu2#linked-domain",
+  "id":"did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg#linked-domain",
   "serviceType": "LinkedDomains",
   "serviceEndpoint": "https://bar.example.com"
 }
@@ -331,19 +332,19 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2018/v1"
       ],
-      "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+      "id": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
       "verification_method": [
           {
-              "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+              "id": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
               "verification_method_type": "Ed25519VerificationKey2018",
-              "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+              "controller": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
               "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
           }
       ],
       "authentication": [
-          "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
+          "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
       ],
-      "versionId": "c4ffc8de-8bf9-4c6b-9457-3c5ee13c40c9"
+      "version_id": "c4ffc8de-8bf9-4c6b-9457-3c5ee13c40c9"
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -360,19 +361,19 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+      "id": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e",
       "verification_method": [
         {
-            "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
+            "id": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
             "verification_method_type": "Ed25519VerificationKey2020",
-            "controller": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+            "controller": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e",
             "verification_material": "z6Mku99WnVSLEtUccqYRUZhxXQu29C68fukKMuoXoGkUqh8W"
         }
       ],
       "authentication": [
-        "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
+        "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
       ],
-      "versionId": "fc020ad9-b1d0-4feb-aebb-bd6815c500df"
+      "version_id": "fc020ad9-b1d0-4feb-aebb-bd6815c500df"
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -389,19 +390,19 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/jws-2020/v1"
       ],
-      "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+      "id": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
       "verification_method": [
           {
-              "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+              "id": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
               "verification_method_type": "JsonWebKey2020",
-              "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+              "controller": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
               "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
           }
       ],
       "authentication": [
-          "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
+          "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
       ],
-      "versionId": "1049f853-d4fb-46b7-84e2-3f0770e98907"
+      "version_id": "1049f853-d4fb-46b7-84e2-3f0770e98907"
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -435,18 +436,19 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2018/v1"
       ],
-      "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+      "id": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
       "verification_method": [
           {
-              "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+              "id": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
               "verification_method_type": "Ed25519VerificationKey2018",
-              "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+              "controller": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
               "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
           }
       ],
       "authentication": [
-          "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
+          "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
       ],
+      "version_id": "1049f853-d4fb-46b7-84e2-3f0770e98907",
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -463,18 +465,19 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
-      "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+      "id": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e",
       "verification_method": [
           {
-              "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
+              "id": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
               "verification_method_type": "Ed25519VerificationKey2020",
-              "controller": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+              "controller": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e",
               "verification_material": "z6Mku99WnVSLEtUccqYRUZhxXQu29C68fukKMuoXoGkUqh8W"
           }
       ],
       "authentication": [
-          "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
+          "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
       ],
+      "version_id": "1049f853-d4fb-46b7-84e2-3f0770e98907",
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -491,18 +494,19 @@ WriteRequest{
           "https://www.w3.org/ns/did/v1",
           "https://w3id.org/security/suites/jws-2020/v1"
       ],
-      "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+      "id": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
       "verification_method": [
           {
-              "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+              "id": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
               "verification_method_type": "JsonWebKey2020",
-              "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+              "controller": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
               "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
           }
       ],
       "authentication": [
-          "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
+          "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
       ],
+      "version_id": "1049f853-d4fb-46b7-84e2-3f0770e98907",
   },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -530,7 +534,7 @@ WriteRequest (DeactivateDidDocRequest(id), signatures)
 WriteRequest{
   "data": 
     "DeactivateDidDocRequest" {   
-      "id": "did:cheqd:mainnet:N22N22KY2Dyvmuu2",
+      "id": "did:cheqd:mainnet:5rjaLzcffhGUH4nt4fyfAg",
     },
   "signatures": {
       "Verification Method URI": "<signature>"
@@ -543,8 +547,8 @@ WriteRequest{
 
 DIDDocs associated with a DID of type `did:cheqd:<namespace>` can be resolved using the `GetDidDoc` query to fetch a response from the ledger. The response contains:
 
-- **`did_doc`**: DIDDoc associated with the specified DID in a W3C specification compliant [DIDDoc structure](#did-documents-diddocs).
-- **`metadata`**: Contains the MUST have [DIDDoc metadata](#diddoc-metadata) associated with a DIDDOc.
+- **`did_doc`**: DIDDoc associated with the specified DID in a W3C specification compliant [DIDDoc structure](#did-documents-diddocs-on-cheqd).
+- **`metadata`**: Contains the MUST have [DIDDoc metadata](#did-document-metadata) associated with a DIDDoc.
 
 #### Client request format for get/resolve DIDDoc
 
@@ -560,73 +564,78 @@ The response is returned as a [Protobuf](https://developers.google.com/protocol-
 
 ```jsonc
 "didDocument": {
-    "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+    "id": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
     "verification_method": [
         {
-            "id": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
+            "id": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1",
             "verification_method_type": "Ed25519VerificationKey2018",
-            "controller": "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
+            "controller": "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1",
             "verification_material": "B38Mt4DXaPxq2SxejqTbEEfQFYX9TmTgJyyoELoUMoCB"
         }
     ],
     "authentication": [
-        "did:cheqd:testnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
+        "did:cheqd:mainnet:76d28343-ee38-44b5-b098-72c08ea0f9c1#key1"
     ]
 },
 "didDocumentMetadata": {
     "created": "2023-01-16T13:09:18.995088591Z",
     "updated": "2023-01-16T13:09:20.123096781Z",
+    "deactivated": false,
     "version_id": "c4ffc8de-8bf9-4c6b-9457-3c5ee13c40c9",
-    "previous_version_id": "57e760fd-6b9c-4da8-aabc-48c65a32ace3"
+    "previous_version_id": "57e760fd-6b9c-4da8-aabc-48c65a32ace3",
+    "next_version_id": ""
 }
 ```
 
 ```jsonc
 {
   "didDocument": {
-    "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+    "id": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e",
     "verification_method": [
       {
-          "id": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
+          "id": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e#key1",
           "verification_method_type": "Ed25519VerificationKey2020",
-          "controller": "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e",
+          "controller": "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e",
           "verification_material": "z6Mku99WnVSLEtUccqYRUZhxXQu29C68fukKMuoXoGkUqh8W"
       }
     ],
     "authentication": [
-        "did:cheqd:testnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
+        "did:cheqd:mainnet:63e40964-0072-4c5f-a63c-e2713945218e#key1"
     ]
   },
   "didDocumentMetadata": {
       "created": "2023-01-16T12:22:54.063863795Z",
       "updated": "2023-01-16T12:22:56.293234597Z",
+      "deactivated": false,
       "version_id": "f382b9e1-f7b6-443c-bfd2-c85826ce2b43",
       "previous_version_id": "fc020ad9-b1d0-4feb-aebb-bd6815c500df",
-      "next_version_id": null
+      "next_version_id": ""
   }
 }
 ```
 
 ```jsonc
 "didDocument": {
-    "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+    "id": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
     "verification_method": [
         {
-            "id": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
+            "id": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1",
             "verification_method_type": "JsonWebKey2020",
-            "controller": "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
+            "controller": "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d",
             "verification_material": "{\"crv\":\"Ed25519\",\"kty\":\"OKP\",\"x\":\"Onq1hX1LV9WvqmWmkClKn-QtfAqwHnlloiGQhkMQcFk\"}"
         }
     ],
     "authentication": [
-        "did:cheqd:testnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
+        "did:cheqd:mainnet:95ac18bb-6985-4b57-b0e6-655f8ab0307d#key1"
     ]
 },
 "didDocumentMetadata": {
     "created": "2023-01-16T13:09:14.551420248Z",
     "updated": "2023-01-16T13:09:15.67479948Z",
+    "deactivated": false,
     "version_id": "1049f853-d4fb-46b7-84e2-3f0770e98907",
-    "previous_version_id": "c15d40ea-f9a3-4747-9fa6-27b03d07561d"
+    "previous_version_id": "c15d40ea-f9a3-4747-9fa6-27b03d07561d",
+    "next_version_id": ""
 }
 ```
 
