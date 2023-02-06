@@ -154,7 +154,7 @@ Resources must be under the maximum block size restrictions to be able to fit in
 
 Each request to create a Resource *must* provide the following parameters, supplied by the client application:
 
-* `Resource Collection ID`: (did:cheqd:...:) (supplied client-side)
+* `Resource Collection ID`: (did:cheqd:...:) (supplied client-side): unique identifier from DIDDoc.
 * `Resource ID`: UUID ➝ specific to resource, also effectively a version number (supplied client-side)
 * `Resource Name`: String (e.g., `CL-Schema1` (supplied client-side))
 * `Resource Version`: String (OPTIONAL) ➝ is a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))
@@ -167,8 +167,8 @@ In addition to the above client-provided parameters, the ledger-side code will p
 * `MediaType`: (e.g. `application/json`/`image`/`application/octet-stream`/`text/plain`) (computed ledger-side) This is based on the file extension of the associated resource file.
 * `Created`: XMLDatetime (computed ledger-side)
 * `Checksum`: SHA-256 (computed ledger-side)
-* `previousVersionId`: `null` if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
-* `nextVersionId`: `null` if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+* `previousVersionId`: an empty string if first, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
+* `nextVersionId`: an empty string if first/latest, otherwise ID as long as Name, ResourceType, and MimeType match previous version (computed ledger-side)
 
 Example using the Veramo CLI:
 
@@ -192,7 +192,7 @@ Example using the Veramo CLI:
 
 #### MsgCreateResource
 
-* `collectionId`: (did:cheqd:...:)`<identifier>` (supplied client-side)
+* `collectionId`: (did:cheqd:...:)`<identifier>` (supplied client-side) ➝ unique identifier from DIDDoc.
 * `id`: UUID representing resource ID ➝ specific to resource, also effectively a version number (supplied client-side)
 * `name`: String (e.g., `CL-Schema1` (supplied client-side)
 * `version`: String (**OPTIONAL**) ➝ a human-readable semantic version for the Resource (e.g., `1.0.0` (supplied client-side))
@@ -207,12 +207,12 @@ Example:
 {
     "Payload": {
         "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0=",
-        "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
         "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
         "name": "PassportScheme",
         "version": "1.0",
-        "resource_type": "CL-Schema",
-        "also_known_as": [
+        "resourceType": "CL-Schema",
+        "alsoKnownAs": [
             {
                 "uri": "https://example.com/alternative-uri",
                 "description": ""
@@ -223,10 +223,10 @@ Example:
             }
         ]
     },
-    "SignInputs": [
+    "SignInfo": [
         {
             "VerificationMethodID": "did:cheqd:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
-            "PrivKey": "tBjxEJCqSkj7u+iTWRqAVZwtcl2XBZrlaMfhxYIRc4wj7epbmDkJ35sCin3MWnAxvHJNDY0yyPafVspsrgb1Ng=="
+            "Signature": "m0ZE4x5Qxs+6HEBoXDrjtGTLr9GuXjIttSznoVumRWIA3GMeDipXnCVgdZfa0PUVVdr2DQy9a0NyPXPeQcXdCw=="
         }
     ]
 }
@@ -290,7 +290,12 @@ Example:
                     "uri": "https://example.com/alternative-uri",
                     "description": ""
                 }
-            ]
+            ],
+            "media_type": "application/json",
+            "created": "2023-01-21T20:02:55.664985039Z",
+            "checksum": "a7cd6c222ea5fc1463c0ca3f70b93035196c8c4f34d89181ff5086bd7b58bfff",
+            "previous_version_id": "",
+            "next_version_id": ""
         },
         {
             "collection_id": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
@@ -307,7 +312,12 @@ Example:
                     "uri": "https://example.com/alternative-uri",
                     "description": "Alternative URI description"
                 }
-            ]
+            ],
+            "media_type": "application/json",
+            "created": "2023-01-21T20:02:55.664985039Z",
+            "checksum": "a7cd6c222ea5fc1463c0ca3f70b93035196c8c4f34d89181ff5086bd7b58bfff",
+            "previous_version_id": "",
+            "next_version_id": ""
         }
     ]
 }
@@ -400,14 +410,27 @@ Returns `resource's metadata` with a given `collection ID` and `ID`.
                 "uri": "https://example.com/alternative-uri",
                 "description": "Alternative URI description"
             }
-        ]
+        ],
+        "media_type": "application/json",
+        "created": "2023-01-21T20:02:55.664985039Z",
+        "checksum": "a7cd6c222ea5fc1463c0ca3f70b93035196c8c4f34d89181ff5086bd7b58bfff",
+        "previous_version_id": "",
+        "next_version_id": ""
     }
 }
 ```
 
 ### State
 
-* `resources:<collection-id>:<resource-id>` ➝ **Resource**
+#### Metadata
+
+* `resources-metadata:<collection-id>:<resource-id>` ➝ **Metadata**
+  * `<collection-id>` is the last part of DID. It can be UUID, Indy-style or whatever is allowed by ledger. It allows us to evolve over time more easily.
+  * `<resource-id>` is a unique resource identifier on UUID format
+
+#### Data
+
+* `resources-data:<collection-id>:<resource-id>` ➝ **Data**
   * `<collection-id>` is the last part of DID. It can be UUID, Indy-style or whatever is allowed by ledger. It allows us to evolve over time more easily.
   * `<resource-id>` is a unique resource identifier on UUID format
 
@@ -434,10 +457,40 @@ Returns `resource's metadata` with a given `collection ID` and `ID`.
 cheqd Cosmos CLI Example:
 
 ```bash
-cheqd-noded tx resource create [payload-file]
+cheqd-noded tx resource create [payload-file] [resource-data-file]
 ```
 
-* `payload-file`: path to the [payload file](#msgcreateresource)
+* `payload-file`: path to the payload file:
+
+```jsonc
+{
+    "Payload": {
+        "collectionId": "91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+        "name": "PassportScheme",
+        "version": "1.0",
+        "resourceType": "CL-Schema",
+        "alsoKnownAs": [
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": ""
+            },
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": "Alternative URI description"
+            }
+        ]
+    },
+    "SignInputs": [
+        {
+            "VerificationMethodID": "did:cheqd:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
+            "PrivKey": "tBjxEJCqSkj7u+iTWRqAVZwtcl2XBZrlaMfhxYIRc4wj7epbmDkJ35sCin3MWnAxvHJNDY0yyPafVspsrgb1Ng=="
+        }
+    ]
+}
+```
+
+* `resource-data-file`: path to the resource file (e.g.: `/path/to/resource.jpeg`)
 
 ### Queries
 
@@ -458,7 +511,7 @@ cheqd-noded tx resource create [payload-file]
 cheqd Cosmos CLI Example:
 
 ```bash
-cheqd-noded query resource collection-resources [collection-id]
+cheqd-noded query resource collection-metadata [collection-id]
 ```
   
 #### GetResource
@@ -476,7 +529,7 @@ cheqd-noded query resource collection-resources [collection-id]
 cheqd Cosmos CLI Example:
 
 ```bash
-cheqd-noded query resource resource [collectionId] [id]
+cheqd-noded query resource specific-resource [collectionId] [id]
 ```
 
 #### QueryResourceMetadata
@@ -496,21 +549,6 @@ cheqd Cosmos CLI Example:
 ```bash
 cheqd-noded query resource resource-metadata [collectionId] [id]
 ```
-  
-### DID Resolver
-
-We need to support resource resolution in the DID resolver.
-
-#### Resource resolution
-
-* Input DIDUrl:
-  * `https://resolver.cheqd.net/1.0/identifiers/<did>/resources/<resource-id>`
-
-* Output:
-  * Resource `data` value
-
-* Processing logic:
-  * Simply call [GetResource](#getresource) via GRPC
 
 ### Resource versioning
 
@@ -544,8 +582,8 @@ Step 1. Resource exists in the ledger:
     "media_type": "application/json",
     "created": "2022-07-19T08:40:00Z",
     "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
-    "previous_version_id": null, // null, since no previous version
-    "next_version_id": null // null, since no next version
+    "previous_version_id": "", // an empty string, since no previous version
+    "next_version_id": "" // an empty string, since no next version
   }
 }
 
@@ -556,7 +594,7 @@ Step 2. Client send request for creating a new resource with a transaction MsgCr
   ```jsonc
   MsgCreateResource for creating Resource2
   {
-    "collectionId":   "DAzMQo4MDMxCjgwM", // same collection ID
+    "collectionId":   "91e5f0cf-5f1e-5c19-97d3-d313e84033b4", // same collection ID
     "id":             "bb2118f3-5e55-4510-b420-33ef9e1726d2", // new unique ID
     "name":           "PassportSchema", // same resource name
     "resourceType":   "CL-Schema", // same resource type
@@ -588,7 +626,7 @@ Step 3. After the transaction applying
     "media_type": "application/json",
     "created": "2022-07-19T08:40:00Z",
     "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
-    "previous_version_id": null, // null, since no previous version
+    "previous_version_id": "", // an empty string, since no previous version
     "next_version_id": "bb2118f3-5e55-4510-b420-33ef9e1726d2", // Points to next version below
   },
   { // Second version of a Resource called PassportSchema
@@ -611,7 +649,7 @@ Step 3. After the transaction applying
     "created": "2022-07-19T08:40:00Z",
     "checksum": "7b2022636f6e74656e74223a202274657374206461746122207d0ae3b0c44298", // Old version checksum
     "previous_version_id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f", // Points to previous version above
-    "next_version_id": null // null, since no next version
+    "next_version_id": "" // an empty string, since no next version
   }
 ]
 ```
