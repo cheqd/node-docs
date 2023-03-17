@@ -6,7 +6,7 @@ In order to reduce disk utilization on your node, you can enable pruning to redu
 
 This can be done by modifying the pruning parameters inside `/home/cheqd/.cheqdnode/config/app.toml` file.
 
-> Warning: In order to make pruning configuration work, you need to run **cheqd-noded v1.2.5+** Find more details on our [releases page](https://github.com/cheqd/cheqd-node/releases).
+> :warning: In order to make pruning configuration work, you need to run **cheqd-noded v1.2.5+** Find more details on our [releases page](https://github.com/cheqd/cheqd-node/releases).
   
 ## Pruning Strategies
 
