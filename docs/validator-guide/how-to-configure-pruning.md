@@ -21,7 +21,8 @@ There are 4 pruning strategies you can use:
         > :memo: In case you see `pruning-keep-every`, feel free to remove it from the configuration, since it's been [deprecated](https://github.com/cosmos/cosmos-sdk/pull/11152) for a while.
 
 > :warning: Make sure to comment out `pruning-interval`, `pruning-keep-every` and `pruning-keep-recent` in case you're not using `pruning="custom"`.
+
 * `min_retain_blocks` - Configuring this parameter will help you to configure Tendermint block pruning - specify the minimum block height offset from the current block being committed. If not enabled previously, this configuration will remove the significant amount of historic data from your node.
 
-    > :exclamation: This configuration is in conjunction with `Unbonding time` the parameter. Based on that and our average block time, we suggest setting the value to not lower than **`250000`** to assure the data integrity on your node. 
+    > :exclamation: This configuration is in conjunction with `Unbonding time` the parameter. Based on that and our average block time, we suggest setting the value to not lower than **`250000`** to assure the data integrity on your node.
     > It is calculated by dividing Unbonding period (1,210,000 seconds or 14 days) by the average block time (which is around 6 seconds for most of the time) + adding a significant buffer (~50000 blocks) just for safety.
