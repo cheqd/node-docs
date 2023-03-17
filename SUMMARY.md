@@ -2,24 +2,24 @@
 
 * [cheqd: Node Documentation](README.md)
 
-## Guides <a href="#docs" id="docs"></a>
+## Guides
 
 * [Setting up a new cheqd node](docs/setup-and-configure/README.md)
-  *
   * [Interactive installer](docs/setup-and-configure/interactive/interactive-installer.md)
   * [Installing cheqd-node with Docker](docs/setup-and-configure/docker-install.md)
   * [Installing a cheqd node from binary package releases](docs/setup-and-configure/binary-install.md)
-* [Setting up and configuring validators](docs/validator-guide/README.md)
+* [Setting up and configuring validator nodes](docs/validator-guide/README.md)
   * [FAQs for validator operators](docs/validator-guide/validator-faq.md)
-  * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore-node-keys.md)
+  * [How to backup and restore node keys](docs/validator-guide/backup-and-restore-node-keys.md)
+  * [How to configure pruning settings](docs/validator-guide/how-to-configure-pruning.md)
+  * [How to move a validator node](docs/validator-guide/how-to-move-node.md)
+  * [How to unjail a node](docs/validator-guide/how-to-unjail.md)
 * [cheqd Cosmos CLI](docs/cheqd-cli/README.md)
-  *
   * [Using cheqd Cosmos CLI to manage keys](docs/cheqd-cli/cheqd-cli-key-management.md)
   * [Using cheqd Cosmos CLI to manage accounts](docs/cheqd-cli/cheqd-cli-accounts.md)
   * [Using cheqd Cosmos CLI to manage a node](docs/cheqd-cli/cheqd-cli-node-management.md)
   * [Using cheqd Cosmos CLI for token transactions](docs/cheqd-cli/cheqd-cli-token-transactions.md)
 * [Building from source](docs/build-and-networks/README.md)
-  *
   * [Docker Based Localnet](docs/build-and-networks/local-docker-network.md)
   * [Docker Compose Based Localnet](docs/build-and-networks/local-docker-compose-network.md)
   * [Setting up a new network](docs/build-and-networks/manual-network-setup.md)
@@ -46,5 +46,5 @@
 ***
 
 * [License](LICENSE.md)
-* [Code of Conduct](CODE\_OF\_CONDUCT.md)
+* [Code of Conduct](CODE_OF_CONDUCT.md)
 * [Security Policy](SECURITY.md)
