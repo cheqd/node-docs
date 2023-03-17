@@ -4,7 +4,7 @@ In order to reduce disk utilization on your node, you can always use enable prun
 
 This can be done by modifying the pruning parameters inside `/home/cheqd/.cheqdnode/config/app.toml` file.
 
-> :warning: In order to make pruning configuration work, you need to run **cheqd-noded v1.2.5+** Find more details under our [releases page](https://github.com/cheqd/cheqd-node/releases).
+> :warning: In order to make pruning configuration work, you need to run **cheqd-noded v1.2.5+** Find more details on our [releases page](https://github.com/cheqd/cheqd-node/releases).
   
 There are 4 pruning strategies you can use:
 
@@ -24,4 +24,4 @@ There are 4 pruning strategies you can use:
 * `min_retain_blocks` - Configuring this parameter will help you to configure Tendermint block pruning - specify the minimum block height offset from the current block being committed. If not enabled previously, this configuration will remove the significant amount of historic data from your node.
 
     > :exclamation: This configuration is in conjunction with `Unbonding time` the parameter. Based on that and our average block time, we suggest setting the value to not lower than **`250000`** to assure the data integrity on your node. 
-    > It is calculated by dividing Unbonding period (1,210,000 seconds or 14 days) by average block time (which is around 6 seconds for most of the time) + adding a significant buffer (~50000 blocks) just for safety.
+    > It is calculated by dividing Unbonding period (1,210,000 seconds or 14 days) by the average block time (which is around 6 seconds for most of the time) + adding a significant buffer (~50000 blocks) just for safety.
