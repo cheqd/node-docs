@@ -18,7 +18,7 @@ There are 4 pruning strategies you can use:
     * `pruning-keep-recent` - This will define how many recent states are kept. On some of our nodes, we're setting this to `250` .
     * `pruning-interval` - This will define how often state pruning happens. On some of our nodes, we're setting this to `50`, which means it will start pruning operations after every 50 blocks.
 
-> :memo: In case you see `pruning-keep-every`, feel free to remove it from the configuration, since it's been [deprecated](https://github.com/cosmos/cosmos-sdk/pull/11152) for a while.
+        > :memo: In case you see `pruning-keep-every`, feel free to remove it from the configuration, since it's been [deprecated](https://github.com/cosmos/cosmos-sdk/pull/11152) for a while.
 
 * `min_retain_blocks` - Configuring this parameter will help you to configure Tendermint block pruning - specify the minimum block height offset from the current block being committed. If not enabled previously, this configuration will instantly remove the significant amount of historic from your node.
 
