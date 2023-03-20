@@ -12,21 +12,17 @@ For other scenarios, please see [setting up a new network from scratch](../build
 
 For most nodes, the RAM/vCPU requirements are relatively static and do not change over time. However, the disk storage space needs to grow as the chain grows and will evolve over time.
 
-It is recommended to provide the disk storage as an expandable volume/partition that is mounted on your node configuration data path (the default is under `/home/cheqd`) so that it can be expanded independent of the root volume.
+It is recommended to **mount disk storage for blockchain data as an expandable volume/partition separate from your root partition**. This allows you mount the node data/configuration path on `/home` (for example) and increase the storage if necessary *independent* of the root `/` partition since hosting providers typically force an increase in CPU/RAM specifications to grow the root partition.
 
 Extended information on [recommended hardware requirements is available in Tendermint documentation](https://docs.tendermint.com/main/tendermint-core/running-in-production.html#hardware). The figures below have been updated from the default Tendermint recommendations to account for current cheqd network chain size, real-world usage accounting for requests nodes need to handle, etc.
 
-#### Minimum specifications
-
-* 2 GB RAM
-* x64 1.4 GHz 1 vCPU (or equivalent)
-* 200 GB of disk space
-
 #### Recommended specifications
 
-* 4 GB RAM
-* x64 2.0 GHz 2 vCPU (or equivalent)
-* 300 GB SSD
+* 4 GB RAM (2 GB RAM minumum)
+* x64 2.0 GHz 2 vCPU or equivalent (x64 1.4 GHz 1 vCPU or equivalent minimum)
+* 650 GB SSD (500 GB minimum)
+
+> ⚠️ **Storage requirements for the blockchain grows with time**. Therefore, these minimum storage figures are expected to increase over time. Read our validator guide for "pruning" settings to optimise storage consumed.
 
 ### Operating system
 
