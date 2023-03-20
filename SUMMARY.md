@@ -11,7 +11,7 @@
 * [Setting up and configuring validator nodes](docs/validator-guide/README.md)
   * [FAQs for validator operators](docs/validator-guide/validator-faq.md)
   * [How to backup and restore node keys](docs/validator-guide/backup-and-restore-node-keys.md)
-  * [How to configure pruning settings](docs/validator-guide/how-to-configure-pruning.md)
+  * [How to configure pruning settings](docs/validator-guide/pruning.md)
   * [How to move a validator node](docs/validator-guide/how-to-move-node.md)
   * [How to unjail a node](docs/validator-guide/how-to-unjail.md)
 * [cheqd Cosmos CLI](docs/cheqd-cli/README.md)
