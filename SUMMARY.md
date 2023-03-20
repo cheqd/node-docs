@@ -33,15 +33,15 @@
 * [Architecture Decision Record (ADR) Process](architecture/README.md)
 * [List of ADRs](architecture/adr-list/README.md)
   * [ADR 001: Payment mechanism for issuing credentials](architecture/adr-list/adr-001-payment-mechanism-for-issuing-credentials.md)
-  * [ADR 002: cheqd DID method](architecture/adr-list/adr-002-cheqd-did-method.md)
+  * [ADR 002: Importing/exporting mnemonic keys from Cosmos](adr-002-mnemonic-keys-cosmos.md)
   * [ADR 003: Command Line Interface (CLI) tools](architecture/adr-list/adr-003-cli-tools.md)
   * [ADR 004: Token fractions](architecture/adr-list/adr-004-token-fractions.md)
   * [ADR 005: Genesis parameters](architecture/adr-list/adr-005-genesis-parameters.md)
   * [ADR 006: Community tax](architecture/adr-list/adr-006-community-tax.md)
   * [ADR 007: Revocation registry](architecture/adr-list/adr-007-revocation-registry.md)
-  * [ADR 008: cheqd on-ledger resources](architecture/adr-list/adr-008-ledger-resources.md)
-  * [ADR 009: Importing/exporting mnemonic keys from Cosmos](architecture/adr-list/adr-009-mnemonic-keys-cosmos.md)
+  * [ADR 011: AnonCreds: Schemas and Credential Definitions](adr-011-anoncreds.md)
   * [ADR {ADR-NUMBER}: {TITLE}](architecture/adr-list/adr-template.md)
+* [Identity ADRs](https://docs.cheqd.io/identity/architecture/adr-list)
 
 ***
 
