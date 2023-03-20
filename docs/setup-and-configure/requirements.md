@@ -2,9 +2,9 @@
 
 ## Context
 
-This document describes the hardware and software pre-requisites for setting up a new `cheqd-node` instance and joining the existing testnet/mainnet.
+This document describes the hardware and software pre-requisites for setting up a new `cheqd-node` instance and joining the existing testnet/mainnet. The **recommended** installation method is to use the [interactive installer script](README.md).
 
-For other scenarios, please see [setting up a new network from scratch](../build-and-networks/manual-network-setup.md) and [building `cheqd-node` from source](../build-and-networks/README.md).
+Alternative installation methods and a developer guide to building from scratch are covered at the end of this page.
 
 ## Hardware requirements
 
@@ -78,6 +78,15 @@ In addition to the P2P/RPC ports above, you need to allow the following ports in
 Tendermint allows more complex setups in production, where the ingress/egress to a validator node is [proxied behind a "sentry" node](https://docs.tendermint.com/main/tendermint-core/validators.html).
 
 While this setup is not compulsory, node operators with higher stakes or a need to have more robust network security may consider setting up a sentry-validator node architecture.
+
+## Alternative installation methods
+
+The [interactive installer](README.md) is designed to setup/configure node installation as a service that runs on a virtual machine. **This is the recommended setup for most scenarios when running as a validator**. A validator node is expected to run 24/7 for network stability and security, and therefore cannot be autoscaled up/down across multiple instances.
+
+If you're not running a validator node, or if you want more advanced control on your setup, the following installation methods are also supported:
+
+* [**Docker image**](docker.md): Docker images can be useful for running non-validator nodes on existing testnet/mainnet. They are also useful for running a localnet or when running a node on non-Linux systems for development purposes.
+* [**Manual, binary-only install**](manual.md): Manual/binary-only installs are recommended if you want more control on system service setup than the installer allows (described below), or if you want a binary for development purposes.
 
 ## Further information
 
