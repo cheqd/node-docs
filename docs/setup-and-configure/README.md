@@ -8,422 +8,290 @@ This document describes how to use install and configure a new instance of `cheq
 2. Configure a node to work with the testnet/mainnet network
 3. Upgrade an existing node installation
 
-The installer also supports [configuring Cosmovisor](https://docs.cosmos.network/main/tooling/cosmovisor) by default, which is a standard Cosmos SDK tool that makes network upgrades happen in an automated fashion. Alternatively, if you want to manage network upgrades manually, you can also opt for a standadalone installation.
+Alternatively, if you want to manage network upgrades manually, you can also opt for a standadalone installation.
 
-### Pre-requisites for installation
+## Pre-requisites for using interactive installer
 
 > ⚠️ Read our guidance on [hardware, software, and networking pre-requisites for nodes](requirements.md) before you get started!
 >
 > This document specifies the CPU/RAM requirements, firewall ports, and operating system requirements for running cheqd-node.
 
-### Alternative installation methods
+The interactive installer is written in **Python 3** and is designed to work on **Ubuntu Linux 20.04 LTS** systems. The script has been written to work pre-installed Python 3.x libraries generally available on Ubuntu 20.04.
 
-The interactive installer is designed to setup/configure node installation as a service that runs on a virtual machine. **This is the recommended setup for most scenarios when running as a validator**.
+### Software installed by installer
 
-If you're not running a validator node, or if you want more advanced control on your setup, the following installation methods are also supported:
+1. **Cosmovisor** (default, but can be skipped): The installer [configures Cosmovisor](https://docs.cosmos.network/main/tooling/cosmovisor) by default, which is a standard Cosmos SDK tool that makes network upgrades happen in an automated fashion. This makes the process of upgrading to new releases for network-wide upgrades easier.
+2. **`cheqd-noded` binary** (mandatory): This is the main piece of ledger-side code each node runs.
+3. **Dependencies**: In case you request the installer to restore from a snapshot, dependencies such as `pv` will be installed so that a progress bar can be shown for snapshot extraction. Otherwise, no additional software is installed by the installer.
 
-* [**Docker image**]:
+### External URLs accessed by the installer
 
-For other scenarios, please see [setting up a new network from scratch](../build-and-networks/manual-network-setup.md) and [building `cheqd-node` from source](../build-and-networks/README.md).
+* **Github.com**: Fetch latest releases, configuration files, and network settings.
+* **Cloudflare DNS** (optional): Used to fetch an externally-resolvable IP address, if this option is selected during install.
+* **Network snapshot server** (optional): If requested by the user, the script will fetch latest network snapshots published on [snapshots.cheqd.net](https://snapshots.cheqd.net) and then download snapshot files from the snapshot CDN endpoint ([snapshots-cdn.cheqd.net](https://snapshots-cdn.cheqd.net/))
 
-## OS pre-requirements
+## Usage
 
-By default, our target platform already has `python3` under the hood and no additional packages are needed and other preparation steps.
+> ⚠️ The guidance below is intended for straightforward new installations or upgrades.
+>
+> If your scenario is more complex, such as in case of [**upgrading a validator**](../upgrades/README.md) or [**moving a validator**](../validator-guide/move-validator.md), please review the guidance under [our validator guide](../validator-guide/README.md).
 
-For running installer the next command can be used:
+By default, the installer will attempt to create a backup of the `~/.cheqdnode/config/` directory and important files under `~/.cheqdnode/data/` before making any destructive changes. These backups are created under the cheqd user's home directory in a folder called `backup` (default location: `/home/cheqd/backup`). However, for safety, **you're recommended to also make manual backups** when upgrading a node.
+
+If you're **setting up a new node from scratch**, you can safely ignore the advice above.
+
+### Download and start interactive installer
+
+To get started, download the interactive installer script:
 
 ```bash
-wget -q https://raw.githubusercontent.com/cheqd/cheqd-node/main/installer/installer.py && sudo python3 installer.py
+curl -O https://raw.githubusercontent.com/cheqd/cheqd-node/main/installer/installer.py
 ```
 
-## Installer modes
+Then, start the interactive installer:
 
-All the questions at the end have the default value in [] brackets, like `[default: 1]`. If a default value exists you can just press `Enter` without needing to type the whole answer.
-
-This installer has 2 possible options:
-
-- Installation from scratch
-- Upgrade existing installation
-
-### General questions
-
-The next questions will be used with both options:
-
-- Question about versions:
-
-```text
-1) v0.5.0
-2) v0.6.0-rc2
-3) v0.6.0-rc1
-4) v0.5.0-rc2
-5) v0.5.0-rc1
-Choose the appropriate list option number above to select the version of cheqd-node to install [default: 1]:
+```bash
+sudo python3 installer.py
 ```
+
+> ℹ️ **NOTE**: You need to execute this as root or *at least* a user with super-user privileges using the `sudo` prefix to the command.
+
+### (Fresh install) Answer prompts for installing from scratch (or overwriting existing)
+
+The interactive installer guides you through setting up and configuring a node installation by asking as series of questions.
+
+All the questions specify the default answer/value for that question in square (`[]`) brackets, for example, `[default: 1]`. If a default value exists, you can just press `Enter` without needing to type the whole answer.
+
+#### 1. Choose release version
+
+Binary release version to install, automatically fetched from Github. The first release displayed in the list will always be the latest stable version. Other versions displayed below it are pre-release/beta versions.
   
-where default version is the latest release. The others just next even `pre-releases`, just the next.
-
-- `Set path for cheqd user's home directory [default: /home/cheqd]:`. This is essentialy a question about where the home directory,  `.cheqdnode`, is located or will be.
-
-### Clean installation
-
-If you are using the installer on a clean machine the next group of questions are significant:
-
-- `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:`. This options can be used in case of setting up the node.
-- `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`. For now, we have 2 networks, `testnet` and `mainnet`. Please, type here which chain you want to use or just keep the default by clicking `Enter`.
-- `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` . Default value is going to be `Yes`. We assume, that the next upgrades can be in an automative mode.
-- `CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:`. This can help you speed up the catchup to cheqd network.
-
-Questions if you answered `Yes` for setting up the node after installation:
-
-- `Provide a moniker for your cheqd-node [default: test-interactive-installer]:` . (this is just a nickname for your node, used for things like block explorer).
-
-- `What is the externally-reachable IP address or DNS name for your cheqd-node? [default: Fetch automatically via DNS resolver lookup]:`. This is an IP address of your node. This address shows your public address.
-
-- `Specify port for Tendermint RPC [default: 26657]:`. RPC port for client-node communications.
-
-- `Specify port for Tendermint P2P [default: 26656]:`. Port for node-to-node communications.
-
-- `Specify minimum gas price for transactions [default: 25ncheq]:`. Gas-price parameter.
-
-After completely a successful installation, cheqd-noded is ready to be started and it's time to complete the [post-install steps](#postinstall-steps)
-
-### Upgrade case
-
-To run an `Upgrade scenario` you'll be required to setup a current home directory for a `cheqd` user as an answer on question `Set path for cheqd user's home directory [default: /home/cheqd]:`. The upgrade scenario will be used as long as this directory exists.
-
-#### Install from scratch
-
-If there is `$HOME/.cheqdnode` directory, where `$HOME` is the answer on the question `Set path for cheqd user's home directory [default: /home/cheqd]:` , the installer assumes that there is already an installation on the machine. In this case the next questions will be:
-
-- `Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]:`. Here there 2 possible ways, upgrade current installation and remove all and install from the scratch.
-  In case of answering `No` the next question will be:
-
-- `WARNING: Doing a fresh installation of cheqd-node will remove ALL existing configuration and data. CAUTION: Please ensure you have a backup of your existing configuration and data before proceeding. Do you want to do fresh installation of cheqd-node? (yes/no) [default: no]:`.
-  **Please make sure, that answer 'Yes' means removing all the ledger-related data with `config` and `data` directories. Please check that you have copied your private keys and configs**
-  After that installation process will complete as installation from the [beginning](#clean-installation).
-
-#### Upgrade current installation
-
-  In case of yes on the `upgrade` question, the next flow will be:
-
-- `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:` - It's needed only for figuring out is Cosmovisor uses for now.
-  
-- `Overwrite existing systemd configuration for cheqd-node? (yes/no) [default: yes]:`. This question will be asked if rewriting is needed, for example, if the existing systemd config file for `cheqd-noded` or `cheqd-cosmovisor` is used.
-  
-- `Overwrite existing configuration for cheqd-node logging? (yes/no) [default: yes]:`. In case of existing `/etc/rsyslog.d/cheqd-node.conf` config file this question will be asked to check if rewriting is needed.
-
-- `Overwrite existing configuration for logrotate? (yes/no) [default: yes]:`. In case of existing `/etc/logrotate.d/cheqd-node` config file this question will be asked to check if rewriting is needed.
-
-
-## Postinstall steps
-
-When the installation process ends you can start the `systemctl` service:
-
-```bash
-sudo systemctl start <service-name>
+```text
+Latest stable cheqd-noded release version is Name: v1.3.0
+List of cheqd-noded releases: 
+1. v1.3.0
+2. v1.4.0-develop.1
+3. v1.3.1-develop.1
+4. v1.3.0-develop.3
+5. v1.3.0-develop.2
+Choose list option number above to select version of cheqd-node to install [default: 1]:
 ```
 
-where `<service-name>` is a name of service depending was `Install Cosmovisor` selected or not.
+#### 2. Set home directory for cheqd user
 
-- `cheqd-cosmovisor` if Cosmovisor was installed.
-- `cheqd-noded` in case of keeping `cheqd-noded` as was with debian package approach.
+By default, a new user/group called `cheqd` will be created and a home directory created for it. The default location is `/home/cheqd` and any configuration data directories being created under this path at `/home/cheqd/.cheqdnode`.
 
-For checking that service works, please run the next command:
+#### 3. Select network to join
 
-```bash
-systemctl status <service-name>
-```
-
-where `<service-name>` has the same meaning as above.
-
-## Move from Debian installation to new interactive with Cosmovisor support
-
-For this to work correctlly, the Debian package should be removed first.
-
-```bash
-sudo apt remove cheqd-node
-```
-
-**Please take it into account, that `apt remove` just removes the binary and systemd config. All your ledger `configs` and `data` will remain the same. For additional comfort, before all the manipulations with installer are done, make sure that you have a copy of your private keys, somewhere outside.**
-
-Afterward you'll need to rewrite `systemd`, `logrotate` and `rsyslog` configs by running the installer, by answering `Yes` or `y` on questions below:
+Join either the existing [mainnet](https://explorer.cheqd.io) (chain ID: `cheqd-mainnet-1`) or [testnet](https://testnet-explorer.cheqd.io) (chain ID: `cheqd-testnet-6`) network.
 
 ```text
-1) v0.5.0
-2) v0.6.0
-3) v0.6.0-rc2
-4) v0.6.0-rc1
-5) v0.5.0-rc2
-Choose list option number above to select version of cheqd-node to install [default: 1]:
-2
-Set path for cheqd user's home directory [default: /home/cheqd]:
-
-Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]:
-y
-*********  INFO: Installing cheqd-node with Cosmovisor allows for automatic unattended upgrades for valid software upgrade proposals.
-Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:
-y
-Overwrite existing configuration for cheqd-node logging? (yes/no) [default: yes]:
-y
-Overwrite existing configuration for logrotate? (yes/no) [default: yes]:
-y
+Select cheqd network to join:
+1. Mainnet (cheqd-mainnet-1)
+2. Testnet (cheqd-testnet-6) [default: 1]:
 ```
 
-## Recover node using interactive installer
+#### 4. Choose Cosmovisor configuration options
 
-If recovering or instantiating on another machine is required this installer also can be used. The main aasuption here that and operator already has private keys saved somewhere in safe place.
+The next few questions are used to configure Cosmovisor-related options. Read [an explanation of Cosmovisor configuration options in  Cosmos SDK documentation](https://docs.cosmos.network/main/tooling/cosmovisor), or choose to install with the default settings.
 
-The steps are:
+1. `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]`: Use Cosmovisor to run node
+2. `Do you want Cosmovisor to automatically download binaries for scheduled upgrades? (yes/no) [default: yes]`: By default, Cosmovisor will attempt to automatically download new binaries that have passed [software upgrade proposals voted on the network](../upgrades/README.md). You can choose to do this manually if you want more control.
+3. `Do you want Cosmovisor to automatically restart after an upgrade? (yes/no) [default: yes]`: By default, Cosmovisor will automatically restart the node after an [upgrade height](../upgrades/README.md) is reached and an upgrade carried out.
 
-### Make sure that there is a copy of your private keys and `data/priv_validator_state.json` file somewhere in safe place and on another machine
+You can also choose `no` to installing with Cosmovisor on the first question, in which case a standalone binary installation is carried out.
 
-It's extreamely important cause during the installation process your `CHEQD_HOME/.cheqdnode` directory will be removed and all the configs and data will be lost.
+#### 5. Define node configuration
 
-### Run installer in `installation from scratch` mode
+The next set of questions sets common node configuration parameters. These are the *minimal* configuration parameters necessary for a node to function, but advanced users can later customise other settings.
 
-For running `installation from scratch` mode an operator should answer with current home directory for `cheqd` user (by default it `/home/cheqd`) and `No` on the question about `Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]`. After that the question about installation from scratch will be and answer `Yes` is needed here.
+Answers to these prompts are saved in the `app.toml` and `/config.toml` files, which are written under `/home/cheqd/.cheqdnode/config/` by default (but can be different if a different home directory was set above). An explanation of some these settings are available in [requirements for running a node](requirements.md) and the [validator guide](../validator-guide/README.md).
 
-### Installation from scratch
+1. `Provide a moniker for your cheqd-node [default: <hostname>]:`: Moniker is a human-readable name for your cheqd-node. This is NOT the same as your [validator name](../validator-guide/README.md), and is only used to uniquely identify your node for Tendermint P2P address book.
+2. `What is the externally-reachable IP address or DNS name for your cheqd-node? [default: Fetch automatically via DNS resolver lookup]:`: External address is the publicly accessible IP address or DNS name of your cheqd-node. This is used to advertise your node's P2P address to other nodes in the network. If you are running your node behind a NAT, you should set this to your public IP address or DNS name. If you are running your node on a public IP address, you can leave this blank to automatically fetch your IP address via DNS resolver lookup. (Automatic fetching sends a `dig` request to `whoami.cloudflare.com`)
+3. `Specify your node's P2P port [default: 26656]`: [Tendermint peer-to-peer traffic port](requirements.md)
+4. `Specify your node's RPC port [default: 26657]`: [Tendermint RPC port](requirements.md)
+5. `Specify persistent peers [default: none]`: Persistent peers are nodes that you want to always keep connected to. Values for persistent peers should be specified in format: `<nodeID>@<IP>:<port>,<nodeID>@<IP>:<port>`.
+6. `Specify minimum gas price [default: 50ncheq]`: Minimum gas prices is the price you are willing to accept as a validator to process a transaction. Values should be entered in format `<number>ncheq` (e.g., [`50ncheq`](../../architecture/adr-list/adr-004-token-fractions.md))
+7. `Specify log level (trace|debug|info|warn|error|fatal|panic) [default: error]:`: The default log level of `error` is generally recommended for normal operation. You may temporarily need to change to more verbose logging levels if trying to diagnose issues if the node isn't behaving correctly.
+8. `Specify log format (json|plain) [default: json]:`: JSON log format allows parsing log files more easily if there's an issue with your node, hence it's set as the default.
 
-After approving `installation from scratch` the list of questions will be the same as for [clean installation](#clean-installation).
+#### 6. Choose whether to restore from snapshot
 
-**If there is backup of whole `config` directory** If you backed up the whole `config` directory, it would be better to skip setting up the node after installation, answer on question `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:` no. Cause after installation you can just replace `CHEQD_HOME/.cheqdnode/config` with your own and start the service.
+When setting up a new node, you typically need to download all past blocks on the network, including any upgrades that were done along the way with the specific binary releases those upgrades went through.
 
-**If there are only private keys** In this case we would recommend to setting up the node after installation cause it does not require to change configs and genesis after.
+Since this can be quite cumbersome and take a really long time, the installer offers the ability to download a recent blockchain snapshot for the selected network from [snapshots.cheqd.net](https://snapshot.cheqd.net).
 
-### Restore validator's keys
+If you skip this step, you'll need to manually synchronise with the network.
 
-Before starting the service only one action is needed - copy your private keys and `data/priv_validator_state.json` back.
-Steps:
+> ⚠️ Chain snapshots can range from 10 GBs (for testnet) to 100 GBs (for mainnet). Therefore, this step can take a long time.
+>
+> If you choose this option, you can step away and return to the installer while it works in the background to complete the rest of the installation. You might want to [change settings in your SSH client / server to keep SSH connections alive](https://www.baeldung.com/linux/ssh-keep-alive), since some hosts terminate connection due to inactivity.
 
-- copy the whole `config` or only your `priv_validator_key.json` to `CHEQD_HOME/.cheqdnode/config`
-- copy your `priv_validator_key.json` to `CHEQD_HOME/.cheqdnode/data`
+### (Alternative path) Answer prompts for upgrading an existing installation
 
-### Start the service
-
-Here an operator only need to run the service. For this you can follow [postinstall steps](#postinstall-steps)
-
-
-### The example of questions/answers
-
-Here home directory is supposed to be `/home/cheqd` and for this example the whole `config` was backed up
+If you're running the installer on a machine where an existing installation is already present, you'll be prompted whether you want to update/upgrade the existing installation:
 
 ```text
-*********  Latest stable cheqd-noded release version is Name: v0.5.0
-*********  List of cheqd-noded releases: 
-1) v0.5.0
-2) v0.6.0
-3) v0.6.0-rc2
-4) v0.6.0-rc1
-5) v0.5.0-rc2
-Choose list option number above to select version of cheqd-node to install [default: 1]:
-2
-Set path for cheqd user's home directory [default: /home/cheqd]:
+Existing cheqd-node binary detected.
 
-Existing cheqd-node configuration folder detected. Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: no]:
-n
-WARNING: Doing a fresh installation of cheqd-node will remove ALL existing configuration and data. CAUTION: Please ensure you have a backup of your existing configuration and data before proceeding. Do you want to do fresh installation of cheqd-node? (yes/no) [default: no]:
-y
-Do you want to setup a new cheqd-node? (yes/no) [default: yes]:
-n
-Select cheqd network to join (testnet/mainnet) [default: mainnet]:
-testnet
-*********  INFO: Installing cheqd-node with Cosmovisor allows for automatic unattended upgrades for valid software upgrade proposals.
-Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:
-y
-CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:
-y
+Do you want to upgrade an existing cheqd-node installation? (yes/no) [default: yes]:
 ```
 
-## Example of installing
+If you choose `no`, this will treat the installation as if installing from scratch and prompt with the questions in section above.
 
-### Installing from the scratch
+If you choose `yes`, this will retain existing node configuration and prompt with a different set of questions as outlined below. Choosing "yes" is the default since in most cases, you would want to retain the existing configuration while updating the node binary to a newer version.
+
+#### 1. Choose release version for upgrade
+
+Choose binary release version to [upgrade the node](../upgrades/README.md) to.
+
+#### 2. Install or bump Cosmovisor version
+
+If Cosmovisor is detected as installed, you'll be offered the option to bump it to the latest default version. Otherwise, you will be given the option of installing it.
+
+#### 3. Configure Cosmovisor settings
+
+The next section allows you to customise Cosmovisor settings. The explanations of the options are same those given above.
+
+#### 4. Update systemd configuration
+
+By default, the installer will update the `systemd` system service settings for the following:
+
+* `cheqd-cosmovisor.service` (if installed with Cosmovisor) or `cheqd-noded.service` (if installed without Cosmovisor): This is the service that runs the node in the background 24/7.
+* `rsyslog.service`: Configures node-specific logging directories and settings.
+* `logrotate.service` and `logrotate.timer`: Configures log rotation for node service to limit the duration/size of logs retained to sensible values. By default, this keeps 7 days worth of logs, and compresses logs if they grow larger than 100 MB in size.
+
+### Actions taken by the installer after prompts
+
+Once all prompts have been answered, the installer attempts to carry out the changes requested. This includes:
+
+1. Setting up a new `cheqd` user/group.
+2. Downloading `cheqd-noded` and Cosmovisor binaries, as applicable.
+3. Setting environment variables required for node binary / Cosmovisor to function.
+4. Creating directories for node data and configuration.
+5. If present, backing up existing node directories and configuration.
+6. Downloading and extracting snapshots (if requested).
+
+The installer is designed to terminate the installation process and stop making changes if it encounters an error. If this happens, please reach out to us on our [community Slack](http://cheqd.link/join-cheqd-slack) or [Discord](http://cheqd.link/discord-github) for how to proceed and recover from errors (if any).
+
+## What to do after the installer finishes
+
+> ⚠️ The guidance below is intended for straightforward new installations or upgrades.
+>
+> If your scenario is more complex, such as in case of [**upgrading a validator**](../upgrades/README.md) or [**moving a validator**](../validator-guide/move-validator.md), please review the guidance under [our validator guide](../validator-guide/README.md).
+
+If the installer finishes successfully, it will exit with a success message:
 
 ```text
-*********  Latest stable cheqd-noded release version is Name: v0.5.0
-*********  List of cheqd-noded releases: 
-1) v0.5.0
-2) v0.6.0
-3) v0.6.0-rc2
-4) v0.6.0-rc1
-5) v0.5.0-rc2
-Choose list option number above to select version of cheqd-node to install [default: 1]:
-1
-Set path for cheqd user's home directory [default: /home/cheqd]:
+[INFO]: Installation steps completed successfully
+[INFO]: Installation of cheqd-noded v1.3.0 completed successfully!
 
-Do you want to setup a new cheqd-node? (yes/no) [default: yes]:
-y
-Select cheqd network to join (testnet/mainnet) [default: mainnet]:
-testnet
-*********  INFO: Installing cheqd-node with Cosmovisor allows for automatic unattended upgrades for valid software upgrade proposals.
-Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:
-y
-CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually it's safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]:
-y
-Provide a moniker for your cheqd-node [default: test-interactive-installer]:
-interactive
-What is the externally-reachable IP address or DNS name for your cheqd-node? [default: Fetch automatically via DNS resolver lookup]: 
+[INFO]: Please review the configuration files manually and use systemctl to start the node.
 
-Specify port for Tendermint RPC [default: 26657]:
-
-Specify port for Tendermint P2P [default: 26656]:
-
-Specify minimum gas price for transactions [default: 25ncheq]:
-
-*********  Downloading cheqd-noded binary...
-*********  Executing command: wget -c https://github.com/cheqd/cheqd-node/releases/download/v0.5.0/cheqd-node_0.5.0.tar.gz
---2022-07-06 13:25:07--  https://github.com/cheqd/cheqd-node/releases/download/v0.5.0/cheqd-node_0.5.0.tar.gz
-Resolving github.com (github.com)... 140.82.121.3
-Connecting to github.com (github.com)|140.82.121.3|:443... connected.
-HTTP request sent, awaiting response... 302 Found
-Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/352898787/cb872f01-577e-471b-b95b-1b11486ec99b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220706%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220706T132507Z&X-Amz-Expires=300&X-Amz-Signature=e00dd544a315c4c3c973f7e1d82177f693518822a64d8b8c4c18da63c75be907&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=352898787&response-content-disposition=attachment%3B%20filename%3Dcheqd-node_0.5.0.tar.gz&response-content-type=application%2Foctet-stream [following]
---2022-07-06 13:25:07--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/352898787/cb872f01-577e-471b-b95b-1b11486ec99b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220706%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220706T132507Z&X-Amz-Expires=300&X-Amz-Signature=e00dd544a315c4c3c973f7e1d82177f693518822a64d8b8c4c18da63c75be907&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=352898787&response-content-disposition=attachment%3B%20filename%3Dcheqd-node_0.5.0.tar.gz&response-content-type=application%2Foctet-stream
-Resolving objects.githubusercontent.com (objects.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.108.133, ...
-Connecting to objects.githubusercontent.com (objects.githubusercontent.com)|185.199.109.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 15045525 (14M) [application/octet-stream]
-Saving to: ‘cheqd-node_0.5.0.tar.gz’
-
-cheqd-node_0.5.0.tar.gz                            100%[================================================================================================================>]  14.35M  13.4MB/s    in 1.1s    
-
-2022-07-06 13:25:08 (13.4 MB/s) - ‘cheqd-node_0.5.0.tar.gz’ saved [15045525/15045525]
-
-*********  Executing command: tar -xzf cheqd-node_0.5.0.tar.gz
-*********  Executing command: chmod +x cheqd-noded
-*********  User cheqd does not exist
-*********  Creating cheqd group
-*********  Executing command: addgroup cheqd --quiet --system
-*********  Creating cheqd user and adding to cheqd group
-*********  Executing command: adduser --system cheqd --home /home/cheqd --shell /bin/bash --ingroup cheqd --quiet
-*********  Creating main directory for cheqd-noded
-*********  Setting directory permissions to default cheqd user: cheqd
-*********  Executing command: chown -R cheqd:cheqd /home/cheqd
-*********  Creating log directory for cheqd-noded
-*********  Setting up ownership permissions for /home/cheqd/.cheqdnode/log directory
-*********  Executing command: chown -R syslog:cheqd /home/cheqd/.cheqdnode/log
-*********  Configuring syslog systemd service for cheqd-noded logging
-*********  Executing command: wget -c https://raw.githubusercontent.com/cheqd/cheqd-node/main/build-tools/rsyslog.conf
---2022-07-06 13:25:09--  https://raw.githubusercontent.com/cheqd/cheqd-node/main/build-tools/rsyslog.conf
-Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.110.133, 185.199.108.133, ...
-Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 82 [text/plain]
-Saving to: ‘rsyslog.conf’
-
-rsyslog.conf                                       100%[================================================================================================================>]      82  --.-KB/s    in 0s      
-
-2022-07-06 13:25:09 (3.18 MB/s) - ‘rsyslog.conf’ saved [82/82]
-
-*********  Restarting rsyslog service
-*********  Executing command: systemctl restart rsyslog
-*********  Configuring log rotation systemd service for cheqd-noded logging
-*********  Executing command: wget -c https://raw.githubusercontent.com/cheqd/cheqd-node/main/build-tools/logrotate.conf
---2022-07-06 13:25:09--  https://raw.githubusercontent.com/cheqd/cheqd-node/main/build-tools/logrotate.conf
-Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.110.133, 185.199.108.133, ...
-Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 115 [text/plain]
-Saving to: ‘logrotate.conf’
-
-logrotate.conf                                     100%[================================================================================================================>]     115  --.-KB/s    in 0s      
-
-2022-07-06 13:25:09 (8.95 MB/s) - ‘logrotate.conf’ saved [115/115]
-
-*********  Restarting logrotate services
-*********  Executing command: systemctl restart logrotate.service
-*********  Executing command: systemctl restart logrotate.timer
-*********  Setting up systemd config
-*********  Executing command: systemctl is-active cheqd-cosmovisor
-*********  Executing command: systemctl is-enabled cheqd-cosmovisor
-*********  Executing command: systemctl is-active cheqd-noded
-*********  Executing command: systemctl is-enabled cheqd-noded
-*********  Executing command: wget -c https://raw.githubusercontent.com/cheqd/cheqd-node/main/build-tools/node-cosmovisor.service
---2022-07-06 13:25:09--  https://raw.githubusercontent.com/cheqd/cheqd-node/main/build-tools/node-cosmovisor.service
-Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.110.133, 185.199.108.133, ...
-Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 655 [text/plain]
-Saving to: ‘node-cosmovisor.service’
-
-node-cosmovisor.service                            100%[================================================================================================================>]     655  --.-KB/s    in 0s      
-
-2022-07-06 13:25:10 (36.7 MB/s) - ‘node-cosmovisor.service’ saved [655/655]
-
-*********  Enabling systemd service for cheqd-noded
-*********  Executing command: systemctl enable cheqd-cosmovisor
-Created symlink /etc/systemd/system/multi-user.target.wants/cheqd-cosmovisor.service → /lib/systemd/system/cheqd-cosmovisor.service.
-*********  Setting up Cosmovisor
-*********  Executing command: wget -c https://github.com/cosmos/cosmos-sdk/releases/download/cosmovisor%2Fv1.1.0/cosmovisor-v1.1.0-linux-amd64.tar.gz
---2022-07-06 13:25:10--  https://github.com/cosmos/cosmos-sdk/releases/download/cosmovisor%2Fv1.1.0/cosmovisor-v1.1.0-linux-amd64.tar.gz
-Resolving github.com (github.com)... 140.82.121.3
-Connecting to github.com (github.com)|140.82.121.3|:443... connected.
-HTTP request sent, awaiting response... 302 Found
-Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/51193526/cd988a2a-016a-4ab9-8178-759acddfa18f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220706%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220706T132510Z&X-Amz-Expires=300&X-Amz-Signature=0323b6e50a75d778c2cf92afdec05598fb5b6e63ca8a8bde07bcf5e65156dcc6&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=51193526&response-content-disposition=attachment%3B%20filename%3Dcosmovisor-v1.1.0-linux-amd64.tar.gz&response-content-type=application%2Foctet-stream [following]
---2022-07-06 13:25:10--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/51193526/cd988a2a-016a-4ab9-8178-759acddfa18f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220706%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220706T132510Z&X-Amz-Expires=300&X-Amz-Signature=0323b6e50a75d778c2cf92afdec05598fb5b6e63ca8a8bde07bcf5e65156dcc6&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=51193526&response-content-disposition=attachment%3B%20filename%3Dcosmovisor-v1.1.0-linux-amd64.tar.gz&response-content-type=application%2Foctet-stream
-Resolving objects.githubusercontent.com (objects.githubusercontent.com)... 185.199.111.133, 185.199.108.133, 185.199.110.133, ...
-Connecting to objects.githubusercontent.com (objects.githubusercontent.com)|185.199.111.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 16049509 (15M) [application/octet-stream]
-Saving to: ‘cosmovisor-v1.1.0-linux-amd64.tar.gz’
-
-cosmovisor-v1.1.0-linux-amd64.tar.gz               100%[================================================================================================================>]  15.31M  11.7MB/s    in 1.3s    
-
-2022-07-06 13:25:12 (11.7 MB/s) - ‘cosmovisor-v1.1.0-linux-amd64.tar.gz’ saved [16049509/16049509]
-
-*********  Executing command: tar -xzf cosmovisor-v1.1.0-linux-amd64.tar.gz
-*********  Moving Cosmovisor binary to installation directory
-*********  Creating symlink for current Cosmovisor version
-*********  Moving binary from /root/cheqd-noded to /home/cheqd/.cheqdnode/cosmovisor/current/bin/cheqd-noded
-*********  Executing command: sudo mv /root/cheqd-noded /home/cheqd/.cheqdnode/cosmovisor/current/bin/cheqd-noded
-*********  Creating symlink to /home/cheqd/.cheqdnode/cosmovisor/current/bin/cheqd-noded
-*********  Changing directory ownership for Cosmovisor to cheqd user
-*********  Executing command: chown -R cheqd:cheqd /home/cheqd/.cheqdnode/cosmovisor
-*********  Executing command: sudo su -c 'cheqd-noded init interactive' cheqd
-{"app_message":{"auth":{"accounts":[],"params":{"max_memo_characters":"256","sig_verify_cost_ed25519":"590","sig_verify_cost_secp256k1":"1000","tx_sig_limit":"7","tx_size_cost_per_byte":"10"}},"authz":{"authorization":[]},"bank":{"balances":[],"denom_metadata":[],"params":{"default_send_enabled":true,"send_enabled":[]},"supply":[]},"capability":{"index":"1","owners":[]},"cheqd":{"didList":[],"did_namespace":"testnet"},"crisis":{"constant_fee":{"amount":"1000","denom":"stake"}},"distribution":{"delegator_starting_infos":[],"delegator_withdraw_infos":[],"fee_pool":{"community_pool":[]},"outstanding_rewards":[],"params":{"base_proposer_reward":"0.010000000000000000","bonus_proposer_reward":"0.040000000000000000","community_tax":"0.020000000000000000","withdraw_addr_enabled":true},"previous_proposer":"","validator_accumulated_commissions":[],"validator_current_rewards":[],"validator_historical_rewards":[],"validator_slash_events":[]},"evidence":{"evidence":[]},"feegrant":{"allowances":[]},"genutil":{"gen_txs":[]},"gov":{"deposit_params":{"max_deposit_period":"172800s","min_deposit":[{"amount":"10000000","denom":"stake"}]},"deposits":[],"proposals":[],"starting_proposal_id":"1","tally_params":{"quorum":"0.334000000000000000","threshold":"0.500000000000000000","veto_threshold":"0.334000000000000000"},"votes":[],"voting_params":{"voting_period":"172800s"}},"ibc":{"channel_genesis":{"ack_sequences":[],"acknowledgements":[],"channels":[],"commitments":[],"next_channel_sequence":"0","receipts":[],"recv_sequences":[],"send_sequences":[]},"client_genesis":{"clients":[],"clients_consensus":[],"clients_metadata":[],"create_localhost":false,"next_client_sequence":"0","params":{"allowed_clients":["06-solomachine","07-tendermint"]}},"connection_genesis":{"client_connection_paths":[],"connections":[],"next_connection_sequence":"0","params":{"max_expected_time_per_block":"30000000000"}}},"mint":{"minter":{"annual_provisions":"0.000000000000000000","inflation":"0.130000000000000000"},"params":{"blocks_per_year":"6311520","goal_bonded":"0.670000000000000000","inflation_max":"0.200000000000000000","inflation_min":"0.070000000000000000","inflation_rate_change":"0.130000000000000000","mint_denom":"stake"}},"params":null,"slashing":{"missed_blocks":[],"params":{"downtime_jail_duration":"600s","min_signed_per_window":"0.500000000000000000","signed_blocks_window":"100","slash_fraction_double_sign":"0.050000000000000000","slash_fraction_downtime":"0.010000000000000000"},"signing_infos":[]},"staking":{"delegations":[],"exported":false,"last_total_power":"0","last_validator_powers":[],"params":{"bond_denom":"stake","historical_entries":10000,"max_entries":7,"max_validators":100,"unbonding_time":"1814400s"},"redelegations":[],"unbonding_delegations":[],"validators":[]},"transfer":{"denom_traces":[],"params":{"receive_enabled":true,"send_enabled":true},"port_id":"transfer"},"upgrade":{},"vesting":{}},"chain_id":"cheqd","gentxs_dir":"","moniker":"interactive","node_id":"2fc02110507665f6d956c8f46b0ad0ac5f4ab03e"}
-*********  Executing command: curl https://raw.githubusercontent.com/cheqd/cheqd-node/main/networks/testnet/genesis.json > /home/cheqd/.cheqdnode/config/genesis.json
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100  211k  100  211k    0     0   972k      0 --:--:-- --:--:-- --:--:--  967k
-*********  Executing command: curl https://raw.githubusercontent.com/cheqd/cheqd-node/main/networks/testnet/seeds.txt
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   234  100   234    0     0   1170      0 --:--:-- --:--:-- --:--:--  1170
-*********  Executing command: sudo su -c 'cheqd-noded configure p2p seeds 658453f9578d82f0897f13205ca2e7ad37279f95@seed1.eu.testnet.cheqd.network:26656,eec97b12f7271116deb888a8d62e0739b4350fbd@seed1.us.testnet.cheqd.network:26656,32d626260f74f3c824dfa15a624c078f27fc31a2@seed1.ap.testnet.cheqd.network:26656' cheqd
-*********  Executing command: sudo su -c 'cheqd-noded configure rpc-laddr "tcp://0.0.0.0:26657"' cheqd
-*********  Executing command: sudo su -c 'cheqd-noded configure p2p laddr "tcp://0.0.0.0:26656"' cheqd
-*********  Executing command: sudo su -c 'cheqd-noded configure min-gas-prices 25ncheq' cheqd
-*********  Downloading snapshot and extracting archive. This can take a *really* long time...
-*********  Directory /home/cheqd/.cheqdnode/data already exists
-*********  Executing command: curl -s --head https://cheqd-node-backups.ams3.cdn.digitaloceanspaces.com/testnet/latest/cheqd-testnet-4_2022-07-06.tar.gz | awk '/Length/ {print $2}'
-*********  Executing command: df -P -B1 /home/cheqd/.cheqdnode | tail -1 | awk '{print $4}'
-*********  Downloading snapshot archive. This may take a while...
-*********  Executing command: wget -c https://cheqd-node-backups.ams3.cdn.digitaloceanspaces.com/testnet/latest/cheqd-testnet-4_2022-07-06.tar.gz -P /home/cheqd/.cheqdnode
---2022-07-06 13:25:13--  https://cheqd-node-backups.ams3.cdn.digitaloceanspaces.com/testnet/latest/cheqd-testnet-4_2022-07-06.tar.gz
-Resolving cheqd-node-backups.ams3.cdn.digitaloceanspaces.com (cheqd-node-backups.ams3.cdn.digitaloceanspaces.com)... 205.185.216.42, 205.185.216.10
-Connecting to cheqd-node-backups.ams3.cdn.digitaloceanspaces.com (cheqd-node-backups.ams3.cdn.digitaloceanspaces.com)|205.185.216.42|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 31716673197 (30G) [application/gzip]
-Saving to: ‘/home/cheqd/.cheqdnode/cheqd-testnet-4_2022-07-06.tar.gz’
-
-cheqd-testnet-4_2022-07-06.tar.gz                  100%[================================================================================================================>]  29.54G  63.3MB/s    in 7m 43s  
-
-2022-07-06 13:32:57 (65.3 MB/s) - ‘/home/cheqd/.cheqdnode/cheqd-testnet-4_2022-07-06.tar.gz’ saved [31716673197/31716673197]
-
-*********  Executing command: curl -s https://cheqd-node-backups.ams3.cdn.digitaloceanspaces.com/testnet/latest/md5sum.txt | tail -1 | cut -d' ' -f 1
-*********  Comparing published checksum with local checksum
-*********  Executing command: md5sum /home/cheqd/.cheqdnode/cheqd-testnet-4_2022-07-06.tar.gz | tail -1 | cut -d' ' -f 1
-*********  Checksums match. Download is OK.
-*********  Snapshot download was successful and checksums match.
-*********  Installing dependencies
-*********  Executing command: sudo apt-get update
-*********  Install pv to show progress of extraction
-*********  Executing command: sudo apt-get install -y pv
-*********  Extracting snapshot archive. This may take a while...
-*********  Executing command: sudo su -c 'pv /home/cheqd/.cheqdnode/cheqd-testnet-4_2022-07-06.tar.gz | tar xzf - -C /home/cheqd/.cheqdnode/data --exclude priv_validator_state.json' cheqd
-29.5GiB 0:07:40 [65.7MiB/s] [============================================================================================================================================================>] 100%            
-*********  Snapshot extraction was successful. Deleting snapshot archive.
-*********  Copying upgrade-info.json file to cosmovisor/current/
-*********  Changing owner to cheqd user
-*********  Executing command: chown -R cheqd:cheqd /home/cheqd/.cheqdnode/cosmovisor
-*********  Executing command: chown -R cheqd:cheqd /home/cheqd/.cheqdnode/data
+[INFO]: Documentation: https://docs.cheqd.io/node
 ```
+
+Otherwise, if the installation **failed**, it will exit with an error message which elaborates on the specific error encountered during setup.
+
+The following steps are only recommended if installation has been **successful**.
+
+### Check systemd service is enabled
+
+Check that the node-related `systemd` service is **`enabled`**. This ensures that the node service automatically restarted, even if the service fails or if the machine is rebooted.
+
+If installed *with* Cosmovisor:
+
+```bash
+root@hostname ~# systemctl status cheqd-cosmovisor.service
+● cheqd-cosmovisor.service - Service for running cheqd-node daemon
+  Loaded: loaded (/lib/systemd/system/cheqd-cosmovisor.service; enabled; vendor preset: enabled)
+```
+
+The output line after the `systemctl status cheqd-cosmovisor.service` command should say **`enabled`** after `Loaded` path and `vendor preset`.
+
+If installed *without* Cosmovisor (standalone binary install):
+
+```bash
+root@hostname ~# systemctl status cheqd-noded.service
+● cheqd-noded.service - Service for running cheqd-node daemon
+  Loaded: loaded (/lib/systemd/system/cheqd-noded.service; enabled; vendor preset: enabled)
+```
+
+The output line after the `systemctl status cheqd-noded.service` command should say **`enabled`** after `Loaded` path and `vendor preset`.
+
+### Start systemd service
+
+Once the node is installed/upgraded, restart the `systemd` service to get the node running. These steps require `root` or super-user privileges as a pre-requisite.
+
+If installed *with* Cosmovisor:
+
+```bash
+sudo systemctl start cheqd-cosmovisor.service
+```
+
+If installed *without* Cosmovisor:
+
+```bash
+sudo systemctl start cheqd-cosmovisor.service
+```
+
+### Check node service is running (and stays running)
+
+The command above should start the node service. Ideally, the node service should start running and *remain* running. You can check this by running the command below **a couple of times** in succession and checking that the output line remains as `Active: running` rather than any other status.
+
+(Previous commands can be recalled in bash by pressing the `up` arrow key on your keyboard to repeat or cycle through previous commands.)
+
+If installed *with* Cosmovisor:
+
+```bash
+root@hostname ~# systemctl status cheqd-cosmovisor.service
+● cheqd-cosmovisor.service - Service for running cheqd-node daemon
+  Loaded: loaded (/lib/systemd/system/cheqd-cosmovisor.service; enabled; vendor preset: enabled)
+  Active: active (running) since Mon 2023-03-13 14:48:57 GMT; 1 weeks 0 days ago
+```
+
+The output line after the `systemctl status cheqd-cosmovisor.service` command should say **`enabled`** after `Loaded` path and `vendor preset`.
+
+If installed *without* Cosmovisor (standalone binary install):
+
+```bash
+root@hostname ~# systemctl status cheqd-noded.service
+● cheqd-noded.service - Service for running cheqd-node daemon
+  Loaded: loaded (/lib/systemd/system/cheqd-noded.service; enabled; vendor preset: enabled)
+  Active: active (running) since Mon 2023-03-13 14:48:57 GMT; 1 weeks 0 days ago
+```
+
+### Confirm that node is gaining new blocks
+
+Once the `systemd` service is confirmed as running, check that the node is catching up on new blocks by **repeating this command 3-5 times**:
+
+(Previous commands can be recalled in bash by pressing the `up` arrow key on your keyboard to repeat or cycle through previous commands.)
+
+```bash
+cheqd-noded status
+```
+
+**Note**: The `cheqd-noded status` may not return a successful response immediately after starting the `systemd` service. For instance, you might get the following output:
+
+```bash
+root@hostname ~# cheqd-noded status
+Error: post failed: Post "http://localhost:26657": dial tcp [::1]:26657: connect: connection refused
+```
+
+If you encounter the output above, *as long as `systemctl status ...` returns `Active`*, this "error" above is completely normal. This is because it takes a few minutes after `systemctl start` for the node services to properly start running. Please wait for a few minutes, and then re-run the `cheqd-noded status` command.
+
+The output might say `catching_up: true` if the node is still catching up, or `catching_up: false` if it's fully caught up.
+
+```bash
+root@hostnames ~# cheqd-noded status
+{"NodeInfo":{"protocol_version":{"p2p":"8","block":"11","app":"0"},"id":"<node-id>","listen_addr":"<external-address>:26656","network":"cheqd-mainnet-1","version":"0.34.26","channels":"40202122233038606100","moniker":"<moniker>","other":{"tx_index":"on","rpc_address":"tcp://0.0.0.0:26657"}},"SyncInfo":{"latest_block_hash":"082E9ACC41E72BCB566DDF9132B9011C470629F54E9F0F32B0A619265A42F1F6","latest_app_hash":"302F62AB35B8D463D398E83CF7C0597A2DCC27DF7C3C5165F7AEC4CA6B4C3C7F","latest_block_height":"7153781","latest_block_time":"2023-03-20T18:02:41.952748008Z","earliest_block_hash":"A20320D647F4EC8E6D7EC95A3F25B13B86807907BD8231A24BF3EA8171E645D3","earliest_app_hash":"2B7DA548AFF3FA8886E602993BB13CFCD0E97E7F943AF129B5DBA92284B9284A","earliest_block_height":"6903781","earliest_block_time":"2023-03-03T16:12:02.371081673Z","catching_up":false},"ValidatorInfo":{"Address":"9CE4242862F7CB95B22D2EC60CB625F6B09C9562","PubKey":{"type":"tendermint/PubKeyEd25519","value":"CGe/qgutfjKuPSFQK3ZBraNRjcyKzEvy6hd2JX73Vns="},"VotingPower":"35373490103"}}
+```
+
+If the node is catching up, the time needed to fully catch up will depend on how far behind your node is. The `latest_block_height` value in the output shown above will indicate how far behind the node is. This number should display a larger value every time you re-run the command.
+
+> ❓ The absolute newest block height across the entire network is displayed in the block explorer. Check the [mainnet explorer](https://explorer.cheqd.io) or the [testnet explorer](https://testnet-explorer.cheqd.io) (depending on which network you've joined) to understand the network-wide latest block height vs your node's delta.
+
+## Next steps
+
+If you're configuring a validator, check out [**our validator guide**](../validator-guide/README.md) for further configuration steps to carry out.
