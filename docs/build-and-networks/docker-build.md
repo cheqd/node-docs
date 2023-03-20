@@ -54,5 +54,12 @@ docker compose -f docker/localnet/docker-compose.yml build
 If you don't want to use `docker compose build`, or build using `docker build` and then run it using Docker Compose, a sample command you could use is (modify as necessary)
 
 ```bash
-docker build . -f docker/Dockerfile --target runner --tag cheqd-node:build-local`
+docker build . -f docker/Dockerfile --target runner --tag cheqd-node:build-local
 ```
+
+## Next steps
+
+Once you built a Docker image, you can:
+
+* [Configure a Docker-based node installation](../setup-and-configure/docker.md) for mainnet/testnet
+* [Run a localnet](docker-localnet.md) using this custom Docker image
