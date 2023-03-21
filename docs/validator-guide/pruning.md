@@ -1,4 +1,4 @@
-# Pruning configuration
+# Optimising storage with pruning
 
 ## Context
 
