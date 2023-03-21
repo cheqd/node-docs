@@ -38,7 +38,7 @@ We also offer [pre-built Docker image releases for `cheqd-node`](https://github.
 
 We recommend using a storage path that can be kept persistent and restored/remounted (if necessary) for the configuration, data, and log directories associated with a node. This allows a node to be restored along with configuration files such as node keys and for the node's copy of the ledger to be restored without triggering a full chain sync.
 
-The default directory location for `cheqd-node` installations is `$HOME/.cheqdnode`, which computes to `/home/cheqd/.cheqdnode` when [using the interactive installer](interactive/interactive-installer.md). Custom paths can be defined if desired.
+The default directory location for `cheqd-node` installations is `$HOME/.cheqdnode`, which computes to `/home/cheqd/.cheqdnode` when [using the interactive installer](/docs/setup-and-configure/interactive-installer.md). Custom paths can be defined if desired.
 
 ### Ports
 
@@ -78,7 +78,7 @@ While this setup is not compulsory, node operators with higher stakes or a need 
 
 Follow the guide for your preferred installation method:
 
-* [interactive installer](interactive/interactive-installer.md)
+* [interactive installer](interactive-installer.md)
 * [Docker install](docker-install.md)
 * [Binary install](binary-install.md)
 
