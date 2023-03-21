@@ -26,7 +26,7 @@ If your node is not stopped correctly and two nodes are running with the same pr
 
 You will also be required to complete a fresh setup of your node.
 
-## Installation
+## Installation summary
 
 Only after you have completed the preparation steps to shut down the previous node, the installation should begin.
 
@@ -34,11 +34,11 @@ In general, the installer allows you to install the binary and download/extract 
 
 Once this has been completed, you will be able to move your existing keys back and settings.
 
-### Installation with the latest snapshot
+## Installation with the latest snapshot
 
 The answers for installer quiestion could be:
 
-#### 1. Select Version
+### 1. Select Version
 
 ```text
 1) v0.6.0
@@ -51,7 +51,7 @@ Choose the appropriate list option number above to select the version of cheqd-n
 
 Here you can pick up the version what you want.
 
-#### 2. Select Home directory
+### 2. Select Home directory
 
 `Set path for cheqd user's home directory [default: /home/cheqd]:`.
   
@@ -59,7 +59,7 @@ This is essentialy a question about where the home directory,  `cheqdnode`, is l
 
 It is up to operator where they want to store `data`, `config` and `log` directories.
 
-#### 3. Setup node
+### 3. Setup node
 
 `Do you want to setup a new cheqd-node? (yes/no) [default: yes]:`
 
@@ -69,7 +69,7 @@ The main idea is that our old `config` directory will be used and `data` will be
 
 We don't need to setup the new one.
 
-#### 4. Select Network
+### 4. Select Network
 
 `Select cheqd network to join (testnet/mainnet) [default: mainnet]:`
 
@@ -77,19 +77,19 @@ For now, we have 2 networks, `testnet` and `mainnet`.
 
 Type whichever chain you want to use or just keep the default by clicking `Enter`.
 
-#### 5. Specify Cosmovisor option
+### 5. Specify Cosmovisor option
 
 `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]:`.
 
 This is also up to the operator.
 
-#### 6. Specify if you are using a snapshot
+### 6. Specify if you are using a snapshot
 
-> CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) \[`default: yes`].
+> CAUTION: Downloading a snapshot replaces your existing copy of chain data. Usually safe to use this option when doing a fresh installation. Do you want to download a snapshot of the existing chain to speed up node synchronisation? (yes/no) [default: yes]
 
 On this question we recommend to answer `Yes`, cause it will help you to catchup with other nodes in the network. That is the main feature from this installer.
 
-#### Example
+### Example
 
 ```text
 *********  Latest stable cheqd-noded release version is Name: v0.6.0

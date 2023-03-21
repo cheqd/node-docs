@@ -1,4 +1,4 @@
-# ADR 002: Importing/exporting cheqd account mnemonics in VDR Tools SDK
+# ADR 008: Importing/exporting cheqd account mnemonics in VDR Tools SDK
 
 ## Status
 
@@ -17,7 +17,7 @@ This ADR describes how cheqd/Cosmos account keys can be imported/exported into i
 
 Client SDK applications such as [Evernym VDR Tools](https://gitlab.com/evernym/verity/vdr-tools) need to work with cheqd accounts in identity wallets to be able to interact with the cheqd network ledger.
 
-For example, an identity wallet application or backend application would need to pay network transaction fees for writing [cheqd DIDs to the ledger](https://docs.cheqd.io/identity/architecture/adr-list/adr-001-cheqd-did-method). This may also need to be extended in the future to support [peer-to-peer payments for credential exchange](adr-001-payment-mechanism-for-issuing-credentials.md).
+For example, an identity wallet application or backend application would need to pay network transaction fees for writing [cheqd DIDs to the ledger](adr-002-cheqd-did-method.md). This may also need to be extended in the future to support [peer-to-peer payments for credential exchange](adr-001-payment-mechanism-for-issuing-credentials.md).
 
 ### Assumptions / Considerations
 

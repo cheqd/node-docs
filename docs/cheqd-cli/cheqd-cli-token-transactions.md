@@ -25,7 +25,7 @@ cheqd-noded query <module> <query> <params> --node <url>
 ```bash
 $ cheqd-noded query bank balances 
 
-cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node https://rpc.cheqd.network:443
+cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node http://nodes.testnet.cheqd.network:26657
 ```
 
 ### Submitting transactions
@@ -39,7 +39,7 @@ cheqd-noded tx <module> <tx> <params> --node <url> --chain-id <chain> --fees <fe
 #### Arguments
 
 * `--node`: IP address or URL of node to send request to
-* `--chain-id`: i.e. `cheqd-testnet-6`
+* `--chain-id`: i.e. `cheqd-testnet-2`
 * `--fees`: Maximum fee limit that is allowed for the transaction.
 
 #### Status codes
@@ -51,5 +51,5 @@ Pay attention at return status code. It should be 0 if a transaction is submitte
 ```bash
 $ cheqd-noded tx bank send alice 
 
-cheqd10dl985c76zanc8n9z6c88qnl9t2hmhl5rcg0jq 10000ncheq --node http://localhost:26657 --chain-id cheqd-testnet-6 --fees 50ncheq
+cheqd10dl985c76zanc8n9z6c88qnl9t2hmhl5rcg0jq 10000ncheq --node http://localhost:26657 --chain-id cheqd --fees 50ncheq
 ```

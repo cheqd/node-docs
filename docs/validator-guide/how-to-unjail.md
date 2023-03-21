@@ -10,7 +10,7 @@ There are two scenarios in which a validator could be jailed, one of which has m
 
 When a validator "misses" blocks or doesn't participate in consensus, it can get temporarily jailed. By enforcing this check, PoS networks like ours ensure that validators are actively participating in the operation of the network, ensuring that their nodes remain secure and up-to-date with the latest software releases, etc.
 
-The duration on how this is calculated is defined in the [genesis parameters of cheqd network](../../architecture/adr-list/adr-005-genesis-parameters.md). Jailing occurs based on a sliding time window (called the [*infraction window*](https://docs.cosmos.network/main/modules/slashing)) calculated as follows.
+The duration on how this is calculated is defined in the [genesis parameters of cheqd network](../../architecture/adr-list/adr-005-genesis-parameters.md). Jailing occurs based on a sliding time window (called the [*infraction window*](https://docs.cosmos.network/main/modules/slashing) calculated as follows.
 
 1. The `signed_blocks_window` (set to 25,920 blocks on mainnet) defines the time window that is used to calculate downtime.
 2. Within this window of 25,920 blocks, **at least 50% of the blocks must be signed** by a validator. This is defined in the genesis parameter `min_signed_per_window` (set to `0.5` for mainnet).

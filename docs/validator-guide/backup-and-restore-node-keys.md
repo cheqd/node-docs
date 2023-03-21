@@ -1,4 +1,4 @@
-# Backup/Restore validator keys
+# Backup/Restore Validator Keys
 
 If you're running a validator node, it's important to backup your validator's keys and state - especially before attempting any updates or shifting nodes.
 

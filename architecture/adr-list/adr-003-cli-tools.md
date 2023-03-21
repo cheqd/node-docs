@@ -101,7 +101,7 @@ Based on the options considerations above and an analysis of development require
 
 ### CLI components overview
 
-> [Editable versions of the diagrams](../../.gitbook/assets/adr003-cli-components-editable.excalidraw) (in Excalidraw format)
+> [Editable versions of the diagrams](../../assets/adr003-cli-components-editable.excalidraw) (in Excalidraw format)
 
 ## Consequences
 
