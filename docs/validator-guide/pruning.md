@@ -158,7 +158,7 @@ Our [installer guide](../setup-and-configure/README.md) has a section on how to 
 
 ## Next steps
 
-If you activate/modify any pruning configuration above, the changes to disk usage are NOT immediate. Typically, it may take 1-2 days over which the disk usage reduction is progressively applied.
+If you activate/modify any pruning configuration above, the changes to disk usage are NOT immediate. Typically, it **may take 1-2 days** over which the disk usage reduction is progressively applied.
 
 If you've gone from a higher disk usage setting to a lower disk usage setting, re-run the disk usage command to comapre the breakdown of disk usage in the node data directory:
 
