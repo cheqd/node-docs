@@ -15,7 +15,7 @@ You can get help for any questions or problems that you have on through the foll
 - Check if your question/problem is already covered under our documentation sites:
   - [Node / cheqd network](https://docs.cheqd.io/node)
   - [Identity features / SDKs](https://docs.cheqd.io/identity)
-  - [Governance Framework](https://gov.cheqd.io)
+  - [Governance Framework](https://docs.cheqd.io/governance/)
   - [Product Suite & Updates](https://product.cheqd.io)
   - [Learn about cheqd](https://learn.cheqd.io) (basics for general audience)
 - Raise a bug report or feature request using the "Issue" tab on Github
@@ -23,15 +23,16 @@ You can get help for any questions or problems that you have on through the foll
 
 ## 🪲 Found a bug?
 
-If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our [GitHub Repository][github].
-Even better, you can [submit a Pull Request](#submit-pr) with a fix.
+If you find a bug in the source code, you can help us by [submitting an issue](https://github.com/cheqd/cheqd-node/issues/new/choose) to our [GitHub Repository](https://github.com/cheqd/cheqd-node).
+Even better, you can [submit a Pull Request](https://github.com/cheqd/cheqd-node/compare) with a fix.
 
 ## ❣️ Missing a feature?
-You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub Repository.
+
+You can *request* a new feature by [submitting an issue](https://github.com/cheqd/cheqd-node/issues/new/choose) to our GitHub Repository.
 If you would like to *implement* a new feature, please consider the size of the change in order to determine the right steps to proceed:
 
-* For a **Major Feature**, first open an issue and outline your proposal so that it can be discussed. This process allows us to better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
-* **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
+- For a **Major Feature**, first open an issue and outline your proposal so that it can be discussed. This process allows us to better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
+- **Small Features** can be crafted and directly [submitted as a Pull Request](https://github.com/cheqd/cheqd-node/compare).
 
 ## Submission Guidelines
 
@@ -51,19 +52,19 @@ We understand that sometimes it might be hard to extract essential bits of code 
 
 Unfortunately, we are not able to investigate / fix bugs without a minimal reproduction, so if we don't hear back from you, we are going to close an issue that doesn't have enough info to be reproduced.
 
-You can file new issues by selecting from our [new issue templates](https://github.com/angular/angular/issues/new/choose) and filling out the issue template.
+You can file new issues by selecting from our [new issue templates](https://github.com/cheqd/cheqd-node/issues/new/choose) and filling out the issue template.
 
 ### Submitting a Pull Request (PR)
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-1. Search [GitHub](https://github.com/angular/angular/pulls) for an open or closed PR that relates to your submission. You don't want to duplicate existing efforts.
+1. Search [GitHub](https://github.com/cheqd/cheqd-node/pulls) for an open or closed PR that relates to your submission. You don't want to duplicate existing efforts.
 2. Be sure that an issue describes the problem you're fixing, or documents the design for the feature you'd like to add. Discussing the design upfront helps to ensure that we're ready to accept your work.
 3. [Fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) the [cheqd-node](https://github.com/cheqd/cheqd-node) repository.
 4. In your forked repository, make your changes in a new git branch:
 
      ```bash
-     git checkout -b my-fix-branch main
+     git checkout -b my-fix-branch develop
      ```
 
 5. Create your patch, **including appropriate test cases**.
@@ -75,4 +76,4 @@ Before you submit your Pull Request (PR) consider the following guidelines:
     git push origin my-fix-branch
     ```
 
-9. In GitHub, send a pull request to `cheqd-node:main`.
+9. In GitHub, send a pull request to `cheqd-node:develop`. The `develop` branch is where all pending PRs should be targetted for inclusion in the next release.
