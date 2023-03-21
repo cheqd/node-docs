@@ -1,83 +1,92 @@
-# Docker Compose Based Localnet
+# Running a localnet using Docker images
 
-## Description
+## Context
 
-The set of scripts to generate configurations for a network of four nodes and run it locally in docker-compose.
+This document provides instructions on how to run a localnet with multiple validator/non-validator nodes. This can be useful if you are developing applications to work on cheqd network, or in automated testing pipelines.
 
-## Building your own Docker image
+The techniques described here are used in CI/CD contexts, for example, in this repository itself in the [`test.yml` Github workflow](https://github.com/cheqd/cheqd-node/blob/main/.github/workflows/test.yml).
 
-In case you don't want to use the pre-built Docker image published to Github Container registry, use the following steps:
+## Pre-requisites
 
-1. **Clone the [`cheqd-node` repository](https://github.com/cheqd/cheqd-node)** from Github
-2. (Optional) **Inspect the [Dockerfile](https://github.com/cheqd/cheqd-node/blob/main/docker/Dockerfile)** to understand build arguments and variables.
-   1. This is only *really* necessary if you want to modify the Docker build.
-   2. You can also [modify the Docker Compose file](https://github.com/cheqd/cheqd-node/blob/main/docker/persistent-chains/docker-compose.yml) to uncomment the `build` section. Note that a valid Docker Compose file will only have *one* `image` section, so modify/comment this as necessary.
-   3. If you want to use [Docker `buildx` engine](https://docs.docker.com/engine/reference/commandline/buildx/), look at the usage/configuration in [our Github build workflow](https://github.com/cheqd/cheqd-node/blob/main/.github/workflows/build.yml).
-3. **Build the image**: Again, you have two options here:
-   1. Sample command **using `docker build`** (modify as necessary): `docker build . -f docker/Dockerfile --target runner --tag cheqd-node:build-local`.
-   2. Sample command **using [`docker compose build`](https://docs.docker.com/engine/reference/commandline/compose_build/)** (modify as necessary): `docker compose -f docker/persistent-chains/docker-compose.yml build`
+* A clone of the [`cheqd-node` repository](https://github.com/cheqd/cheqd-node)
+* Either [a pre-built Docker image downloaded from Github Container Registry](https://github.com/cheqd/cheqd-node/pkgs/container/cheqd-node), or [a custom-built Docker image](docker-build.md) (the latter is mandatory if you've modified any code in the repository cline).
+* Docker Engine and Docker Compose (same versions as described in [configuration instructions for Docker setup](../setup-and-configure/docker.md))
+* A cheqd-node binary to run the network config generation script below.
 
-If you're planning on passing/modifying a lot of build arguments from their defaults, the Docker Compose method allows defining them easily in the `docker-compose.yml` file.
+## Instructions
 
-> **Note**: If you are using M1 Macbook you should modify the `FROM` statement in the Dockerfile, should be like this `FROM --platform=linux/amd64 FROM golang:1.18-alpine AS builder`
+Our localnet setup instructions are designed to set up a local network with the following node types:
 
-## Prerequisites
+* 3x validator nodes
+* 1x non-validator/observer node
+* 1x seed node
 
-* [Starport](https://docs.starport.network/guide/install.html)
-* docker-compose
+The definition for this network is described in a [localnet Docker Compose file](https://github.com/cheqd/cheqd-node/blob/main/docker/localnet/docker-compose.yml), which can be modified as required for your specific use case. Since it's not possible to cover all possible localnet setups, the following instructions describe the steps necessary to execute a setup similar to that using in [our Github `test` workflow](https://github.com/cheqd/cheqd-node/blob/main/.github/workflows/test.yml).
 
-## How to run
+### Generate localnet configuration (one-time)
 
-1. Build docker image:
+Execute the [bash script `gen-network-config.sh`](https://github.com/cheqd/cheqd-node/blob/main/docker/localnet/gen-network-config.sh) to generate validator keys and node configuration for the node types above.
 
-    See [the instruction](../setup-and-configure/docker-install.md).
+```bash
+./docker/localnet/gen-network-config.sh
+```
 
-2. Build cheqd-node:
+You may modify the output if you want a different mix of node types.
 
-    ```bash
-    starport chain build
-    ```
+#### Import the generated keys (one-time)
 
-3. Generate node configurations:
+Import the keys generated using the [`import-keys.sh` bash script](https://github.com/cheqd/cheqd-node/blob/main/docker/localnet/import-keys.sh):
 
-    Run: `gen_node_configs.sh`.
+```bash
+./docker/localnet/import-keys.sh
+```
 
-4. Run docker-compose:
+### Bring up the localnet using Docker Compose
 
-    Run: `run_docker.sh`.
+Modify the `docker-compose.yml` file if necessary, along with the per-container environment variables under the `container-env` folder.
 
-## Result
+```bash
+docker compose --env-file build-latest.env up --detach --no-build
+```
+
+## Interacting with localnet
+
+The default Docker localnet will configure a running network with a pre-built image or custom image.
 
 ### Nodes
 
-This will setup 4 nodes listening on the following ports:
+The five nodes and corresponding ports set up by the default Docker Compose setup will be:
 
-* Node0:
-  * p2p: 26656
-  * rpc: 26657
-* Node1:
-  * p2p: 26659
-  * rpc: 26660
-* Node2:
-  * p2p: 26662
-  * rpc: 26663
-* Node3:
-  * p2p: 26665
-  * rpc: 26666
+1. **Validator nodes**
+   1. `validator-0`
+      1. *P2P*: 26656
+      2. *RPC*: 26657
+   2. `validator-1`
+      1. *P2P*: 26756
+      2. *RPC*: 26757
+   3. `validator-2`
+      1. *P2P*: 26856
+      2. *RPC*: 26857
+   4. `validator-3`
+      1. *P2P*: 26956
+      2. *RPC*: 26957
+2. **Seed node**
+   1. `seed-0`
+      1. *P2P*: 27056
+      2. *RPC*: 27057
+3. **Observer node**
+   1. `observer-0`
+      1. *P2P*: 27156
+      2. *RPC*: 27157
 
 You can tests connection to a node using browser: `http://localhost:<rpc_port>`. Example for the first node: `http://localhost:26657`.
 
 ### Accounts
 
-Also, there will be 4 keys generated and corresponding genesis accounts created for node operators:
+Key and corresponding accounts will be placed in the network config folder by the `import-keys.sh` script, which are used within the nodes configured above.
 
-* operator0;
-* operator1;
-* operator2;
-* operator3;
-
-When connecting using CLI, point path to home directory of the node corresponding to the operator: `--home network-config/validator-x`.
+When connecting using CLI, provide the `--home` parameter to any CLI command to point to the specific home directory of the corresponding node: `--home network-config/validator-x`.
 
 ## CLI commands
 
-See [the cheqd CLI guide](../cheqd-cli/README.md) to learn about the most common CLI flows.
+See [the cheqd CLI guide](../cheqd-cli/README.md) to learn about the most common CLI commands.
