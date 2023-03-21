@@ -1,51 +1,23 @@
-# Building `cheqd-noded`
+# Building your own node software binaries
 
 ## Building from source
 
 Prerequisites:
 
-* Install [Go](https://golang.org/doc/install)
-* Install [Starport](https://docs.starport.network/guide/install.html)
+* Install [Go](https://golang.org/doc/install) (currently, our builds are done for Golang v1.18)
 
-To build the `cheqd-node` executable run:
+To build the executable, run:
 
 ```bash
-starport chain build
+make proto-gen
+make swagger
+make build
 ```
 
-To look up binary's location run:
+## Build using Docker
 
-```text
-which cheqd-noded
-```
+We have an [in-depth guide for making custom Docker image builds](docker-build.md).
 
-## Building in docker
+## Running a localnet using Docker Compose
 
-Use this [instruction](../setup-and-configure/docker-install.md).
-
-# Running a network
-
-## Running local network using starport
-
-Prerequisites:
-
-* Install [Go](https://golang.org/doc/install)
-* Install [Starport](https://docs.starport.network/guide/install.html)
-
-Only the network of one node is supported. To run the network of one node:
-
-```text
-starport serve
-```
-
-`serve` command installs dependencies, builds, initializes and starts your blockchain in development.
-
-Your blockchain in development can be configured with `config.yml`. To learn more see the [reference](https://github.com/tendermint/starport#documentation).
-
-## Running local network in single docker image
-
-Use the [Docker localnet instructions](local-docker-network.md).
-
-## Running local network using docker compose
-
-Use the [Docker Compose localnet instructions](local-docker-compose-network.md).
+We also have an [in-depth guide on running a localnet with multiple nodes](docker-localnet.md) using Docker / Docker Compose.

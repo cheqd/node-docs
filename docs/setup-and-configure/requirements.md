@@ -26,7 +26,7 @@ Extended information on [recommended hardware requirements is available in Tende
 
 We recommend using a storage path that can be kept persistent and restored/remounted (if necessary) for the configuration, data, and log directories associated with a node. This allows a node to be restored along with configuration files such as node keys and for the node's copy of the ledger to be restored without triggering a full chain sync.
 
-The default directory location for `cheqd-node` installations is `$HOME/.cheqdnode`, which computes to `/home/cheqd/.cheqdnode` when [using the interactive installer](interactive/interactive-installer.md). Custom paths can be defined if desired.
+The default directory location for `cheqd-node` installations is `$HOME/.cheqdnode`, which computes to `/home/cheqd/.cheqdnode` when [using the interactive installer](README.md). Custom paths can be defined if desired.
 
 ## Operating system
 
@@ -83,10 +83,7 @@ While this setup is not compulsory, node operators with higher stakes or a need 
 
 The [interactive installer](README.md) is designed to setup/configure node installation as a service that runs on a virtual machine. **This is the recommended setup for most scenarios when running as a validator**. A validator node is expected to run 24/7 for network stability and security, and therefore cannot be autoscaled up/down across multiple instances.
 
-If you're not running a validator node, or if you want more advanced control on your setup, the following installation methods are also supported:
-
-* [**Docker image**](docker.md): Docker images can be useful for running non-validator nodes on existing testnet/mainnet. They are also useful for running a localnet or when running a node on non-Linux systems for development purposes.
-* [**Manual, binary-only install**](manual.md): Manual/binary-only installs are recommended if you want more control on system service setup than the installer allows (described below), or if you want a binary for development purposes.
+If you're not running a validator node, or if you want more advanced control on your setup, [**installing with a Docker image**](docker.md) is also supported. This method is also useful for running a localnet or when running a node on non-Linux systems for development purposes.
 
 ## Further information
 

@@ -2,7 +2,7 @@
 
 This document offers guidance for validators looking to move thier node instance to another one, for example in case of changing VPS provider or something like this.
 
-The main tool required for this is cheqd's [interactive installer](../setup-and-configure/interactive/interactive-installer.md).
+The main tool required for this is cheqd's [interactive installer](../setup-and-configure/README.md).
 
 ## Preparations
 

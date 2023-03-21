@@ -20,7 +20,7 @@
   * [Optimising disk storage with pruning](docs/validator-guide/pruning.md)
   * [Unjailing a jailed validator](docs/validator-guide/unjail.md)
   * [Move validator to a different machine](docs/validator-guide/move-validator.md)
-  * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore-node-keys.md)
+  * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore.md)
 * 🆙 [Network-wide Software Upgrades](docs/upgrades/README.md)
   * [Upgrade to v0.6.x](docs/upgrades/v0.6-upgrade.md)
   * [Creating a software upgrade proposal](docs/upgrades/propose-software-upgrade.md)
