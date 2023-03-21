@@ -4,7 +4,7 @@
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/cheqd/cheqd-node?include_prereleases&label=dev%20release&style=flat-square)](https://github.com/cheqd/cheqd-node/releases/) ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/cheqd/cheqd-node/latest?style=flat-square) [![GitHub contributors](https://img.shields.io/github/contributors/cheqd/cheqd-node?label=contributors%20%E2%9D%A4%EF%B8%8F&style=flat-square)](https://github.com/cheqd/cheqd-node/graphs/contributors)
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cheqd/cheqd-node/Workflow%20Dispatch?label=workflows&style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/dispatch.yml) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cheqd/cheqd-node/CodeQL?label=CodeQL&style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/codeql.yml) ![GitHub repo size](https://img.shields.io/github/repo-size/cheqd/cheqd-node?style=flat-square)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/cheqd/cheqd-node/dispatch.yml?label=workflows&style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/dispatch.yml) [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/cheqd/cheqd-node/codeql.yml?label=CodeQL&style=flat-square)](https://github.com/cheqd/cheqd-node/actions/workflows/codeql.yml) ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/cheqd/cheqd-node?style=flat-square) ![GitHub repo size](https://img.shields.io/github/repo-size/cheqd/cheqd-node?style=flat-square)
 
 ## ℹ️ Overview
 
@@ -14,7 +14,7 @@
 
 ## ▶️ Quick start for joining cheqd networks
 
-Join our [**cheqd Community Slack**](http://cheqd.link/join-cheqd-slack) for help, questions, and support if you are looking to join our [mainnet](https://explorer.cheqd.io) or the [testnet](https://testnet-explorer.cheqd.io/).
+Join our [**cheqd Community Slack**](http://cheqd.link/join-cheqd-slack) for help, questions, and support if you are looking to join our [mainnet](https://explorer.cheqd.io) or [testnet](https://testnet-explorer.cheqd.io).
 
 Either the cheqd team, or one of your fellow node operators will be happy to offer some guidance.
 
@@ -22,17 +22,18 @@ Either the cheqd team, or one of your fellow node operators will be happy to off
 
 Getting started as a node operator on the cheqd network [mainnet](https://explorer.cheqd.io) is as simple as...
 
-1. [Install the `cheqd-node` software](docs/setup-and-configure/README.md) (**version 0.5.0+**) on a hosting platform of your choice
+1. Install [the latest stable release](https://github.com/cheqd/cheqd-node/releases/latest) of `cheqd-node` software (currently `v1.x.x`) on a hosting platform of your choice by [following the setup guide](docs/setup-and-configure/README.md).
 2. Once you have acquired CHEQ tokens, [promote your node to a validator](docs/validator-guide/README.md)
 
 If successfully configured, your node would become the latest validator on the cheqd mainnet. Welcome to the new digital ID revolution!
 
 ### 🚧 Testnet
 
-Our [testnet](https://testnet-explorer.cheqd.io/) is the easiest place for developers and node operators to get started if you're not *quite* ready yet to dive into building apps on our mainnet. To get started...
+Our [testnet](https://testnet-explorer.cheqd.io) is the easiest place for developers and node operators to get started if you're not *quite* ready yet to dive into building apps on our mainnet. To get started...
 
-1. Install [v0.5.0 of cheqd-node](https://github.com/cheqd/cheqd-node/releases/tag/v0.5.0) (same version as that on mainnet)
+1. Install [the latest stable release](https://github.com/cheqd/cheqd-node/releases/latest) of `cheqd-node` software (currently `v1.x.x`) on a hosting platform of your choice by [following the setup guide](docs/setup-and-configure/README.md).
 2. Acquire testnet CHEQ tokens through [our testnet faucet](https://testnet-faucet.cheqd.io).
+3. Once you have acquired CHEQ tokens, [promote your node to a validator](docs/validator-guide/README.md)
 
 ## 🧑‍💻 Using cheqd
 
@@ -44,27 +45,30 @@ Once installed, `cheqd-node` can be controlled using the [cheqd Cosmos CLI guide
 * Creating, managing, and configuring accounts and keys on a cheqd node
 * Staking and participating in public-permissionless governance
 * Governance framework for public-permissionless self-sovereign identity networks
-* Creating [`did:cheqd` method DIDs](architecture/adr-list/adr-002-cheqd-did-method.md), DID Documents ("DIDDocs")
-* Querying DIDs/DIDDocs using our [Universal Resolver driver](https://github.com/cheqd/did-resolver)
+* Creating [`did:cheqd` method DIDs](https://docs.cheqd.io/identity/architecture/adr-list/adr-001-cheqd-did-method), DID Documents ("DIDDocs")
+* Querying DIDs/DIDDocs using our [Universal Resolver driver](https://docs.cheqd.io/identity/guides/did-resolver)
 * Creating and managing Verifiable Credentials anchored to DIDs on cheqd mainnet
+* Creating [on-ledger DID-Linked "resources" (e.g., schemas, visual representations of credentials, etc)](https://docs.cheqd.io/identity/guides/did-linked-resources) that can be used in DIDDocs and Verifiable Credentials. This is used to support [AnonCreds on cheqd](https://docs.cheqd.io/identity/guides/using-on-ledger-resources-to-support-anoncreds)
+* Custom [pricing for DID and Resources](https://product.cheqd.io/product-essentials/why-cheqd/pricing) with burn to manage inflation.
 
 ### 🔮 Upcoming functionality
 
-A non-exhaustive list of future planned functionality (not necessarily in order of priority) is highlighted below:
+The [cheqd product roadmap](https://product.cheqd.io/product-essentials/roadmap) describes in detail functionality that is being considered / in-development for future releases. A non-exhaustive list (not necessarily in order of priority) is:
 
-* Defining persistent Schemas that can be referenced using DIDs
+* Revocation registry/list support to revoke issued credentials
+* Holder-pays-issuer and verifier-pays-issuer [payment rails for Verifiable Credential exchange](https://blog.cheqd.io/cheqds-product-vision-for-2022-6a92e8e4d296)
 
 We plan on adding new functionality rapidly and on a regular basis and welcome feedback on our [cheqd Community Slack](http://cheqd.link/join-cheqd-slack) workspace.
 
 ## 🛠 Developing & contributing to cheqd
 
-`cheqd-node` is written in Go and built using Cosmos SDK. The [Cosmos SDK Developer Guide](https://docs.cosmos.network/) explains a lot of the [basic concepts](https://docs.cosmos.network/main/basics/app-anatomy) of how the cheqd network functions.
+`cheqd-node` is written in Go and built using Cosmos SDK. The [Cosmos SDK Developer Guide](https://docs.cosmos.network/) explains a lot of the [basic concepts](https://docs.cosmos.network/v0.46/basics/app-anatomy.html) of how the cheqd network functions.
 
 If you want to build a node from source or contribute to the code, please read our guide to [building and testing](docs/build-and-networks/README.md).
 
 ### Creating a local network
 
-If you are building from source, or otherwise interested in running a local network, we have [instructions on how to set up a new network](docs/setup-and-configure/README.md) for development purposes.
+If you are building from source, or otherwise interested in running a local network, we have [instructions on how to set up a new network](docs/build-and-networks/README.md) for development purposes.
 
 ## 🐞 Bug reports & 🤔 feature requests
 
