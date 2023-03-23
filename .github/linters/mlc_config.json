@@ -1,12 +1,22 @@
 {
-    "aliveStatusCodes": [0, 200, 206, 403, 501, 999],
-    "ignorePatterns": [
-        {
-          "pattern": "^https://resolver.cheqd.net/"
-        },
-        {
-          "pattern": "^https://docs.cosmos.network/v0.46/"
-        }
-    ],
-    "retryOn429": true
+  "aliveStatusCodes": [0, 200, 206, 403, 501, 999],
+  "replacementPatterns": [
+    {
+      "pattern": "\" %}",
+      "replacement": ""
+    },
+    {
+      "pattern": "&quot; %}",
+      "replacement": ""
+    }
+  ],
+  "ignorePatterns": [
+    {
+      "pattern": "^https://resolver.cheqd.net/"
+    },
+    {
+      "pattern": "^https://docs.cosmos.network/v0.46/"
+    }
+  ],
+  "retryOn429": true
 }
