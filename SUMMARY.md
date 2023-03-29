@@ -18,6 +18,7 @@
 * [Guide for validators](docs/validator-guide/README.md)
   * [FAQs for validators](docs/validator-guide/faq.md)
   * [Optimising disk storage with pruning](docs/validator-guide/pruning.md)
+  * [Troubleshooting consistently high CPU/memory loads](docs/validator-guide/cpu-memory.md)
   * [Unjailing a jailed validator](docs/validator-guide/unjail.md)
   * [Move validator to a different machine](docs/validator-guide/move-validator.md)
   * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore.md)
