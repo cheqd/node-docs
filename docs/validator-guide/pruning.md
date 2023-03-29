@@ -13,7 +13,7 @@ This can be done by modifying the pruning parameters inside `/home/cheqd/.cheqdn
   
 ## Instructions
 
-> ⚠️ In order for either type of pruning to work, your node should be running the [latest stable release of cheqd-node](https://github.com/cheqd/cheqd-node/releases/latest) (at least **v1.2.5+**).
+> ⚠️ In order for either type of pruning to work, your node should be running the [latest stable release of cheqd-node](https://github.com/cheqd/cheqd-node/releases/latest) (at least **v1.3.0+**).
 
 You can check which version of `cheqd-noded` you're running using:
 
@@ -21,7 +21,7 @@ You can check which version of `cheqd-noded` you're running using:
 cheqd-noded version
 ```
 
-The output should be a version higher than v1.2.5.
+The output should be a version higher than v1.3.0. If you're on a lower version, you either manually upgrade the node binary or [use the interactive installer to execute an upgrade](../setup-and-configure/README.md) while retaining settings.
 
 The instructions below assume that the home directory for the `cheqd` user is set to the default value of `/home/cheqd`. If this is *not* the case for your node, please modify the commands below to the correct path.
 

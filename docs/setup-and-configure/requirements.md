@@ -16,8 +16,8 @@ Extended information on [recommended hardware requirements is available in Tende
 
 ### Recommended hardware specifications
 
-* 4 GB RAM (2 GB RAM minimum)
-* x64 2.0 GHz 2 vCPU or equivalent (x64 1.4 GHz 1 vCPU or equivalent minimum)
+* 4-8 GB RAM (2 GB RAM minimum)
+* x64 2.0 GHz 2-4 vCPU or equivalent (x64 1.4 GHz 1 vCPU or equivalent minimum)
 * 650 GB SSD (500 GB minimum)
 
 > ⚠️ **Storage requirements for the blockchain grows with time**. Therefore, these minimum storage figures are expected to increase over time. Read our validator guide for "pruning" settings to optimise storage consumed.
