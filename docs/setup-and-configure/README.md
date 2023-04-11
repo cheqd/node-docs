@@ -40,6 +40,20 @@ By default, the installer will attempt to create a backup of the `~/.cheqdnode/c
 
 If you're **setting up a new node from scratch**, you can safely ignore the advice above.
 
+### Stop any running services related to node services
+
+Stop the running services related to your node. If running via Cosmovisor:
+
+```bash
+sudo systemctl stop cheqd-cosmovisor.service
+```
+
+Or if running standalone:
+
+```bash
+sudo systemctl stop cheqd-noded.service
+```
+
 ### Download and start interactive installer
 
 To get started, download the interactive installer script:
