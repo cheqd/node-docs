@@ -16,6 +16,9 @@
     },
     {
       "pattern": "^https://docs.cosmos.network/v0.46/"
+    },
+    {
+      "pattern": "^https://twitter.com/"
     }
   ],
   "retryOn429": true
