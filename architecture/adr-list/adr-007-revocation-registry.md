@@ -129,5 +129,5 @@ _Reply Example_:
 
 ## References
 
-* [Hyperledger Indy Credential Revocation Hype](https://hyperledger-indy.readthedocs.io/projects/hipe/en/latest/text/0011-cred-revocation/README.html)
+* [Hyperledger Indy Credential Revocation Hype](https://hyperledger-indy.readthedocs.io/projects/hipe/en/latest/text/0011-cred-revocation/README/)
 

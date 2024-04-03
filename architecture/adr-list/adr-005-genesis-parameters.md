@@ -80,7 +80,7 @@ Cosmos application is divided [into a list of modules](https://docs.cosmos.netwo
 
 | Parameter | Description | Mainnet | Testnet |
 | - | - | - | - |
-| `constant_fee` | The fee is used to verify the [invariant(s)](https://docs.cosmos.network/main/building-modules/invariants.html) | 10,000,000,000,000 ncheq (10,000 CHEQ) | 10,000,000,000,000 ncheq (10,000 CHEQ) |
+| `constant_fee` | The fee is used to verify the [invariant(s)](https://docs.cosmos.network/main/build/building-modules/invariants) | 10,000,000,000,000 ncheq (10,000 CHEQ) | 10,000,000,000,000 ncheq (10,000 CHEQ) |
 
 ### `distribution` module
 
