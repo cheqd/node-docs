@@ -25,13 +25,13 @@ cheqd-noded keys list
 You are able to transfer tokens between key accounts using the function.
 
 ```bash
-cheqd-noded tx bank send <from> <to-address> <amount> --node <url> --chain-id <chain> --gas auto --gas-adjustment 1.2
+cheqd-noded tx bank send <from> <to-address> <amount> --node <url> --chain-id <chain> --gas auto --gas-adjustment 1.4
 ```
 
 You can then delegate to your Validator Node, using the function
 
 ```bash
-cheqd-noded tx staking delegate <validator address> <amount to stake> --from <key alias> --gas auto --gas-adjustment 1.2 --gas-prices 25ncheq 
+cheqd-noded tx staking delegate <validator address> <amount to stake> --from <key alias> --gas auto --gas-adjustment 1.4 --gas-prices 50ncheq 
 ```
 
 We use a second/different Virtual Machine to create these new accounts/wallets. In this instane, you only need to install cheqd-noded as a binary, you don't need to run it as a full node.
@@ -168,7 +168,7 @@ Your public name, is also known as your **moniker**.
 You are able to change this, as well as the description of your node using the function:
 
 ```bash
-cheqd-noded tx staking edit-validator --from validator1-eu --moniker "cheqd" --details "cheqd is building a private and secure decentralised digital identity network on the Cosmos ecosystem" --website "https://www.cheqd.io" --identity "F0669B9ACEE06ADC" --security-contact security@cheqd.io --gas auto --gas-adjustment 1.2 --gas-prices 25ncheq -chain-id cheqd-mainnet-1
+cheqd-noded tx staking edit-validator --from validator1-eu --moniker "cheqd" --details "cheqd is building a private and secure decentralised digital identity network on the Cosmos ecosystem" --website "https://www.cheqd.io" --identity "F0669B9ACEE06ADC" --security-contact security@cheqd.io --gas auto --gas-adjustment 1.4 --gas-prices 50ncheq -chain-id cheqd-mainnet-1
 ```
 
 ## Should I set my firewall port 26656 open to the world?

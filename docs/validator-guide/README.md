@@ -84,7 +84,7 @@ P.S. in case of using Ledger Nano device it would be helpful to use [this instru
      * For cheqd's current mainnet, this is `cheqd-mainnet-1`
      * For cheqd's current testnet, this is `cheqd-testnet-6`
    * **`gas`**: Maximum gas to use for *this specific* transaction. Using `auto` uses Cosmos's auto-calculation mechanism, but can also be specified manually as an integer value.
-   * **gas-adjustment** (optional): If you're using `auto` gas calculation, this parameter multiplies the auto-calculated amount by the specified factor, e.g., `1.3`. This is recommended so that it leaves enough margin of error to add a bit more gas to the transaction and ensure it successfully goes through.
+   * **gas-adjustment** (optional): If you're using `auto` gas calculation, this parameter multiplies the auto-calculated amount by the specified factor, e.g., `1.4`. This is recommended so that it leaves enough margin of error to add a bit more gas to the transaction and ensure it successfully goes through.
    * **`gas-prices`**: Maximum gas price set by the validator. Default value is `50ncheq`.
 
 Please note the parameters below are just an “**example**”.
@@ -94,7 +94,7 @@ When setting parameters such as the commission rate, a good benchmark is to cons
 You will see the commission they set, the max rate they set, and the rate of change. Please use this as a guide when thinking of your own commission configurations. This is important to get right, because the `commission-max-rate` and `commission-max-change-rate` cannot be changed after they are initially set.
 
    ```bash
-   cheqd-noded tx staking create-validator --amount 1000000000ncheq --from key-alias-name --moniker mainnet-validator-name --chain-id cheqd-mainnet-1 --min-self-delegation="1" --gas auto --gas-adjustment 1.3 --gas-prices="50ncheq" --pubkey '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"4anVUO8WhmRMqG1t4z6VxqmqZL3V7q6HqucjwZePiUw="}' --commission-max-change-rate 0.01 --commission-max-rate 0.2 --commission-rate 0.05 --node https://rpc.cheqd.net:443
+   cheqd-noded tx staking create-validator --amount 1000000000ncheq --from key-alias-name --moniker mainnet-validator-name --chain-id cheqd-mainnet-1 --min-self-delegation="1" --gas auto --gas-adjustment 1.4 --gas-prices="50ncheq" --pubkey '{"@type":"/cosmos.crypto.ed25519.PubKey","key":"4anVUO8WhmRMqG1t4z6VxqmqZL3V7q6HqucjwZePiUw="}' --commission-max-change-rate 0.01 --commission-max-rate 0.2 --commission-rate 0.05 --node https://rpc.cheqd.net:443
    ```
 
 1. **Check that your validator node is bonded**
