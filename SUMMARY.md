@@ -33,6 +33,7 @@
   * [Run a localnet with Docker](docs/build-and-networks/docker-localnet.md)
 * [Indexers](docs/indexers/README.md)
   * [SubQuery](docs/indexers/subquery.md)
+
 ## Architecture
 
 * [Architecture Decision Record (ADR) Process](architecture/README.md)
