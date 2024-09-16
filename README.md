@@ -14,7 +14,7 @@
 
 ## ▶️ Quick start for joining cheqd networks
 
-Join our [**cheqd Community Slack**](http://cheqd.link/join-cheqd-slack) for help, questions, and support if you are looking to join our [mainnet](https://explorer.cheqd.io) or [testnet](https://testnet-explorer.cheqd.io). Either the cheqd team, or one of your fellow node operators will be happy to offer some guidance.
+Join our [**cheqd D**](http://cheqd.link/join-cheqd-slack)[**iscord Server**](https://discord.com/invite/4VZszdE7HH) for help, questions, and support if you are looking to join our [mainnet](https://explorer.cheqd.io) or [testnet](https://testnet-explorer.cheqd.io). Either the cheqd team, or one of your fellow node operators will be happy to offer some guidance.
 
 ### ✅ Mainnet
 
