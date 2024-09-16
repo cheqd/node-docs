@@ -20,7 +20,7 @@ Join our [**cheqd Community Slack**](http://cheqd.link/join-cheqd-slack) for hel
 
 Getting started as a node operator on the cheqd network [mainnet](https://explorer.cheqd.io) is as simple as...
 
-1. Install [the latest stable release](https://github.com/cheqd/cheqd-node/releases/latest) of `cheqd-node` software (currently `v1.x.x`) on a hosting platform of your choice by [following the setup guide](docs/setup-and-configure/).
+1. Install [the latest stable release](https://github.com/cheqd/cheqd-node/releases/latest) of `cheqd-node` software (currently `v2.x.x`) on a hosting platform of your choice by [following the setup guide](docs/setup-and-configure/).
 2. Once you have acquired CHEQ tokens, [promote your node to a validator](docs/validator-guide/)
 
 If successfully configured, your node would become the latest validator on the cheqd mainnet. Welcome to the new digital ID revolution!
@@ -29,7 +29,7 @@ If successfully configured, your node would become the latest validator on the c
 
 Our [testnet](https://testnet-explorer.cheqd.io) is the easiest place for developers and node operators to get started if you're not _quite_ ready yet to dive into building apps on our mainnet. To get started...
 
-1. Install [the latest stable release](https://github.com/cheqd/cheqd-node/releases/latest) of `cheqd-node` software (currently `v1.x.x`) on a hosting platform of your choice by [following the setup guide](docs/setup-and-configure/).
+1. Install [the latest stable release](https://github.com/cheqd/cheqd-node/releases/latest) of `cheqd-node` software (currently `v2.x.x`) on a hosting platform of your choice by [following the setup guide](docs/setup-and-configure/).
 2. Acquire testnet CHEQ tokens through [our testnet faucet](https://testnet-faucet.cheqd.io).
 3. Once you have acquired CHEQ tokens, [promote your node to a validator](docs/validator-guide/)
 
@@ -52,7 +52,11 @@ Once installed, `cheqd-node` can be controlled using the [cheqd Cosmos CLI guide
 * Trust registry support to manage accreditations betweeen organisations, using DIDs and DID-Linked Resources
 * Holder-pays-issuer and verifier-pays-issuer [payment rails for Verifiable Credential exchange](https://blog.cheqd.io/cheqds-product-vision-for-2022-6a92e8e4d296).
 
-We plan on adding new functionality rapidly and on a regular basis and welcome feedback on our [cheqd Community Slack](http://cheqd.link/join-cheqd-slack) workspace.
+We plan on adding new functionality rapidly and on a regular basis and welcome feedback on our [**cheqd Discord server**](https://discord.com/invite/4VZszdE7HH).&#x20;
+
+See our **detailed Product Docs** below for more information:
+
+<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><mark style="color:blue;"><strong>Product Docs</strong></mark></td><td>Dive into our product docs to learn more about cheqd Studio, Creds and our identity packages &#x26; SDKs, including Credo, Veramo, the Universal Resolver and Registrar.</td><td><a href="https://docs.cheqd.io/product">https://docs.cheqd.io/product</a></td></tr></tbody></table>
 
 ## 🛠 Developing & contributing to cheqd
 
@@ -70,7 +74,7 @@ If you notice anything not behaving how you expected, or would like to make a su
 
 ## 💬 Community
 
-The [**cheqd Community Slack**](http://cheqd.link/join-cheqd-slack) is our primary chat channel for the open-source community, software developers, and node operators.
+The [**cheqd Discord**](https://discord.com/invite/4VZszdE7HH) is our primary chat channel for the open-source community, software developers, and node operators.
 
 Please reach out to us there for discussions, help, and feedback on the project.
 
