@@ -56,7 +56,9 @@ We plan on adding new functionality rapidly and on a regular basis and welcome f
 
 See our **detailed Product Docs** below for more information:
 
+<!-- markdownlint-disable MD033 -->
 <table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><mark style="color:blue;"><strong>Product Docs</strong></mark></td><td>Dive into our product docs to learn more about cheqd Studio, Creds and our identity packages &#x26; SDKs, including Credo, Veramo, the Universal Resolver and Registrar.</td><td><a href="https://docs.cheqd.io/product">https://docs.cheqd.io/product</a></td></tr></tbody></table>
+<!-- markdownlint-enable MD033 -->
 
 ## 🛠 Developing & contributing to cheqd
 
