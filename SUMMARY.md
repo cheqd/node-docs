@@ -25,7 +25,7 @@
 * [Network-wide Software Upgrades](docs/upgrades/README.md)
   * [Upgrade to v0.6.x](docs/upgrades/v0.6-upgrade.md)
   * [Creating a software upgrade proposal](docs/upgrades/propose-software-upgrade.md)
-  * [Upgrade to v2.0.2](docs/upgrades/v2.0.2-upgrade.md)
+  * [Recommended Ubuntu 24.04 LTS Upgrade](docs/upgrades/v2.0.2-upgrade.md)
 
 ## 🧑‍💻 Developing on cheqd
 
