@@ -38,6 +38,15 @@ systemctl status cheqd-cosmovisor.service
 
 If there's a running systemd service, running this sub-process `/usr/bin/cosmovisor run start`, then your node is using Cosmovisor.
 
+Additionally, you should make sure that in your cheqd-cosmovisor systemd service configuration file, you have these environment variables set to true:
+
+```conf
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
+Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
+```
+
+By default, the configuration file can be found at this location - `/usr/lib/systemd/system/cheqd-cosmovisor.service;`.
+
 ## Manual Upgrades for Standalone Nodes
 
 For **standalone nodes**, follow the instructions in [our installation guide](../setup-and-configure/README.md). Make sure to choose the release suggested in the software upgrade proposal.
