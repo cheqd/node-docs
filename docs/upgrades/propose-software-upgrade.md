@@ -25,14 +25,26 @@ The next steps are describing the general flow for making a proposal:
 #### Command for sending proposal
 
 ```bash
-cheqd-noded tx gov submit-proposal software-upgrade upgrade_to_0.3 --title "Upgrade to 0.3 version" --description "This proposal is about new version of our application." --upgrade-height <upgrade height> --from <operator alias> --chain-id <chain_id>
+cheqd-noded tx gov submit-legacy-proposal software-upgrade <proposal_name> \
+  --title "<proposal_title>" \
+  --description "<proposal_description>" \
+  --upgrade-height <upgrade_height> \
+  --upgrade-info <upgrade_info> \
+  --deposit 8000000000000ncheq \
+  --from <operator_alias> \
+  --chain-id cheqd-mainnet-1 \
+  --gas auto \
+  --gas-adjustment 1.4 \
+  --gas-prices 50ncheq
 ```
 
 The main parameters here are:
 
-- `upgrade_to_0.3` - name of proposal which will be used in `UpgradeHandler` in the new application,
-- `--upgrade-height` - height when upgrade process will be occurred,
-- `--from` - alias of a key which will be used for signing proposal,
+- `proposal_name` - name of proposal which will be used in `UpgradeHandler` in the new application,
+- `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links,
+- `upgrade_height` - height when upgrade process will be occurred. Keep in mind that this needs to be after voting period has ended.
+- `upgrade_info` - link to the upgrade info file, containing new binaries. Needs to contain sha256 checksum. See example - `https://raw.githubusercontent.com/cheqd/cheqd-node/refs/heads/main/networks/mainnet/upgrades/upgrade-v3.json?checksum=sha256:5989f7d5bca686598c315eb74e8eb507d7f9f417d71008a31a6b828c48ce45eb`
+- `operator_alias` - alias of a key which will be used for signing proposal,
 - `<chain_id>` - identifier of chain which will be used while creating the blockchain.
 
 In case of successful submitting  the next command can be used for getting `proposal_id`:
@@ -42,29 +54,6 @@ cheqd-noded query gov proposals
 ```
 
 This command will return list of all proposals. It's needed to find the last one with corresponding `name` and `title`.
-Please, remember this `proposal_id` because it will be used in next steps.
-
-Also, the next command is very useful for getting information about proposal status:
-
-```bash
-cheqd-noded query gov proposal <proposal_id>
-```
-
-Expected result for this state is `PROPOSAL_STATUS_DEPOSIT_PERIOD`, It means, that pool is in waiting for the first deposit state.
-
-#### Sending deposit
-
-Since getting proposal, the `DEPOSIT` should be set to the pool.It will be return after finishing voting_preiod.
-For setting deposit the next command is used:
-
-```bash
-cheqd-noded tx gov deposit <proposal_id> 10000000ncheq --from <operator_alias> --chain-id <chain_id>
-```
-
-Parameters:
-
-- `<proposal_id>` - proposal identifier from [step](#Command for sending proposal)
-  In this example, amount of deposit is equal to current `min-deposit` value.
 
 ### Voting process
 
@@ -74,12 +63,13 @@ After getting deposit from the previous step, the `VOTING_PERIOD` will be starte
 For setting vote, the next command can be used:
 
 ```bash
-cheqd-noded tx gov vote <proposal_id> yes --from <operator_alias> --chain-id <chain_id>
+cheqd-noded tx gov vote <proposal_id> <vote_option> --from <operator_alias> --chain-id <chain_id> --gas auto --gas-adjustment 1.5 --gas-prices 50ncheq
 ```
 
 The main parameters here:
 
 - `<proposal_id>` - proposal identifier from [step](#Command for sending proposal)
+- `<vote_option>` - the actual vote (it can be `yes`, `no`, `abstain`, `no_with_veto`)
 
 Votes can be queried by sending request:
 
@@ -91,28 +81,3 @@ cheqd-noded query gov votes <proposal_id>
 
 At the end of voting period, after `voting_end_time`, the state of proposal with `<proposal_id>` should be changed to `PROPOSAL_STATUS_PASSED`, if there was enough votes
 Also, deposits should be refunded back to the operators.
-
-## Upgrade
-
-After getting proposal status as passed, upgrade plan will be active. It can be requested by:
-
-```bash
-$ cheqd-noded query upgrade plan --chain-id cheqd         -testnet-2                                                   0 [19:06:50]
-height: "1000"
-info: ""
-name: <name of proposal>
-```
-
-It means, that at height 1000 `BeginBlocker` will be set and node will be out of consensus and wait for moving to the new version of application.
-
-It will be stopped and the next messages in log are expected:
-
-```bash
-5:17PM ERR UPGRADE "<proposed upgrade name>" NEEDED at height: 1000:
-5:17PM ERR UPGRADE "<proposed upgrade name>" NEEDED at height: 1000:
-panic: UPGRADE "<proposed upgrade name>" NEEDED at height: 1000:
-```
-
-After setting up new version of application node will continue ordering process.
-
-Instructions on setting up a new node/version can be found in [our installation guide](../setup-and-configure/README.md).

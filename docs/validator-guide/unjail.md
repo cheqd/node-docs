@@ -41,7 +41,7 @@ The expected response will be the latest cheqd-noded software release. At the ti
 
 ## Step 2: Upgrading to latest software
 
-If your node is not up to date, please [follow the instructions here](../upgrades/v0.6-upgrade.md)
+If your node is not up to date, please [follow the instructions here](../upgrades/upgrade-guides/v0.6-upgrade.md)
 
 ## Step 3: Confirming the Node is up to date
 
