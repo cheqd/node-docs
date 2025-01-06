@@ -1,4 +1,4 @@
-# Frequently Asked Questions (FAQs) for Validators
+# FAQs for validators
 
 ## How do I **stake** more tokens after setting up a validator node?
 
@@ -51,9 +51,9 @@ I’d recommend at least 250 GB at the current chain size. You can choose to go 
 ## **Is there any way to use less storage?**
 
 \
-Yes, you can. You can do this by [setting the pruning settings](https://cheqd-community.slack.com/archives/C02NWSZ6S5D/p1655158283824199?thread\_ts=1655156299.525379\&cid=C02NWSZ6S5D) to more aggressive parameters in the `app.toml` file.
+Yes, you can. You can do this by [setting the pruning settings](https://cheqd-community.slack.com/archives/C02NWSZ6S5D/p1655158283824199?thread_ts=1655156299.525379\&cid=C02NWSZ6S5D) to more aggressive parameters in the `app.toml` file.
 
- Here’s the relevant section in the file:
+Here’s the relevant section in the file:
 
 ```bash
 default: the last 100 states are kept in addition to every 500th state; pruning at 10 block intervals
@@ -75,6 +75,26 @@ pruning-interval = "0"
 
 Please also see this thread on the trade-offs involved. This will help to _some_ extent, but please note that this is a general property of all blockchains that the chain size will grow. E.g., [Sovrin’s technical docs require 1 TB minimum](https://sovrin.org/wp-content/uploads/Steward-Technical-and-Organizational-Policies-V2.pdf) out of the gate. We recommend using alerting policies to grow the disk storage as needed, which is less likely to require higher spend due to over-provisioning.
 
+## How do I withdraw Validator Rewards including Commission
+
+Validators can withdraw their rewards, including commission, directly via the command-line interface (CLI). This feature is essential for managing earned rewards efficiently.
+
+**Command for Withdrawing Rewards with Commission**
+
+```
+cheqd-noded tx distribution withdraw-rewards cheqdvaloper... --commission --from <wallet-name> --gas auto --gas-adjustment 1.7 --gas-prices 50ncheq --chain-id cheqd-mainnet-1
+```
+
+**Explanation of Command Parameters**
+
+* `cheqdvaloper...`: Insert your validator operator address.
+* `--commission`: Ensures that commission rewards are included in the withdrawal.
+* `--from <wallet-name>`: Specifies the wallet from which the transaction will be initiated.
+* `--gas auto`: Automatically calculates the gas required for the transaction.
+* `--gas-adjustment 1.7`: Adjusts the gas limit to account for network fluctuations.
+* `--gas-prices 50ncheq`: Sets the gas price in `ncheq`.
+* `--chain-id cheqd-mainnet-1`: Identifies the chain ID for the transaction.
+
 ## **How do I monitor the status of my node?**
 
 \
@@ -84,7 +104,7 @@ One of the simplest ways to do this is to [look at the validator “Condition”
 * **Amber**: 70-90% blocks signed
 * **Red**: 1-70% blocks signed
 
-We have also [built a tool](https://github.com/cheqd/validator-status) internally that takes the output of this from condition score from the block explorer GraphQL API and makes it available as a simple REST API that can be used to send alerts on Slack, Discord etc which we have [open sourced](https://github.com/cheqd/validator-status) and set up on our Slack/Discord.&#x20;
+We have also [built a tool](https://github.com/cheqd/validator-status) internally that takes the output of this from condition score from the block explorer GraphQL API and makes it available as a simple REST API that can be used to send alerts on Slack, Discord etc which we have [open sourced](https://github.com/cheqd/validator-status) and set up on our Slack/Discord.
 
 Please join the channel 'mainnet-alerts' on the cheqd community slack.
 
@@ -99,7 +119,7 @@ Yes! Here are a few other suggestions:
 * The default storage path for cheqd-node is on `/home/cheqd`. By default, most hosting/cloud providers will set this up on a single disk volume under the `/` (root) path. If you move and mount `/home` on a separate disk volume, this will allow you to expand the storage independent of the main volume. This can sometimes make a difference, because if you leave `/home` tree mounted on `/` mount path, many cloud providers will force you to bump the _whole_ virtual machine category - including the CPU and RAM - to a more expensive tier in order to get additional disk storage on `/`. This can also result in over-provisioning since the additional CPU/RAM is likely not required.
 * You can also optimise the amount of logs stored, in case the logs are taking up too much space. There’s a few techniques here:
 * In `config.toml` you can set the logging level to `error` for less logging than the default which is `info`. (The other possible value for this is `debug`)
-* [Set the log rotation configuration to use different/custom parameters such as what file-size to rotate at, number of days to retain etc.
+* \[Set the log rotation configuration to use different/custom parameters such as what file-size to rotate at, number of days to retain etc.
 
 ## What is Commission rate and is it important?
 
