@@ -75,7 +75,7 @@ pruning-interval = "0"
 
 Please also see this thread on the trade-offs involved. This will help to _some_ extent, but please note that this is a general property of all blockchains that the chain size will grow. E.g., [Sovrin’s technical docs require 1 TB minimum](https://sovrin.org/wp-content/uploads/Steward-Technical-and-Organizational-Policies-V2.pdf) out of the gate. We recommend using alerting policies to grow the disk storage as needed, which is less likely to require higher spend due to over-provisioning.
 
-## How do I withdraw Validator Rewards including Commission
+## How do I withdraw Validator Rewards including Commission?
 
 Validators can withdraw their rewards, including commission, directly via the command-line interface (CLI). This feature is essential for managing earned rewards efficiently.
 
