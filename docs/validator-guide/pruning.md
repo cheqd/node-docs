@@ -183,3 +183,6 @@ Instead of syncing a full node from scratch, validators can leverage pruned snap
 3. **Lavender.Five Nodes**
    * Website: [https://services.lavenderfive.com/mainnet/cheqd/snapshot](https://services.lavenderfive.com/mainnet/cheqd/snapshot)
    * Visit the page for links and commands to restore a node from their pruned snapshots.
+4. **STARV**
+   1. Website: [https://stavr-team.gitbook.io/nodes-guides/mainnets/Cheqd/statesync-snapshot](https://stavr-team.gitbook.io/nodes-guides/mainnets/Cheqd/statesync-snapshot)
+   2. Visit the page for links and commands to restore a node from their pruned snapshots.
