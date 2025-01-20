@@ -1,30 +1,30 @@
-# Overview
+# Move validator to a different machine
 
 This document offers guidance for validators looking to move thier node instance to another one, for example in case of changing VPS provider or something like this.
 
-The main tool required for this is cheqd's [interactive installer](../setup-and-configure/README.md).
+The main tool required for this is cheqd's [interactive installer](../setup-and-configure/).
 
 ## Preparations
 
 Before completing the move, ensure the following checks are completed:
 
-### 1. Copy `config` directory and `data/priv_validator_state.json` to safe place
-
-Check that your `config` directory and `data/priv_validator_state.json` are copied to a safe place where they will cannot affected by the migration
-
-### 2. Stop the service on your current node
+### 1. Stop the service on your current node
 
 If you are using cosmosvisor, use `systemctl stop cheqd-cosmovisor`
 
-For all other cases, use  `systemctl stop cheqd-noded`.
+For all other cases, use `systemctl stop cheqd-noded`.
 
-### 3. Confirm that your previous node / service was stopped
+### 2. Confirm that your previous node / service was stopped
 
 > This step is of the utmost important
 
 If your node is not stopped correctly and two nodes are running with the same private keys, this will lead to a double signing infraction which results in your node being permemently jailed (tombstoned) resulting in a 5% slack of staked tokens.
 
 You will also be required to complete a fresh setup of your node.
+
+### 3. Copy `config` directory and `data/priv_validator_state.json` to safe place
+
+Check that your `config` directory and `data/priv_validator_state.json` are copied to a safe place where they will cannot affected by the migration.
 
 ## Installation
 
@@ -40,7 +40,7 @@ The answers for installer quiestion could be:
 
 #### 1. Select Version
 
-```text
+```
 1) v0.6.0
 2) v0.6.0-rc3
 3) v0.6.0-rc2
@@ -54,8 +54,8 @@ Here you can pick up the version what you want.
 #### 2. Select Home directory
 
 `Set path for cheqd user's home directory [default: /home/cheqd]:`.
-  
-This is essentialy a question about where the home directory,  `cheqdnode`, is located or will be.
+
+This is essentialy a question about where the home directory, `cheqdnode`, is located or will be.
 
 It is up to operator where they want to store `data`, `config` and `log` directories.
 
@@ -91,7 +91,7 @@ On this question we recommend to answer `Yes`, cause it will help you to catchup
 
 #### Example
 
-```text
+```
 *********  Latest stable cheqd-noded release version is Name: v0.6.0
 *********  List of cheqd-noded releases: 
 1) v0.6.0
@@ -118,7 +118,7 @@ yes
 
 ### 1. Copy your settings
 
-If the installation process was successful, the next step is to get back the configurations from [preparation steps](#preparations):
+If the installation process was successful, the next step is to get back the configurations from [preparation steps](move-validator.md#preparations):
 
 * Copy `config` directory to the `CHEQD_HOME_DIRECTORY/.cheqdnode/`
 * Copy `data/priv_validator_state.json` to the `CHEQD_HOME_DIRECTORY/.cheqdnode/data`
