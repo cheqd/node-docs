@@ -79,13 +79,13 @@ Please also see this thread on the trade-offs involved. This will help to _some_
 
 Validators can withdraw their rewards, including commission, directly via the command-line interface (CLI). This feature is essential for managing earned rewards efficiently.
 
-**Command for Withdrawing Rewards with Commission**
+### Command for Withdrawing Rewards with Commission
 
-```
+```bash
 cheqd-noded tx distribution withdraw-rewards cheqdvaloper... --commission --from <wallet-name> --gas auto --gas-adjustment 1.7 --gas-prices 50ncheq --chain-id cheqd-mainnet-1
 ```
 
-**Explanation of Command Parameters**
+### Explanation of Command Parameters
 
 * `cheqdvaloper...`: Insert your validator operator address.
 * `--commission`: Ensures that commission rewards are included in the withdrawal.
