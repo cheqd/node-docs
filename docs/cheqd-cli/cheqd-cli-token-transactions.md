@@ -56,6 +56,7 @@ price:
 Fees can be set using the `--fees` flag. The fee is in `ncheq` units or 10^-9 \$CHEQ. For example, `5000ncheq` is 0.000005 $CHEQ.
 
 #### Interpreting the real-time gas prices API response
+
 Interpret the value of price.amount as the fixed fee in price.denom units, in which case `500000000000000000ncheq` using `--fees` OR calculate the gas prices necessary by multiplying the value of price.amount by (10^4) * (10^9) = 10^13, in which case resulting in `5000ncheq`. Any increase in the indicative gas price or gas limit will result in greater quantities than the suggested minimum base fee.
 
 ### Submitting transactions
