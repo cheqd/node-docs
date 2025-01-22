@@ -70,7 +70,7 @@ cheqd-noded tx <module> <tx> <params> --node <url> --chain-id <chain> --fees <fe
 
 * `--node`: IP address or URL of node to send request to
 * `--chain-id`: i.e. `cheqd-testnet-6`
-* `--fees`: Maximum fee limit that is allowed for the transaction. The fee is in `ncheq` units. Refer to [Querying & Declaring fees](#querying--declaring-fees) for obtaining the fee amount.
+* `--fees`: Maximum fee limit that is allowed for the transaction. The fee is in `ncheq` units. Refer to [Querying & Declaring fees](#querying-and-declaring-fees) for obtaining the fee amount.
 
 #### Status codes
 
