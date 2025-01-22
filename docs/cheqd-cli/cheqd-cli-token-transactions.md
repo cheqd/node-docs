@@ -38,7 +38,7 @@ cheqd-noded query feemarket gas-price <denom> --node <url>
 
 #### Arguments
 
-* `--denom`: The denomination of the fee. For example, `ncheq`
+* `denom`: The denomination of the fee. For example, `ncheq`
 * `--node`: IP address or URL of node to send the request to
 
 #### Example
