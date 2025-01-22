@@ -28,7 +28,7 @@ $ cheqd-noded query bank balances
 cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node https://rpc.cheqd.network:443
 ```
 
-### Querying & Declaring fees
+### Querying and Declaring fees
 
 #### Command
 
