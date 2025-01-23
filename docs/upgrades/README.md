@@ -21,6 +21,6 @@ You can find more details on the actual upgrade process under in our [Upgrade Pr
 [This section](upgrade-guides) lists **previous** software upgrade proposals and specific instructions on how to execute them.
 
 - [v0.6.0 Upgrade Guide](upgrade-guides/v0.6-upgrade.md)
-- [v2.0.2 Upgrade Guide](upgrade-guides/v2.x-upgrade.md)
-- [v3.0.1 Upgrade Guide](upgrade-guides/v3.x-upgrade.md)
-- [v3.1.4 Upgrade Guide](upgrade-guides/v3.1.x-upgrade.md)
+- [v2.x Upgrade Guide](upgrade-guides/v2.x-upgrade.md)
+- [v3.x Upgrade Guide](upgrade-guides/v3.x-upgrade.md)
+- [v3.1.x Upgrade Guide](upgrade-guides/v3.1.x-upgrade.md)
