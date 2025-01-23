@@ -111,7 +111,7 @@ cheqd10dl985c76zanc8n9z6c88qnl9t2hmhl5rcg0jq 10000ncheq --gas auto --gas-adjustm
 
 For most general ledger queries, use the `--help` flag for any command/sub-command to understand the possible parameters and values.
 
-#### Command
+### Command
 
 ```bash
 cheqd-noded query <module> <query> <params> --node <url>
@@ -121,7 +121,7 @@ cheqd-noded query <module> <query> <params> --node <url>
 
 * `--node`: IP address or URL of node to send the request to
 
-#### Example
+### Example
 
 ```bash
 $ cheqd-noded query bank balances cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node https://rpc.cheqd.network
