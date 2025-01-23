@@ -124,5 +124,5 @@ cheqd-noded query <module> <query> <params> --node <url>
 ### Example
 
 ```bash
-$ cheqd-noded query bank balances cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node https://rpc.cheqd.network
+cheqd-noded query bank balances cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node https://rpc.cheqd.network
 ```
