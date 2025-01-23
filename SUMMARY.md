@@ -25,10 +25,9 @@
 * [Network-wide Software Upgrades](docs/upgrades/README.md)
   * [Upgrade Guides](docs/upgrades/upgrade-guides/README.md)
     * [Upgrade to v0.6.x](docs/upgrades/upgrade-guides/v0.6-upgrade.md)
-    * [Upgrade to v2.0.2](docs/upgrades/upgrade-guides/v2.0.2-upgrade.md)
-    * [Upgrade to v3.0.1](docs/upgrades/upgrade-guides/v3.0.1-upgrade.md)
-    * [Upgrade to v3.1.4](docs/upgrades/upgrade-guides/v3.1.4-upgrade.md)
-    * [Recommended Ubuntu 24.04 LTS Upgrade](docs/upgrades/upgrade-guides/v2.0.2-upgrade.md)
+    * [Upgrade to v2.x (with Ubuntu 24.04 LTS upgrade)](docs/upgrades/upgrade-guides/v2.x-upgrade.md)
+    * [Upgrade to v3.x](docs/upgrades/upgrade-guides/v3.x-upgrade.md)
+    * [Upgrade to v3.1.x](docs/upgrades/upgrade-guides/v3.1.x-upgrade.md)
   * [Creating a software upgrade proposal](docs/upgrades/propose-software-upgrade.md)
   * [Upgrade Guide](docs/upgrades/upgrade.md)
 
