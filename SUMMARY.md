@@ -23,11 +23,13 @@
   * [Move validator to a different machine](docs/validator-guide/move-validator.md)
   * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore.md)
 * [Network-wide Software Upgrades](docs/upgrades/README.md)
-  * [Previous Upgrade Guides](docs/upgrades/upgrade-guides/README.md)
+  * [Upgrade Guides](docs/upgrades/upgrade-guides/README.md)
     * [Upgrade to v0.6.x](docs/upgrades/upgrade-guides/v0.6-upgrade.md)
-    * [Recommended Ubuntu 24.04 LTS Upgrade](docs/upgrades/upgrade-guides/v2.0.2-upgrade.md)
+    * [Upgrade to v2.x (with Ubuntu 24.04 LTS upgrade)](docs/upgrades/upgrade-guides/v2.x-upgrade.md)
+    * [Upgrade to v3.x](docs/upgrades/upgrade-guides/v3.x-upgrade.md)
+    * [Upgrade to v3.1.x](docs/upgrades/upgrade-guides/v3.1.x-upgrade.md)
   * [Creating a software upgrade proposal](docs/upgrades/propose-software-upgrade.md)
-  * [Upgrade Guide](docs/upgrades/upgrade.md)
+  * [Upgrade Process](docs/upgrades/upgrade-process.md)
 
 ## 🧑‍💻 Developing on cheqd
 

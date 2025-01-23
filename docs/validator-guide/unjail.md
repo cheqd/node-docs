@@ -64,5 +64,5 @@ It shows you a page and field "version": "0.6.0".
 If everything is up to date, and the node has fully caught, you can now unjail your node using this command in the cheqd CLI:
 
 ```bash
-cheqd-noded tx slashing unjail --from <address_alias> --gas auto --gas-adjustment 1.4 --gas-prices 50ncheq --chain-id cheqd-mainnet-1
+cheqd-noded tx slashing unjail --from <address_alias> --gas auto --gas-adjustment 1.4 --gas-prices 5000ncheq --chain-id cheqd-mainnet-1
 ```

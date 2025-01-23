@@ -35,7 +35,7 @@ cheqd-noded tx gov submit-legacy-proposal software-upgrade <proposal_name> \
   --chain-id cheqd-mainnet-1 \
   --gas auto \
   --gas-adjustment 1.4 \
-  --gas-prices 50ncheq
+  --gas-prices 5000ncheq
 ```
 
 The main parameters here are:
@@ -63,7 +63,7 @@ After getting deposit from the previous step, the `VOTING_PERIOD` will be starte
 For setting vote, the next command can be used:
 
 ```bash
-cheqd-noded tx gov vote <proposal_id> <vote_option> --from <operator_alias> --chain-id <chain_id> --gas auto --gas-adjustment 1.5 --gas-prices 50ncheq
+cheqd-noded tx gov vote <proposal_id> <vote_option> --from <operator_alias> --chain-id <chain_id> --gas auto --gas-adjustment 1.5 --gas-prices 5000ncheq
 ```
 
 The main parameters here:

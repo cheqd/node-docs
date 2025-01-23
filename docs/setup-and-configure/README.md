@@ -126,7 +126,7 @@ Answers to these prompts are saved in the `app.toml` and `/config.toml` files, w
 3. `Specify your node's P2P port [default: 26656]`: [Tendermint peer-to-peer traffic port](requirements.md)
 4. `Specify your node's RPC port [default: 26657]`: [Tendermint RPC port](requirements.md)
 5. `Specify persistent peers [default: none]`: Persistent peers are nodes that you want to always keep connected to. Values for persistent peers should be specified in format: `<nodeID>@<IP>:<port>,<nodeID>@<IP>:<port>`.
-6. `Specify minimum gas price [default: 50ncheq]`: Minimum gas prices is the price you are willing to accept as a validator to process a transaction. Values should be entered in format `<number>ncheq` (e.g., [`50ncheq`](../../architecture/adr-list/adr-004-token-fractions.md))
+6. `Specify minimum gas price [default: 5000ncheq]`: Minimum gas prices is the price you are willing to accept as a validator to process a transaction. Values should be entered in format `<number>ncheq` (e.g., [`5000ncheq`](../../architecture/adr-list/adr-004-token-fractions.md))
 7. `Specify log level (trace|debug|info|warn|error|fatal|panic) [default: error]:`: The default log level of `error` is generally recommended for normal operation. You may temporarily need to change to more verbose logging levels if trying to diagnose issues if the node isn't behaving correctly.
 8. `Specify log format (json|plain) [default: json]:`: JSON log format allows parsing log files more easily if there's an issue with your node, hence it's set as the default.
 

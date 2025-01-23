@@ -12,10 +12,15 @@ Network-wide software upgrades are typically initiated by the core development t
 
 Additionally, these software upgrades are discussed off-chain on [our discussion forum](https://commonwealth.im/cheqd/discussions) and on [our Discord server](http://cheqd.link/discord-github).
 
-## Upgrade
+## Upgrade Process
 
-You can find more details on the actual upgrade process under in our [Upgrade Guide](upgrade.md)
+You can find more details on the actual upgrade process under in our [Upgrade Process Guide](upgrade-process.md)
 
 ## Previous software upgrade guides
 
 [This section](upgrade-guides) lists **previous** software upgrade proposals and specific instructions on how to execute them.
+
+- [v0.6.0 Upgrade Guide](upgrade-guides/v0.6-upgrade.md)
+- [v2.x Upgrade Guide](upgrade-guides/v2.x-upgrade.md)
+- [v3.x Upgrade Guide](upgrade-guides/v3.x-upgrade.md)
+- [v3.1.x Upgrade Guide](upgrade-guides/v3.1.x-upgrade.md)

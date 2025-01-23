@@ -40,7 +40,7 @@ The answers for installer quiestion could be:
 
 #### 1. Select Version
 
-```
+```bash
 1) v0.6.0
 2) v0.6.0-rc3
 3) v0.6.0-rc2
@@ -91,9 +91,9 @@ On this question we recommend to answer `Yes`, cause it will help you to catchup
 
 #### Example
 
-```
+```bash
 *********  Latest stable cheqd-noded release version is Name: v0.6.0
-*********  List of cheqd-noded releases: 
+*********  List of cheqd-noded releases:
 1) v0.6.0
 2) v0.6.0-rc3
 3) v0.6.0-rc2
