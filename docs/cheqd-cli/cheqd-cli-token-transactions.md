@@ -53,7 +53,13 @@ You can also query real-time gas prices on chain using the REST API, which can b
 
 ### Interpreting the real-time gas prices API response
 
-Interpret the value of `price.amount` as the fixed fee in `price.denom` units, in which case `5000000000000ncheq` using `--fees` OR calculate the gas prices necessary by multiplying the value of `price.amount` by (10^4) * (10^9) = 10^13, in which case resulting in `5000ncheq`. Any increase in the indicative gas price or gas limit will result in greater quantities than the suggested minimum base fee.
+There are two ways of interpreting the CLI/API response:
+
+1. **If specifying fees as `gas x gas prices` with `auto` gas calculation** (recommended): Multiply the `price.amount` by 10^4 to derive the *gas price* in `ncheq`. In the example above, this results in gas price `0.5ncheq * (10^4) = 5000ncheq`
+2. **If specifying fixed fees as `--fees`**:
+The `price.amount` value represents the exact fee to pay in `price.denom` units. In the example above, this becomes `0.5 CHEQ * (10^4) * (10^9) = 5,000,000,000,000,000ncheq`
+
+The **Submitting transactions** section below explains further how fees can be specified with transactions.
 
 ### Suggested static gas price values
 
@@ -71,7 +77,7 @@ Please note that without querying the real-time prices, these ranges might not s
 
 In our documentation, you will come across terms like *gas* and *gas prices*. *Fees* are calculated as follows:
 
-`fee = gas x gas-adjustment x gas-prices`
+`fees = gas x gas-adjustment x gas-prices`
 
 There are important changes to particular values for *gas adjustment* and *gas prices* since the [v3.x](../upgrades/upgrade-guides/v3.x-upgrade.md) and [v3.1.x upgrade](../upgrades/upgrade-guides/v3.1.x-upgrade.md), which are reflected below.
 
@@ -93,7 +99,7 @@ cheqd-noded tx <module> <tx> <params> --gas auto --gas-adjustment <adjustment-fa
 
 Instead of using `--gas`, `--gas-adjustment`, and `--gas-prices`, you can also specify fixed fees for a transaction using the `--fees` flag, which is the maximum fee limit that is allowed for the transaction.
 
-`--fee` needs to be specified in `ncheq` units or 10^-9 CHEQ. For example, `5000ncheq` is 0.000005 CHEQ. The fee is in `ncheq` units. Refer to the section above for obtaining gas prices that help determine the fee amount.
+`--fees` needs to be specified in `ncheq` units or 10^-9 CHEQ. For example, `5000ncheq` is 0.000005 CHEQ. The fee is in `ncheq` units. Refer to the section above for obtaining gas prices that help determine the fee amount.
 
 #### Status codes
 
