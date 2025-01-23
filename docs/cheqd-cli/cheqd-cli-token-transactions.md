@@ -37,8 +37,8 @@ price:
 
 You can also query real-time gas prices on chain using the REST API, which can be useful for applications that do not use the node CLI. You can fetch this by initiating a GET reqeust to:
 
-- **Mainnet**: `https://api.cheqd.net/feemarket/v1/gas_price/ncheq`
-- **Testnet**: `https://api.cheqd.network/feemarket/v1/gas_price/ncheq`
+* **Mainnet**: `https://api.cheqd.net/feemarket/v1/gas_price/ncheq`
+* **Testnet**: `https://api.cheqd.network/feemarket/v1/gas_price/ncheq`
 
 #### Response format for gas prices from REST API
 
@@ -61,9 +61,9 @@ The most **fool-proof method** of ensuring your transaction succeeds is by query
 
 If, however, your application is **unable** to query on-chain prices for some reason, you *may* be able to use the following static gas price values:
 
-- Low (minimum gas price): `5000ncheq`
-- Medium: `7500ncheq`
-- High: `10000ncheq`
+* Low (minimum gas price): `5000ncheq`
+* Medium: `7500ncheq`
+* High: `10000ncheq`
 
 Please note that without querying the real-time prices, these ranges might not satisfy requirements during periods of peak congestion, but will likely meet the required gas prices in 90% of scenarios at the peak.
 
@@ -83,11 +83,11 @@ cheqd-noded tx <module> <tx> <params> --gas auto --gas-adjustment <adjustment-fa
 
 #### Arguments
 
-- `--chain-id`: E.g., `cheqd-mainnet-1` (for mainnet), `cheqd-testnet-6` (for testnet). This parameter is typically mandatory
-- `--gas`: Either a specific value, or `auto` (recommended)
-- `--gas-adjustment`: Usually, the auto-calculated gas value fluctuates, so you're recommended to boost the gas value by this multiplication factor. Since our v3.x upgrade, the **recommended value is 1.7 or more**.
-- `--gas-prices`: From v3.1.x upgrade onwards, the **minimum gas price is 5000ncheq**. Recommendation is to either query real-time gas prices, or use the static values.
-- `--node` (optional): IP address or URL of node's RPC endpoint to send request to, e.g., `https://rpc.cheqd.net`, `http:localhost:26657`. This is not necessary when executing on a node itself.
+* `--chain-id`: E.g., `cheqd-mainnet-1` (for mainnet), `cheqd-testnet-6` (for testnet). This parameter is typically mandatory
+* `--gas`: Either a specific value, or `auto` (recommended)
+* `--gas-adjustment`: Usually, the auto-calculated gas value fluctuates, so you're recommended to boost the gas value by this multiplication factor. Since our v3.x upgrade, the **recommended value is 1.7 or more**.
+* `--gas-prices`: From v3.1.x upgrade onwards, the **minimum gas price is 5000ncheq**. Recommendation is to either query real-time gas prices, or use the static values.
+* `--node` (optional): IP address or URL of node's RPC endpoint to send request to, e.g., `https://rpc.cheqd.net`, `http:localhost:26657`. This is not necessary when executing on a node itself.
 
 #### Alternative method for setting fees
 
@@ -124,7 +124,5 @@ cheqd-noded query <module> <query> <params> --node <url>
 #### Example
 
 ```bash
-$ cheqd-noded query bank balances
-
-cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node https://rpc.cheqd.network
+$ cheqd-noded query bank balances cheqd1lxej42urme32ffqc3fjvz4ay8q5q9449f06t4v --node https://rpc.cheqd.network
 ```
