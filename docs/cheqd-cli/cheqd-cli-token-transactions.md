@@ -91,7 +91,7 @@ cheqd-noded tx <module> <tx> <params> --gas auto --gas-adjustment <adjustment-fa
 
 #### Alternative method for setting fees
 
-Instead of using `--gas`, `--gas-adjustment`, and `--gas-prices`, you can also specify fees for a transaction using the `--fees` flag, which is the maximum fee limit that is allowed for the transaction.
+Instead of using `--gas`, `--gas-adjustment`, and `--gas-prices`, you can also specify fixed fees for a transaction using the `--fees` flag, which is the maximum fee limit that is allowed for the transaction.
 
 `--fee` needs to be specified in `ncheq` units or 10^-9 CHEQ. For example, `5000ncheq` is 0.000005 CHEQ. The fee is in `ncheq` units. Refer to the section above for obtaining gas prices that help determine the fee amount.
 
