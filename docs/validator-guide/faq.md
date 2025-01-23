@@ -31,7 +31,7 @@ cheqd-noded tx bank send <from> <to-address> <amount> --node <url> --chain-id <c
 You can then delegate to your Validator Node, using the function
 
 ```bash
-cheqd-noded tx staking delegate <validator address> <amount to stake> --from <key alias> --gas auto --gas-adjustment 1.4 --gas-prices 50ncheq 
+cheqd-noded tx staking delegate <validator address> <amount to stake> --from <key alias> --gas auto --gas-adjustment 1.4 --gas-prices 5000ncheq 
 ```
 
 We use a second/different Virtual Machine to create these new accounts/wallets. In this instane, you only need to install cheqd-noded as a binary, you don't need to run it as a full node.
@@ -82,7 +82,7 @@ Validators can withdraw their rewards, including commission, directly via the co
 ### Command for Withdrawing Rewards with Commission
 
 ```bash
-cheqd-noded tx distribution withdraw-rewards cheqdvaloper... --commission --from <wallet-name> --gas auto --gas-adjustment 1.7 --gas-prices 50ncheq --chain-id cheqd-mainnet-1
+cheqd-noded tx distribution withdraw-rewards cheqdvaloper... --commission --from <wallet-name> --gas auto --gas-adjustment 1.7 --gas-prices 5000ncheq --chain-id cheqd-mainnet-1
 ```
 
 ### Explanation of Command Parameters
@@ -92,7 +92,7 @@ cheqd-noded tx distribution withdraw-rewards cheqdvaloper... --commission --from
 * `--from <wallet-name>`: Specifies the wallet from which the transaction will be initiated.
 * `--gas auto`: Automatically calculates the gas required for the transaction.
 * `--gas-adjustment 1.7`: Adjusts the gas limit to account for network fluctuations.
-* `--gas-prices 50ncheq`: Sets the gas price in `ncheq`.
+* `--gas-prices 5000ncheq`: Sets the gas price in `ncheq`.
 * `--chain-id cheqd-mainnet-1`: Identifies the chain ID for the transaction.
 
 ## **How do I monitor the status of my node?**
@@ -178,7 +178,7 @@ We suggest the set:
 should fall within this recommended range:
 
 1. Low: 25ncheq
-2. Medium: 50ncheq
+2. Medium: 5000ncheq
 3. High: 100ncheq
 
 ## How do I change my public name and description
@@ -188,7 +188,7 @@ Your public name, is also known as your **moniker**.
 You are able to change this, as well as the description of your node using the function:
 
 ```bash
-cheqd-noded tx staking edit-validator --from validator1-eu --moniker "cheqd" --details "cheqd is building a private and secure decentralised digital identity network on the Cosmos ecosystem" --website "https://www.cheqd.io" --identity "F0669B9ACEE06ADC" --security-contact security@cheqd.io --gas auto --gas-adjustment 1.4 --gas-prices 50ncheq -chain-id cheqd-mainnet-1
+cheqd-noded tx staking edit-validator --from validator1-eu --moniker "cheqd" --details "cheqd is building a private and secure decentralised digital identity network on the Cosmos ecosystem" --website "https://www.cheqd.io" --identity "F0669B9ACEE06ADC" --security-contact security@cheqd.io --gas auto --gas-adjustment 1.4 --gas-prices 5000ncheq -chain-id cheqd-mainnet-1
 ```
 
 ## Should I set my firewall port 26656 open to the world?
