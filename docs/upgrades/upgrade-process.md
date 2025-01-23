@@ -1,4 +1,4 @@
-# Upgrade
+# Upgrade Process
 
 After the proposal status is marked as passed, the upgrade plan will become active. You can query the upgrade plan details using the following command:
 

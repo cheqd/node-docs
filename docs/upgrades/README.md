@@ -14,7 +14,7 @@ Additionally, these software upgrades are discussed off-chain on [our discussion
 
 ## Upgrade Process
 
-You can find more details on the actual upgrade process under in our [Upgrade Guide](upgrade.md)
+You can find more details on the actual upgrade process under in our [Upgrade Process Guide](upgrade-process.md)
 
 ## Previous software upgrade guides
 

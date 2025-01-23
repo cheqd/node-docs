@@ -29,7 +29,7 @@
     * [Upgrade to v3.x](docs/upgrades/upgrade-guides/v3.x-upgrade.md)
     * [Upgrade to v3.1.x](docs/upgrades/upgrade-guides/v3.1.x-upgrade.md)
   * [Creating a software upgrade proposal](docs/upgrades/propose-software-upgrade.md)
-  * [Upgrade Guide](docs/upgrades/upgrade.md)
+  * [Upgrade Process](docs/upgrades/upgrade-process.md)
 
 ## 🧑‍💻 Developing on cheqd
 
