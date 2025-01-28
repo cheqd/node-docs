@@ -61,7 +61,7 @@ There are two ways of interpreting the CLI/API response:
 
 2. **If specifying fixed fees as `--fees`**:
 
-The `price.amount` value represents the exact fee to pay in `price.denom` units. In the example above, this becomes `0.5 CHEQ * 2 = 1,000,000,000,000ncheq or 1 CHEQ`. If the network is congested, the fee may be higher than this value, therefore it is recommended to multiply by a factor of 2 or more to ensure the transaction is processed.
+The `price.amount` value represents the exact fee to pay in `price.denom` units. In the example above, this becomes `0.5 CHEQ * 2 = 1,000,000,000ncheq or 1 CHEQ`. If the network is congested, the fee may be higher than this value, therefore it is recommended to multiply by a factor of 2 or more to ensure the transaction is processed.
 
 The [**Submitting transactions**](#submitting-transactions) section below explains further how fees can be specified with transactions.
 
