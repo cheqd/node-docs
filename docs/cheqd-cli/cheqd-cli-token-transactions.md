@@ -56,10 +56,12 @@ You can also query real-time gas prices on chain using the REST API, which can b
 There are two ways of interpreting the CLI/API response:
 
 1. **If specifying fees as `gas x gas prices` with `auto` gas calculation** (recommended): Multiply the `price.amount` by 10^4 to derive the *gas price* in `ncheq`. In the example above, this results in gas price `0.5ncheq * (10^4) = 5000ncheq`
-2. **If specifying fixed fees as `--fees`**:
-The `price.amount` value represents the exact fee to pay in `price.denom` units. In the example above, this becomes `0.5 CHEQ * (10^4) * (10^9) = 5,000,000,000,000,000ncheq`
 
-The **Submitting transactions** section below explains further how fees can be specified with transactions.
+    > **Note:** Consider `10^4` the fee offset multiplier for gas prices. This is because cheqd network uses `ncheq` as the base denomination for gas prices, whereas Cosmos SDK uses `uatom` for this feemarket implementation. The offset factor is not related to the conversion from `ncheq` to `uatom`, but rather to the way the gas prices are calculated in Cosmos SDK.
+
+2. **If specifying fixed fees as `--fees`**: The `price.amount` value represents the exact fee to pay in CHEQ, whereas the `price.denom` gives the units it should be expressed in. If the network is congested, the fee may be higher than the example value shown. Therefore, it is recommended to multiply by a factor of 2 or more to ensure the transaction is processed when using `--fees`, as this method does not have the benefit of auto gas calculation. In the example above, this becomes `0.5 CHEQ * 2 * 10^9 = 1,000,000,000ncheq` (1 CHEQ).
+
+The [**Submitting transactions**](#submitting-transactions) section below explains further how fees can be specified with transactions.
 
 ### Suggested static gas price values
 
