@@ -77,7 +77,7 @@ cheqd-noded tx bank <from_key_or_address> <to_address> <amount> --gas <gas> --ga
 * `to_address`: The address of the recipient
 * `amount`: The amount to send, in the format `1000ncheq`. The amount must be in the chain-native denomination, which is `ncheq`
 * `gas`: The amount of gas to use or `auto` to calculate the gas automatically
-* `gas_prices`: The gas prices to use, in the format `5000ncheq` or `0.0000016ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4`
+* `gas_prices`: The gas prices to use, in the format `5000ncheq` or `0.00000016ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4`
 * `fees`: The fees to pay, in the format `1000000000ncheq` or `0.032ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4`
 * `--node`: IP address or URL of node to send the request to
 
