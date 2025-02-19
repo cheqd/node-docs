@@ -8,7 +8,9 @@ This document contains the Fee Abstraction commands for [paying for transactions
 
 Various commands are available for declaring fees in transactions, along with querying and configuring allowed denominations through governance proposals.
 
-## Querying for allowed IBC denominations
+## Supported IBC denominations
+
+Fees for transactions cannot be denominated in arbitrary alternative tokens, when attempting to pay for transactions with non-CHEQ tokens. Supported IBC denominations must be approved using decentralised governance.
 
 ### Querying allowed IBC denominations via CLI
 
