@@ -12,6 +12,10 @@ Various commands are available for declaring fees in transactions, along with qu
 
 Fees for transactions cannot be denominated in arbitrary alternative tokens, when attempting to pay for transactions with non-CHEQ tokens. Supported IBC denominations must be approved using decentralised governance.
 
+## Interacting with Fee Abstraction
+
+The equivalent IBC denomination amount is required to pay for transactions. **Ensure** this amount is available in the respective Osmosis account in possession of the sender.
+
 ### Querying allowed IBC denominations via CLI
 
 ```bash
