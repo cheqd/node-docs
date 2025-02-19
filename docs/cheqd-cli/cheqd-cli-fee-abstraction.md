@@ -42,6 +42,48 @@ all_host_chain_config:
 
 If the `status` is `0`, the IBC denomination is allowed for transactions. If the `status` is `1`, the IBC denomination is not allowed for transactions. Also, if the IBC denomination is not included in the response, it is not allowed for transactions.
 
+### Querying allowed IBC denominations via REST API
+
+You can also query allowed IBC denominations using the REST API, which can be useful for applications that do not use the node CLI. You can fetch this by initiating a GET request to:
+
+* **Mainnet**: `https://api.cheqd.net/fee-abstraction/feeabs/v1/all-host-chain-config`
+* **Testnet**: `https://api.cheqd.network/fee-abstraction/feeabs/v1/all-host-chain-config`
+
+#### Response format for allowed IBC denominations from REST API
+
+```json
+{
+  "all_host_chain_config": [
+    {
+      "ibc_denom": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+      "osmosis_pool_token_denom_in": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+      "pool_id": "1273",
+      "status": 0
+    }
+  ]
+}
+```
+
+### Querying allowed IBC denominations via REST API with a specific IBC denomination
+
+You can also query allowed IBC denominations for a specific IBC denomination using the REST API. You can fetch this by initiating a GET request to:
+
+* **Mainnet**: `https://api.cheqd.net/fee-abstraction/feeabs/v1/host-chain-config/<ibc_denom>`
+* **Testnet**: `https://api.cheqd.network/fee-abstraction/feeabs/v1/host-chain-config/<ibc_denom>`
+
+#### Response format for allowed IBC denominations from REST API with a specific IBC denomination
+
+```json
+{
+  "host_chain_config": {
+    "ibc_denom": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+    "osmosis_pool_token_denom_in": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+    "pool_id": "1273",
+    "status": 0
+  }
+}
+```
+
 ## Querying and declaring fees in transactions
 
 ### Querying real-time gas prices via CLI
