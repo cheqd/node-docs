@@ -4,7 +4,9 @@
 
 A `cheqd-node` instance can be controlled and configured using the [cheqd Cosmos CLI](README.md).
 
-This document contains the commands for writing token transactions in any supported IBC denomination on Osmosis. Various commands are available for declaring fees in transactions, along with querying and configuring allowed denominations through governance proposals.
+This document contains the Fee Abstraction commands for [paying for transactions](cheqd-cli-token-transactions.md) using governance-approved alternative tokens, e.g., a stablecoin such as USDC. The Fee Abstraction module routes requests for supported IBC denominations to [Osmosis DEX](https://app.osmosis.zone), and uses existing liquidity pools (e.g., the [CHEQ/USDC pool](https://app.osmosis.zone/pool/1273)) to convert the tokens on the fly. The underlying transaction on cheqd network is **always** funded in CHEQ tokens.
+
+Various commands are available for declaring fees in transactions, along with querying and configuring allowed denominations through governance proposals.
 
 ## Querying for allowed IBC denominations
 
