@@ -67,7 +67,3 @@ Most transactions will require you to use `--from <key-alias>` param which is a 
 ```bash
 cheqd-noded tx <module> <tx-name> --from <key-alias>
 ```
-
-### Converting bech32 address from / to chain-native prefix and vice-versa
-
-Refer to external tooling such as this [bech32 converter](https://cosmosdrops.io/en/tools/bech32-converter) to convert between bech32 addresses and chain-native addresses.

@@ -24,7 +24,7 @@ You can find out if you've got sufficient balance in supported IBC denominations
    1. Ensure you have added the cheqd wallet you want to use for transactions to a supported desktop/mobile wallet. The recommended wallet app is [Leap Wallet](https://www.leapwallet.io/download). If you previously used Keplr Wallet, we recommend [migrating from Keplr Wallet to Leap Wallet](https://docs.cheqd.io/product/network/wallets/migrate) as it has better support for [looking up real-time gas prices](./cheqd-cli-token-transactions.md).
    2. Once you've added the cheqd wallet account to Leap Wallet, use the network switcher to switch to **Osmosis**. This will allow you to see the balances you have on Osmosis chain, including native OSMO as well as any IBC denominations such as USDC.
 2. **Converting your cheqd address to Osmosis using CLI**
-   1. Refer to the [Converting bech32 address from / to chain-native prefix and vice-versa](./cheqd-cli-key-management.md#converting-bech32-address-from--to-chain-native-prefix-and-vice-versa) section in the [Manage keys](./cheqd-cli-key-management.md) page to convert your cheqd address to Osmosis.
+   1. Use a [bech32 converter tool like this one](https://cosmosdrops.io/en/tools/bech32-converter) to convert a cheqd wallet address to an Osmosis address (use the prefix `osmo` for target address to convert to).
    2. Once you have obtained your Osmosis address, you can look up its balance using the [Osmosis CLI](https://docs.osmosis.zone/osmosis-core/osmosisd/) or through a block explorer like [Mintscan](https://mintscan.io/osmosis).
 
 ### Getting sufficient balance of supported IBC denominations on equivalent Osmosis account
