@@ -40,6 +40,8 @@ If you do not have sufficient balances in supported IBC denominations on Osmosis
 
 ### Querying allowed IBC denominations via CLI
 
+As tokens supported for fee abstraction can only be allowlisted by governance, use the following command to find out which IBC denominations are supported:
+
 ```bash
 cheqd-noded query feeabs all-host-chain-config --node <url>
 ```
@@ -47,6 +49,7 @@ cheqd-noded query feeabs all-host-chain-config --node <url>
 #### Arguments
 
 * `--node`: IP address or URL of node to send the request to
+* `--output json` (optional): Provides the output in JSON format
 
 #### Example
 
@@ -60,9 +63,10 @@ all_host_chain_config:
     status: 0
 ```
 
-> **Note**: Use `--output json` to get the output in JSON format.
+#### Response
 
-If the `status` is `0`, the IBC denomination is allowed for transactions. If the `status` is `1`, the IBC denomination is not allowed for transactions. Also, if the IBC denomination is not included in the response, it is not allowed for transactions.
+1. The `ibc_denom` is the IBC denomination of the supported asset **on Osmsosis** (not the IBC denomination of the asset on cheqd).
+2. If the `status` is `0`, the IBC denomination is allowed for transactions. If the `status` is `1`, the IBC denomination is not allowed for transactions. Also, if the IBC denomination is not included in the response, it is not allowed for transactions.
 
 ### Querying allowed IBC denominations via REST API
 
@@ -124,6 +128,7 @@ cheqd-noded query feeabs osmo-arithmetic-twap <ibc_denom> --node <url>
 
 * `ibc_denom`: The IBC denomination to convert the gas price to
 * `--node`: IP address or URL of node to send the request to
+* `--output json` (optional): Provides the output in JSON format
 
 #### Example
 
@@ -132,8 +137,6 @@ $ cheqd-noded query feeabs osmo-arithmetic-twap ibc/498A0751C798A0D9A389AA369112
 
 osmo_arithmetic_twap: "34874.714483483365588155"
 ```
-
-> **Note**: Use `--output json` to get the output in JSON format.
 
 If the desired IBC denomination is not configured, the response will error out with a message indicating that the IBC denomination is not allowed for transactions.
 
