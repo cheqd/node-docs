@@ -12,9 +12,31 @@ Various commands are available for declaring fees in transactions, along with qu
 
 Fees for transactions cannot be denominated in arbitrary alternative tokens, when attempting to pay for transactions with non-CHEQ tokens. Supported IBC denominations must be approved using decentralised governance.
 
-## Interacting with Fee Abstraction
+## Prerequisites for using Fee Abstraction
 
-The equivalent IBC denomination amount is required to pay for transactions. **Ensure** this amount is available in the respective Osmosis account in possession of the sender.
+The equivalent IBC denomination amount is required to pay for transactions. **Ensure this amount is available in the equivalent Osmosis account** related to the cheqd account/key provided in the transaction.
+
+### Looking up balance of equivalent Osmosis account
+
+You can find out if you've got sufficient balance in supported IBC denominations using the following methods:
+
+1. **Through Leap Wallet**
+   1. Ensure you have added the cheqd wallet you want to use for transactions to a supported desktop/mobile wallet. The recommended wallet app is [Leap Wallet](https://www.leapwallet.io/download). If you previously used Keplr Wallet, we recommend [migrating from Keplr Wallet to Leap Wallet](https://docs.cheqd.io/product/network/wallets/migrate) as it has better support for [looking up real-time gas prices](./cheqd-cli-token-transactions.md).
+   2. Once you've added the cheqd wallet account to Leap Wallet, use the network switcher to switch to **Osmosis**. This will allow you to see the balances you have on Osmosis chain, including native OSMO as well as any IBC denominations such as USDC.
+2. **Converting your cheqd address to Osmosis using CLI**
+   1. TASOS: We should probably add this under the [key management](./cheqd-cli-key-management.md) and link to it from here.
+   2. Once you have obtained your Osmosis address, you can look up its balance using the [Osmosis CLI](https://docs.osmosis.zone/osmosis-core/osmosisd/) or through a block explorer like [Mintscan](https://mintscan.io/osmosis).
+
+### Getting sufficient balance of supported IBC denominations on equivalent Osmosis account
+
+If you do not have sufficient balances in supported IBC denominations on Osmosis, you need to top-up the specific token you want in your Osmosis account
+
+#### For USDC
+
+1. If you already have USDC (regardless of which chain it is on), use [Noble Express Transfer](https://express.noble.xyz/) to transfer it as Cosmos-native Noble USDC into Osmosis.
+2. Acquire USDC on Osmosis by [swapping existing tokens to USDC](https://docs.osmosis.zone/overview/educate/getting-started#swapping-tokens).
+
+## Interacting with Fee Abstraction
 
 ### Querying allowed IBC denominations via CLI
 
