@@ -12,7 +12,7 @@ For most nodes, the RAM/vCPU requirements are relatively static and do not chang
 
 It is recommended to **mount disk storage for blockchain data as an expandable volume/partition separate from your root partition**. This allows you mount the node data/configuration path on `/home` (for example) and increase the storage if necessary *independent* of the root `/` partition since hosting providers typically force an increase in CPU/RAM specifications to grow the root partition.
 
-Extended information on [recommended hardware requirements is available in Tendermint documentation](https://docs.tendermint.com/main/tendermint-core/running-in-production.html#hardware). The figures below have been updated from the default Tendermint recommendations to account for current cheqd network chain size, real-world usage accounting for requests nodes need to handle, etc.
+Extended information on [recommended hardware requirements is available in Tendermint documentation](https://docs.cometbft.com/main/explanation/core/running-in-production#hardware). The figures below have been updated from the default Tendermint recommendations to account for current cheqd network chain size, real-world usage accounting for requests nodes need to handle, etc.
 
 ### Recommended hardware specifications
 
@@ -53,13 +53,13 @@ The P2P port is used for peer-to-peer communication between nodes. This port is 
 * Outbound TCP connections must be allowed on *all* ports to *any* IP address range.
 * The default P2P port can be changed in `$HOME/.cheqdnode/config/config.toml`.
 
-Further details on [how P2P settings work is defined in Tendermint documentation](https://docs.tendermint.com/main/tendermint-core/running-in-production.html#p2p).
+Further details on [how P2P settings work is defined in Tendermint documentation](https://docs.cometbft.com/main/explanation/core/running-in-production#p2p).
 
 ### RPC port
 
 The RPC port is intended to be used by client applications as well as the cheqd-node CLI. Your RPC port **must** be active and available on localhost to be able to use the CLI. It is up to a node operator whether they want to expose the RPC port to public internet.
 
-The [RPC endpoints for a node](https://docs.tendermint.com/main/rpc/) provide REST, JSONRPC over HTTP, and JSONRPC over WebSockets. These API endpoints can provide useful information for node operators, such as healthchecks, network information, validator information etc.
+The [RPC endpoints for a node](https://docs.cometbft.com/main/explanation/core/rpc) provide REST, JSONRPC over HTTP, and JSONRPC over WebSockets. These API endpoints can provide useful information for node operators, such as healthchecks, network information, validator information etc.
 
 * By default, the RPC port is set to `26657`
 * Inbound and outbound TCP connections should be allowed from destinations desired by the node operator. The default is to allow this from any IPv4 address range.
@@ -75,7 +75,7 @@ In addition to the P2P/RPC ports above, you need to allow the following ports in
 
 ### Sentry nodes (optional)
 
-Tendermint allows more complex setups in production, where the ingress/egress to a validator node is [proxied behind a "sentry" node](https://docs.tendermint.com/main/tendermint-core/validators.html).
+Tendermint allows more complex setups in production, where the ingress/egress to a validator node is [proxied behind a "sentry" node](https://docs.cometbft.com/main/explanation/core/validators).
 
 While this setup is not compulsory, node operators with higher stakes or a need to have more robust network security may consider setting up a sentry-validator node architecture.
 
@@ -87,5 +87,5 @@ If you're not running a validator node, or if you want more advanced control on 
 
 ## Further information
 
-* Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.tendermint.com/main/tendermint-core/running-in-production.html).
+* Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.cometbft.com/main/explanation/core/running-in-production).
 * [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/main/tooling/cosmovisor); however in our testing so far this method has not been reliable and is therefore currently not recommended.

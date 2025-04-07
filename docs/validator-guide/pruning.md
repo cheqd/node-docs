@@ -178,7 +178,6 @@ Instead of syncing a full node from scratch, validators can leverage pruned snap
    * Website: [https://nodestake.org/cheqd](https://nodestake.org/cheqd)
    * Instructions: Navigate to the **Snapshot** tab for detailed steps on downloading and using their snapshots.
 2. **Nysa Network**
-   * Website: [https://snapshots.nysa.network/#cheqd-mainnet-1/](https://snapshots.nysa.network/#cheqd-mainnet-1/)
    * Snapshot details and setup instructions are provided on the site.
 3. **Lavender.Five Nodes**
    * Website: [https://services.lavenderfive.com/mainnet/cheqd/snapshot](https://services.lavenderfive.com/mainnet/cheqd/snapshot)
