@@ -14,18 +14,20 @@ Fees for transactions cannot be denominated in arbitrary alternative tokens, whe
 
 ## Prerequisites for using Fee Abstraction
 
-The equivalent IBC denomination amount is required to pay for transactions. **Ensure this amount is available in the equivalent Osmosis account** related to the cheqd account/key provided in the transaction.
+The equivalent IBC denomination amount is required to pay for transactions. **Ensure this amount is available in the equivalent cheqd account** related to the cheqd account/key provided in the transaction, bridged from any Osmosis account.
 
-### Looking up balance of equivalent Osmosis account
+### Bridging from Osmosis
 
 You can find out if you've got sufficient balance in supported IBC denominations using the following methods:
 
 1. **Through Leap Wallet**
    1. Ensure you have added the cheqd wallet you want to use for transactions to a supported desktop/mobile wallet. The recommended wallet app is [Leap Wallet](https://www.leapwallet.io/download). If you previously used Keplr Wallet, we recommend [migrating from Keplr Wallet to Leap Wallet](https://docs.cheqd.io/product/network/wallets/migrate) as it has better support for [looking up real-time gas prices](./cheqd-cli-token-transactions.md).
    2. Once you've added the cheqd wallet account to Leap Wallet, use the network switcher to switch to **Osmosis**. This will allow you to see the balances you have on Osmosis chain, including native OSMO as well as any IBC denominations such as USDC.
-2. **Converting your cheqd address to Osmosis using CLI**
-   1. Use a [bech32 converter tool like this one](https://cosmosdrops.io/en/tools/bech32-converter) to convert a cheqd wallet address to an Osmosis address (use the prefix `osmo` for target address to convert to).
-   2. Once you have obtained your Osmosis address, you can look up its balance using the [Osmosis CLI](https://docs.osmosis.zone/osmosis-core/osmosisd/) or through a block explorer like [Mintscan](https://mintscan.io/osmosis).
+2. **Sending tokens over IBC**
+   1. If you have an existing Osmosis account, you can send tokens over IBC to your cheqd account. This is done by sending the tokens from your Osmosis account to the address of your cheqd account. Use the `Swap` flow to send tokens over IBC. The tokens will be sent to the cheqd account and will be available for use in transactions. Otherwise, you can use the `cheqd-noded tx ibc-transfer transfer` command to send tokens over IBC from your Osmosis account to your cheqd account. The command will look like this:
+    `osmosisd tx ibc-transfer transfer <src-port> <src-channel> <to_address> <amount> --from <key_or_address> --node <url>`
+
+   2. Once the tokens are sent over IBC, you can use the `cheqd-noded query bank balances <address>` command to check the balance of your cheqd account. This will show you the balance of the tokens that were sent over IBC. Refer to [Appendix](./cheqd-cli-fee-abstraction.md#appendix) for the IBC denomination of the tokens.
 
 ### Getting sufficient balance of supported IBC denominations on equivalent Osmosis account
 
@@ -33,8 +35,12 @@ If you do not have sufficient balances in supported IBC denominations on Osmosis
 
 #### For USDC
 
-1. If you already have USDC (regardless of which chain it is on), use [Noble Express Transfer](https://express.noble.xyz/) to transfer it as Cosmos-native Noble USDC into Osmosis.
-2. Acquire USDC on Osmosis by [swapping existing tokens to USDC](https://docs.osmosis.zone/overview/educate/getting-started#swapping-tokens).
+1. If you already have USDC (regardless of which chain it is on), use [Noble Express Transfer](https://express.noble.xyz/) to transfer it first as Cosmos-native Noble USDC into Osmosis, before bridging it to cheqd. This is the fastest way to get USDC on Osmosis.
+2. Acquire USDC on Osmosis by [swapping existing tokens to USDC](https://docs.osmosis.zone/overview/educate/getting-started#swapping-tokens). You can use any token you have on Osmosis to swap for USDC. The most common tokens to swap for USDC are OSMO and ATOM. You can use the [Osmosis DEX](https://app.osmosis.zone/) to swap tokens.
+3. Once you have sufficient USDC on Osmosis, you can use the CLI or Leap Wallet to send the USDC over IBC to your cheqd account. The command will look like this:
+   `osmosisd tx ibc-transfer transfer <src-port> <src-channel> <to_address> <amount> --from <key_or_address> --node <url>`
+4. Once the USDC is sent over IBC, you can use the `cheqd-noded query bank balances <address>` command to check the balance of your cheqd account. This will show you the balance of USDC that was sent over IBC. Refer to [Appendix](./cheqd-cli-fee-abstraction.md#appendix) for the IBC denomination of USDC on Osmosis.
+5. You can also use the `cheqd-noded query feeabs osmo-arithmetic-twap <ibc_denom>` command to check the real-time rate for USDC on cheqd. This will show you the exchange rate in USDC that is required to pay for transactions on cheqd.
 
 ## Interacting with Fee Abstraction
 
@@ -57,7 +63,7 @@ cheqd-noded query feeabs all-host-chain-config --node <url>
 $ cheqd-noded query feeabs all-host-chain-config --node https://rpc.cheqd.network:443
 
 all_host_chain_config:
-  - ibc_denom: ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4
+  - ibc_denom: ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4
     osmosis_pool_token_denom_in: ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4
     pool_id: 1273
     status: 0
@@ -65,8 +71,10 @@ all_host_chain_config:
 
 #### Response
 
-1. The `ibc_denom` is the IBC denomination of the supported asset **on Osmsosis** (not the IBC denomination of the asset on cheqd).
-2. If the `status` is `0`, the IBC denomination is allowed for transactions. If the `status` is `1`, the IBC denomination is not allowed for transactions. Also, if the IBC denomination is not included in the response, it is not allowed for transactions.
+1. The `ibc_denom` is the IBC denomination of the supported asset **on cheqd** (not the IBC denomination of the asset on Osmosis).
+2. The `osmosis_pool_token_denom_in` is the IBC denomination of the asset on Osmosis.
+3. The `pool_id` is the ID of the liquidity pool on Osmosis that is used for the conversion.
+4. If the `status` is `0`, the IBC denomination is allowed for transactions. If the `status` is `1`, the IBC denomination is not allowed for transactions. Also, if the IBC denomination is not included in the response, it is not allowed for transactions. The status can vary based on the relaying channel and whether outdated and / or frozen or not.
 
 ### Querying allowed IBC denominations via REST API
 
@@ -81,7 +89,7 @@ You can also query allowed IBC denominations using the REST API, which can be us
 {
   "all_host_chain_config": [
     {
-      "ibc_denom": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+      "ibc_denom": "ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4",
       "osmosis_pool_token_denom_in": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
       "pool_id": "1273",
       "status": 0
@@ -102,7 +110,7 @@ You can also query allowed IBC denominations for a specific IBC denomination usi
 ```json
 {
   "host_chain_config": {
-    "ibc_denom": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+    "ibc_denom": "ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4",
     "osmosis_pool_token_denom_in": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
     "pool_id": "1273",
     "status": 0
@@ -133,7 +141,7 @@ cheqd-noded query feeabs osmo-arithmetic-twap <ibc_denom> --node <url>
 #### Example
 
 ```bash
-$ cheqd-noded query feeabs osmo-arithmetic-twap ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 --node https://rpc.cheqd.network:443
+$ cheqd-noded query feeabs osmo-arithmetic-twap ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4 --node https://rpc.cheqd.network:443
 
 osmo_arithmetic_twap: "34874.714483483365588155"
 ```
@@ -152,8 +160,8 @@ cheqd-noded tx bank <from_key_or_address> <to_address> <amount> --gas <gas> --ga
 * `to_address`: The address of the recipient
 * `amount`: The amount to send, in the format `1000ncheq`. The amount must be in the chain-native denomination, which is `ncheq`
 * `gas`: The amount of gas to use or `auto` to calculate the gas automatically
-* `gas_prices`: The gas prices to use, in the format `5000ncheq` or `0.00000016ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4`
-* `fees`: The fees to pay, in the format `1000000000ncheq` or `0.032ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4`
+* `gas_prices`: The gas prices to use, in the format `5000ncheq` or `0.00000016ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4`
+* `fees`: The fees to pay, in the format `1000000000ncheq` or `0.032ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4`
 * `--node`: IP address or URL of node to send the request to
 
 > **Note**: Use either `--gas` and `--gas-prices` or `--fees` to declare fees in transactions. If `--fees` is used, the `--gas` and `--gas-prices` flags are ignored.
@@ -163,7 +171,7 @@ cheqd-noded tx bank <from_key_or_address> <to_address> <amount> --gas <gas> --ga
 ##### Declaring fees in transactions using `--gas` and `--gas-prices`
 
 ```bash
-$ cheqd-noded tx bank key1 cheqd1rnr5jrt4exl0samwj0yegv99jeskl0hsxmcz96 1000000000ncheq --gas auto --gas-prices 0.00000016ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 --node https://rpc.cheqd.network:443
+$ cheqd-noded tx bank key1 cheqd1rnr5jrt4exl0samwj0yegv99jeskl0hsxmcz96 1000000000ncheq --gas auto --gas-prices 0.00000016ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4 --node https://rpc.cheqd.network:443
 
 {"height":"0","txhash":"<tx_hash>","codespace":"","code":0,"data":"","raw_log":"[]","logs":[],"info":"","gas_wanted":"0","gas_used":"0","tx":null,"timestamp":"","events":[]}
 ```
@@ -171,7 +179,7 @@ $ cheqd-noded tx bank key1 cheqd1rnr5jrt4exl0samwj0yegv99jeskl0hsxmcz96 10000000
 ##### Declaring fees in transactions using `--fees`
 
 ```bash
-$ cheqd-noded tx bank key1 cheqd1rnr5jrt4exl0samwj0yegv99jeskl0hsxmcz96 1000000000ncheq --fees 0.032ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 --node https://rpc.cheqd.network:443 -y
+$ cheqd-noded tx bank key1 cheqd1rnr5jrt4exl0samwj0yegv99jeskl0hsxmcz96 1000000000ncheq --fees 0.032ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4 --node https://rpc.cheqd.network:443 -y
 
 {"height":"0","txhash":"<tx_hash>","codespace":"","code":0,"data":"","raw_log":"[]","logs":[],"info":"","gas_wanted":"0","gas_used":"0","tx":null,"timestamp":"","events":[]}
 ```
@@ -181,7 +189,7 @@ $ cheqd-noded tx bank key1 cheqd1rnr5jrt4exl0samwj0yegv99jeskl0hsxmcz96 10000000
 ##### Declaring fees for identity transactions
 
 ```bash
-$ cheqd-noded tx cheqd create-did did-document.json --fees 1.6ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 --node https://rpc.cheqd.network:443 -y
+$ cheqd-noded tx cheqd create-did did-document.json --fees 1.6ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4 --node https://rpc.cheqd.network:443 -y
 
 {"height":"0","txhash":"<tx_hash>","codespace":"","code":0,"data":"","raw_log":"[]","logs":[],"info":"","gas_wanted":"0","gas_used":"0","tx":null,"timestamp":"","events":[]}
 ```
@@ -191,7 +199,7 @@ Identity transactions require fees to be declared using the `--fees` flag. The f
 Similarly, declare fees for DID-Linked Resource transactions using the `--fees` flag.
 
 ```bash
-$ cheqd-noded tx resource create resource-payload.json data.json --fees 0.08ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4 --node https://rpc.cheqd.network:443 -y
+$ cheqd-noded tx resource create resource-payload.json data.json --fees 0.08ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4 --node https://rpc.cheqd.network:443 -y
 
 {"height":"0","txhash":"<tx_hash>","codespace":"","code":0,"data":"","raw_log":"[]","logs":[],"info":"","gas_wanted":"0","gas_used":"0","tx":null,"timestamp":"","events":[]}
 ```
@@ -223,7 +231,7 @@ $ cheqd-noded tx gov submit-legacy-proposal add-hostzone-config proposal.json --
   "title": "Add $USDC IBC denomination to Host Zone",
   "description": "Add $USDC IBC denomination to the Host Zone configuration",
   "host_chain_fee_abs_config": {
-    "ibc_denom": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
+    "ibc_denom": "ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4",
     "osmosis_pool_token_denom_in": "ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4",
     "pool_id": "1273",
     "status": 0
@@ -237,5 +245,6 @@ $ cheqd-noded tx gov submit-legacy-proposal add-hostzone-config proposal.json --
 ## Appendix
 
 * `ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4`: The $USDC IBC denomination for the Osmosis chain
+* `ibc/F5FABF52B54E65064B57BF6DBD8E5FAD22CEE9F4B8A57ADBB20CCD0173AA72A4`: The $USDC IBC denomination for the cheqd chain (bridged from Osmosis)
 * `ibc/92AE2F53284505223A1BB80D132F859A00E190C6A738772F0B3EF65E20BA484F`: The $EURe IBC denomination for the Osmosis chain
 * `ibc/7A08C6F11EF0F59EB841B9F788A87EC9F2361C7D9703157EC13D940DC53031FA`: The $CHEQ IBC denomination for the Osmosis chain
