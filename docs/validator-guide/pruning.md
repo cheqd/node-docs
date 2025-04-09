@@ -177,12 +177,9 @@ Instead of syncing a full node from scratch, validators can leverage pruned snap
 1. **NodeStake**
    * Website: [https://nodestake.org/cheqd](https://nodestake.org/cheqd)
    * Instructions: Navigate to the **Snapshot** tab for detailed steps on downloading and using their snapshots.
-2. **Nysa Network**
-   * Website: [https://snapshots.nysa.network/#cheqd-mainnet-1/](https://snapshots.nysa.network/#cheqd-mainnet-1/)
-   * Snapshot details and setup instructions are provided on the site.
-3. **Lavender.Five Nodes**
+2. **Lavender.Five Nodes**
    * Website: [https://services.lavenderfive.com/mainnet/cheqd/snapshot](https://services.lavenderfive.com/mainnet/cheqd/snapshot)
    * Visit the page for links and commands to restore a node from their pruned snapshots.
-4. **STARV**
+3. **STAVR**
    1. Website: [https://stavr-team.gitbook.io/nodes-guides/mainnets/Cheqd/statesync-snapshot](https://stavr-team.gitbook.io/nodes-guides/mainnets/Cheqd/statesync-snapshot)
    2. Visit the page for links and commands to restore a node from their pruned snapshots.
