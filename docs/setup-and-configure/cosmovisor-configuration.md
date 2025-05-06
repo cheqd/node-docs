@@ -1,5 +1,7 @@
 # Cosmovisor Configuration Guide
 
+> 💬 Cosmovisor is a process manager for Cosmos SDK application binaries that automates application binary switch at chain upgrades. It polls the `upgrade-info.json` file that is created by the **x/upgrade** module at upgrade height, and then can automatically download the new binary, stop the current binary, switch from the old binary to the new one, and finally restart the node with the new binary.
+
 This guide explains the key configuration options for Cosmovisor when running a cheqd node. You can configure these settings via:
 
 * Environment variables
@@ -105,4 +107,4 @@ cosmovisor_disable_recase = false
 
 > **⚠️ Reminder**: Like the service file, custom config.toml changes can be overwritten by the installer. **Decline updates** if you’ve made manual modifications.
 
-For more details, see the [Cosmovisor documentation](https://docs.cosmos.network/main/tooling/cosmovisor).
+For further details, refer to the official [Cosmovisor documentation](https://docs.cosmos.network/main/tooling/cosmovisor).
