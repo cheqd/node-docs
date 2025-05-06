@@ -4,8 +4,6 @@ This guide explains the key Cosmovisor configuration parameters recommended for 
 
 > **Note:** Environment variables always take precedence over values set in the config file. The interactive installer for cheqd nodes sets most of these parameters for you in both the daemon service configuration file (`cheqd-cosmovisor.service`) and as a system-wide environment variable. Understanding these settings helps with troubleshooting and advanced setups.
 
----
-
 ## Configuration Parameters
 
 | Parameter | Default Value | Required | Description | Set by Installer | Comments/Recommendations |
@@ -76,8 +74,6 @@ WantedBy=multi-user.target
 If you decide to use config.toml file instead, feel free to remove environment variables from daemon service file and add `--cosmovisor-config` to your config file, i.e. `ExecStart=/usr/bin/cosmovisor run start --cosmovisor-config /home/cheqd/.cheqdnode/cosmovisor/config.toml`.
 
 > **Important:** If you manually modify the service file, ensure these changes are not overwritten by the interactive installer at future executions. When prompted by the installer to update the cosmovisor daemon file, **decline** to preserve your custom settings.
-
----
 
 ## Example: Cosmovisor config.toml file
 
