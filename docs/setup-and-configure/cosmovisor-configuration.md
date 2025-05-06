@@ -1,6 +1,6 @@
 # Cosmovisor Configuration Guide
 
-This guide explains the key Cosmovisor configuration parameters recommended for cheqd node operators. These settings can be applied as environment variables, in a `config.toml` file under `$DAEMON_HOME/cosmovisor/`, or via a custom path using the `--cosmovisor-config-file` flag at startup.
+This guide explains the key Cosmovisor configuration parameters recommended for cheqd node operators. These settings can be applied as environment variables, in a `config.toml` file under `$DAEMON_HOME/cosmovisor/`, or via a custom path using the `--cosmovisor-config` flag at startup.
 
 > **Note:** Environment variables always take precedence over values set in the config file. The interactive installer for cheqd nodes sets most of these parameters for you in both the daemon service configuration file (`cheqd-cosmovisor.service`) and as a system-wide environment variable. Understanding these settings helps with troubleshooting and advanced setups.
 
@@ -53,8 +53,8 @@ Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment="DAEMON_POLL_INTERVAL=30s"
 Environment="UNSAFE_SKIP_BACKUP=false"
 Environment="DAEMON_RESTART_DELAY=30s"
-ENVIRONMENT="DAEMON_DOWNLOAD_MUST_HAVE_CHECKSUM=true"
-ENVIRONMENT="DAEMON_SHUTDOWN_GRACE=30s"
+Environment="DAEMON_DOWNLOAD_MUST_HAVE_CHECKSUM=true"
+Environment="DAEMON_SHUTDOWN_GRACE=30s"
 
 Type=simple
 User=cheqd
@@ -72,6 +72,8 @@ LimitNOFILE=65535
 [Install]
 WantedBy=multi-user.target
 ```
+
+If you decide to use config.toml file instead, feel free to remove environment variables from daemon service file and add `--cosmovisor-config` to your config file, i.e. `ExecStart=/usr/bin/cosmovisor run start --cosmovisor-config /home/cheqd/.cheqdnode/cosmovisor/config.toml`.
 
 > **Important:** If you manually modify the service file, ensure these changes are not overwritten by the interactive installer at future executions. When prompted by the installer to update the cosmovisor daemon file, **decline** to preserve your custom settings.
 
