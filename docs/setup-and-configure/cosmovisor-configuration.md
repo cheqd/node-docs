@@ -1,39 +1,45 @@
 # Cosmovisor Configuration Guide
 
-This guide explains the key Cosmovisor configuration parameters recommended for cheqd node operators. These settings can be applied as environment variables, in a `config.toml` file under `$DAEMON_HOME/cosmovisor/`, or via a custom path using the `--cosmovisor-config` flag at startup.
+This guide explains the key configuration options for Cosmovisor when running a cheqd node. You can configure these settings via:
 
-> **Note:** Environment variables always take precedence over values set in the config file. The interactive installer for cheqd nodes sets most of these parameters for you in both the daemon service configuration file (`cheqd-cosmovisor.service`) and as a system-wide environment variable. Understanding these settings helps with troubleshooting and advanced setups.
+* Environment variables
+
+* A `config.toml file` under `$DAEMON_HOME/cosmovisor/` (by default) or any other location passed to cosmovisor with `--cosmovisor-config` flag
+
+> **Note:** Environment variables always take precedence over values set in the config file, if the `--cosmovisor-config` flag is not passed.
+
+The cheqd node's [interactive installer](https://raw.githubusercontent.com/cheqd/cheqd-node/refs/heads/main/installer/installer.py) sets most of these parameters for you in both the daemon service configuration file (`cheqd-cosmovisor.service`) and as a system-wide environment variable. It will also create a config.toml file, for consistency purposes. Understanding these settings helps with troubleshooting and advanced setups.
 
 ## Configuration Parameters
 
-| Parameter | Default Value | Required | Description | Set by Installer | Comments/Recommendations |
-|:---------:|:-------------:|:--------:|:------------|:----------------:|:-------------------------|
-| `DAEMON_HOME`| `/home/cheqd/.cheqdnode` | Yes | Location of the `cosmovisor/` directory. | Yes | Unless you installed your cheqd node at different location, you should stick to default value. |
-| `DAEMON_NAME` | `cheqd-noded` | Yes | Name of the node binary. | Yes | For most users, the default value should be fine. |
-| `DAEMON_ALLOW_DOWNLOAD_BINARIES` | `true` | No | Enable/disable auto-download of upgrade binaries. | Yes | Set to `true` for smoother, unattended upgrades. |
-| `DAEMON_DOWNLOAD_MUST_HAVE_CHECKSUM` | `true` | No | Require binary checksums in upgrade plans. | Yes | By default, we include checksums in our upgrade plans. |
-| `DAEMON_RESTART_AFTER_UPGRADE` | `true` | No | Automatically restart after upgrade. | Yes | Leave the default value in case you want fully-automated upgrades. |
-| `DAEMON_RESTART_DELAY` | `30s` | No | Delay (in seconds) between upgrade and restart. | Yes | `0` is fine for most setups. |
-| `DAEMON_SHUTDOWN_GRACE` | `30s` | No | Grace period (in seconds) for shutdown to allow cleanup before force kill. | Yes | For safer undattended upgrades. |
-| `DAEMON_POLL_INTERVAL` | `300ms` | No | How often to poll for upgrade plans (locally - looking for upgrade-info.json file). | No | Default is frequent; `60s` is often sufficient. |
-| `DAEMON_DATA_BACKUP_DIR` | `DAEMON_HOME`| No | Custom backup directory. | No | Set if you want to enable backups at specific locations. Note that this will require a lot of additional storage, since it will backup whole data directory before upgrade is attempted. |
-| `UNSAFE_SKIP_BACKUP` | `true` | No | Skip backup before upgrade. | Yes  | Set to false to enable automatic backups before each upgrade. Note that this will take a lot of time and storage, especially on bigger, non-pruned nodes. |
-| `DAEMON_PREUPGRADE_MAX_RETRIES` | `0` | No | Max retries for pre-upgrade handler after exit status 31. | No | If not changed, the daemon will retry upgrades until succeeds or gets stopped. |
-| `COSMOVISOR_DISABLE_LOGS` | `false`| No | Disable Cosmovisor logs (not the node logs). | No | For most users, the default value should be fine. |
-| `COSMOVISOR_COLOR_LOGS` | `true` | No | Enable colored Cosmovisor logs. | No. | For most users, the default value should be fine. |
-| `COSMOVISOR_TIMEFORMAT_LOGS` | `kitchen` | No | Timestamp format for logs. | No | `kitchen` = `3:04PM`; other options: `ansic`, `unix`, `ruby`, `rfc822`, `rfc3339`, `rfc3339nano`.  For most users, the default value should be fine. |
-| `COSMOVISOR_CUSTOM_PREUPGRADE` | '' | No | Path to script you want to run before upgrade (`$DAEMON_HOME/cosmovisor/$COSMOVISOR_CUSTOM_PREUPGRADE`). | No | Use this for setting up some custom pre-upgrade actions (like backups or state exports) |
-| `COSMOVISOR_DISABLE_RECASE` | `false` | No | If `true`, upgrade directory must match plan name exactly (case-sensitive). | No | For most users, the default value should be fine. |
+| Parameter | Default Value | Required | Description | Set by Installer |
+|:---------:|:-------------:|:--------:|:------------|:----------------:|
+| `DAEMON_HOME`| `/home/cheqd/.cheqdnode` | Yes | Location of the `cosmovisor/` directory. | ✅ |
+| `DAEMON_NAME` | `cheqd-noded` | Yes | Name of the node binary. Usually doesn’t need to change. | ✅ |
+| `DAEMON_ALLOW_DOWNLOAD_BINARIES` | `true` | No | Allows Cosmovisor to auto-download upgrade binaries. Recommended to be true. | ✅ |
+| `DAEMON_DOWNLOAD_MUST_HAVE_CHECKSUM` | `true` | No | Ensures downloaded binaries have checksums. Always true in cheqd upgrade plans. | ✅ |
+| `DAEMON_RESTART_AFTER_UPGRADE` | `true` | No | Automatically restarts node after an upgrade. | ✅ |
+| `DAEMON_RESTART_DELAY` | `30s` | No | Delay before restart after upgrade. 0s is fine for most setups. | ✅ |
+| `DAEMON_SHUTDOWN_GRACE` | `30s` | No | Grace period for clean shutdown. Helps with safe unattended upgrades. | ✅ |
+| `DAEMON_POLL_INTERVAL` | `300s` | No | How often to check for upgrade plans. | ❌ |
+| `DAEMON_DATA_BACKUP_DIR` | `DAEMON_HOME`| No | Custom directory for pre-upgrade backups. Requires extra storage. | ❌ |
+| `UNSAFE_SKIP_BACKUP` | `true` | No | Set to false to enable auto-backups (slower and storage-heavy). | ✅  |
+| `DAEMON_PREUPGRADE_MAX_RETRIES` | `0` | No | Max retries for pre-upgrade hook (exit code 31). | ❌ |
+| `COSMOVISOR_DISABLE_LOGS` | `false`| No | Disable Cosmovisor logs (not the node logs). | ❌ |
+| `COSMOVISOR_COLOR_LOGS` | `true` | No | Enables colored logs for easier readability. | ❌. |
+| `COSMOVISOR_TIMEFORMAT_LOGS` | `kitchen` | No | Time format for logs (e.g., 3:04PM). Other formats: rfc3339, unix, etc. | ❌ |
+| `COSMOVISOR_CUSTOM_PREUPGRADE` | '' | No | Path to a custom pre-upgrade script. It should be located under `$DAEMON_HOME/cosmovisor/`. | ❌ |
+| `COSMOVISOR_DISABLE_RECASE` | `false` | No | Enforces exact case matching for upgrade plan directories. | ❌ |
 
 ---
 
-## Additional Notes
+## 📝 Additional Notes
 
-- **Backups:** Cosmovisor can back up your node data before upgrades. The backup size depends on your node's data directory. Ensure you have enough disk space.
-- **Pre-upgrade Handler:** The `DAEMON_PREUPGRADE_MAX_RETRIES` parameter is for advanced use cases where the Cosmos SDK app implements a pre-upgrade handler.
-- **Log Time Formats:** The `COSMOVISOR_TIMEFORMAT_LOGS` parameter supports several formats. `kitchen` is a human-readable time (e.g., `3:04PM`). For more, see [Go time formats](https://pkg.go.dev/time#pkg-constants).
+* **Backups**: Enabling backups can use significant disk space and time. Use with caution, especially on non-pruned nodes.
+* **Custom Pre-upgrade Scripts**: Use COSMOVISOR_CUSTOM_PREUPGRADE for advanced automation (e.g., state export).
+* **Log Time Format**: kitchen is human-readable. See [Go time formats](https://pkg.go.dev/time#pkg-constants) for more options.
 
-## Example: Modifying the Cosmovisor Systemd Service File
+## 🔧 Example: systemd Service File
 
 To set Cosmovisor parameters at the service level, you can edit the systemd service file, typically located at `/usr/lib/systemd/system/cheqd-cosmovisor.service`. Here is an example with custom values:
 
@@ -48,7 +54,7 @@ Environment="DAEMON_HOME=/home/cheqd/.cheqdnode"
 Environment="DAEMON_NAME=cheqd-noded"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
-Environment="DAEMON_POLL_INTERVAL=30s"
+Environment="DAEMON_POLL_INTERVAL=300s"
 Environment="UNSAFE_SKIP_BACKUP=false"
 Environment="DAEMON_RESTART_DELAY=30s"
 Environment="DAEMON_DOWNLOAD_MUST_HAVE_CHECKSUM=true"
@@ -73,9 +79,9 @@ WantedBy=multi-user.target
 
 If you decide to use config.toml file instead, feel free to remove environment variables from daemon service file and add `--cosmovisor-config` to your config file, i.e. `ExecStart=/usr/bin/cosmovisor run start --cosmovisor-config /home/cheqd/.cheqdnode/cosmovisor/config.toml`.
 
-> **Important:** If you manually modify the service file, ensure these changes are not overwritten by the interactive installer at future executions. When prompted by the installer to update the cosmovisor daemon file, **decline** to preserve your custom settings.
+> **⚠️ Important**: If you manually modify this file, the cheqd installer may overwrite your changes. When prompted during future installs, **decline the update** to preserve your custom settings.
 
-## Example: Cosmovisor config.toml file
+## 🛠 Example: config.toml File
 
 ```toml
 daemon_home = '/home/cheqd/.cheqdnode'
@@ -97,6 +103,6 @@ cosmovisor_custom_preupgrade = ''
 cosmovisor_disable_recase = false
 ```
 
-> **Important:** If you manually modify the config.toml file, ensure these changes are not overwritten by the interactive installer at future executions. When prompted by the installer to update the cosmovisor config.toml file, **decline** to preserve your custom settings.
+> **⚠️ Reminder**: Like the service file, custom config.toml changes can be overwritten by the installer. **Decline updates** if you’ve made manual modifications.
 
 For more details, see the [Cosmovisor documentation](https://docs.cosmos.network/main/tooling/cosmovisor).
