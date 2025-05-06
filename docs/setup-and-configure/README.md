@@ -309,3 +309,5 @@ If the node is catching up, the time needed to fully catch up will depend on how
 ## Next steps
 
 If you're configuring a validator, check out [**our validator guide**](../validator-guide/README.md) for further configuration steps to carry out.
+
+Additonally, you read [**here**](./cosmovisor-configuration.md) about cosmovisor-specific configuration parameters and how to change them.
