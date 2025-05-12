@@ -776,7 +776,6 @@ Let's take a look at some of the most important CometBFT configuration parameter
 * `private_peer_ids` - Useful for same use-case as above. Format is comma-separated node IDs.
 * `[statesync].*` - Statesync configuration, useful when starting node from scratch (to save up on storage) or recovering. We have statesync servers available at `https://eu-rpc.cheqd.net:443` and `https://ap-rpc.cheqd.net:443` for mainnet and `https://eu-rpc.cheqd.network:443` and `https://ap-rpc.cheqd.network:443` for testnet.
 * `consensus.double_sign_check_height` - Some node operators experienced some issues during upgrades if this was set to any other value than 0.
-* `indexer` - **To be evaluated**.
 * `discard_abci_responses` - **To be evaluated**
 
 See more details about CometBFT configuration [here](https://docs.cometbft.com/v0.38/core/configuration).
