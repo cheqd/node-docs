@@ -7,6 +7,7 @@
 * [Setup a new cheqd node](docs/setup-and-configure/README.md)
   * [Pre-Requisites & Requirements](docs/setup-and-configure/requirements.md)
   * [(Alternative) Install with Docker](docs/setup-and-configure/docker.md)
+  * [Configure cheqd node](docs/setup-and-configure/configure-cheqd-node.md)
   * [Configure cosmovisor](docs/setup-and-configure/cosmovisor-configuration.md)
 * [Command Line usage](docs/cheqd-cli/README.md)
   * [Manage keys](docs/cheqd-cli/cheqd-cli-key-management.md)
