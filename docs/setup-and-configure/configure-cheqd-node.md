@@ -183,14 +183,14 @@ offline = false
 # EnableDefaultSuggestedFee defines if the server should suggest fee by default.
 # If 'construction/medata' is called without gas limit and gas price,
 # suggested fee based on gas-to-suggest and denom-to-suggest will be given.
-enable-fee-suggestion = false
+enable-fee-suggestion = true
 
 # GasToSuggest defines gas limit when calculating the fee
-gas-to-suggest = 200000
+gas-to-suggest = 360000
 
 # DenomToSuggest defines the defult denom for fee suggestion.
 minimum-gas-prices = "50ncheq"
-denom-to-suggest = "uatom"
+denom-to-suggest = "ncheq"
 
 ###############################################################################
 ###                           gRPC Configuration                            ###
@@ -221,7 +221,7 @@ max-send-msg-size = "2147483647"
 
 # GRPCWebEnable defines if the gRPC-web should be enabled.
 # NOTE: gRPC must also be enabled, otherwise, this configuration is a no-op.
-enable = true
+enable = false
 
 # Address defines the gRPC-web server address to bind to.
 address = "localhost:9091"
@@ -284,10 +284,11 @@ max-txs = 5000
 Here are some of the most important parameters set in the config file above:
 
 * Set the minimal acceptable gas prices (5000ncheq).
-* Keep the default pruning. See more pruning options [here](../validator-guide/pruning.md)
-* Enable REST and gRPC servers
-* Enable Prometheus server and reports some basic node metrics
-* Keep the state sync off - could be easily turned on.
+* Keep the default pruning. See more pruning options [here](../validator-guide/pruning.md).
+* Enable REST and gRPC servers.
+* Enable Prometheus server and reports some basic app-layer metrics.
+* Enable fee sugestion feature and applies correct config paramters. This is useful feature to enforce if you plan to serve API traffic from your nodes.
+* Keep the state sync off, unless you want to serve statesync snapshots from your node.
 * Set the mempool limit to 5000 txs. This should be sufficient to most use-cases.
 
 See more details about cosmos-SDK configuration [here](https://docs.cosmos.network/v0.50/learn/advanced/config).
@@ -464,7 +465,7 @@ experimental_close_on_slow_client = false
 timeout_broadcast_tx_commit = "10s"
 
 # Maximum size of request body, in bytes
-max_body_bytes = 1000000
+max_body_bytes = 10485760
 
 # Maximum size of request header, in bytes
 max_header_bytes = 1048576
@@ -529,13 +530,13 @@ persistent_peers_max_dial_period = "0s"
 flush_throttle_timeout = "100ms"
 
 # Maximum size of a message packet payload, in bytes
-max_packet_msg_payload_size = 10240
+max_packet_msg_payload_size = 10485760
 
 # Rate at which packets can be sent, in bytes/second
-send_rate = 20000000
+send_rate = 1000000000
 
 # Rate at which packets can be received, in bytes/second
-recv_rate = 20000000
+recv_rate = 1000000000
 
 # Set true to enable the peer-exchange reactor
 pex = true
@@ -687,7 +688,7 @@ timeout_precommit_delta = "500ms"
 # How long we wait after committing a block, before starting on the new
 # height (this gives us a chance to receive some more precommits, even
 # though we already have +2/3).
-timeout_commit = "1s"
+timeout_commit = "5s"
 
 # How many blocks to look back to check existence of the node's consensus votes before joining consensus
 # When non-zero, the node will panic upon restart
@@ -776,6 +777,5 @@ Let's take a look at some of the most important CometBFT configuration parameter
 * `private_peer_ids` - Useful for same use-case as above. Format is comma-separated node IDs.
 * `[statesync].*` - Statesync configuration, useful when starting node from scratch (to save up on storage) or recovering. We have statesync servers available at `https://eu-rpc.cheqd.net:443` and `https://ap-rpc.cheqd.net:443` for mainnet and `https://eu-rpc.cheqd.network:443` and `https://ap-rpc.cheqd.network:443` for testnet.
 * `consensus.double_sign_check_height` - Some node operators experienced some issues during upgrades if this was set to any other value than 0.
-* `discard_abci_responses` - If enabled, this will disable keeping ABCI responses in state storage, which should help reducing the storage requirements.
 
 See more details about CometBFT configuration [here](https://docs.cometbft.com/v0.38/core/configuration).
