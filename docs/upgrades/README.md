@@ -24,3 +24,4 @@ You can find more details on the actual upgrade process under in our [Upgrade Pr
 - [v2.x Upgrade Guide](upgrade-guides/v2.x-upgrade.md)
 - [v3.x Upgrade Guide](upgrade-guides/v3.x-upgrade.md)
 - [v3.1.x Upgrade Guide](upgrade-guides/v3.1.x-upgrade.md)
+- [v4.x Upgrade Guide](upgrade-guides/v4.x-upgrade.md)
