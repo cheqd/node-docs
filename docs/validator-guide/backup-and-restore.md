@@ -68,7 +68,7 @@ nano <filename>
 
 ### Pre-requisites
 
-Before you get started with this guide, make sure you've [installed HashiCorp Vault CLI](https://developer.hashicorp.com/vault/docs/install) on the validator you want to run backups from.
+Before you get started with this guide, make sure you've [installed HashiCorp Vault CLI](https://developer.hashicorp.com/vault/docs/commands) on the validator you want to run backups from.
 
 You also need a running HashiCorp Vault server cluster you can use to proceed with this guide.
 

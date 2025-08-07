@@ -15,7 +15,7 @@ You can get help for any questions or problems that you have on through the foll
 - Check if your question/problem is already covered under our documentation sites:
   - [Node / cheqd network](https://docs.cheqd.io/node)
   - [Identity features / SDKs](https://docs.cheqd.io/identity)
-  - [Governance Framework](https://docs.cheqd.io/governance/)
+  - [Governance Framework](https://learn.cheqd.io/governance/start/)
   - [Product Suite & Updates](https://product.cheqd.io)
   - [Learn about cheqd](https://learn.cheqd.io) (basics for general audience)
 - Raise a bug report or feature request using the "Issue" tab on Github
