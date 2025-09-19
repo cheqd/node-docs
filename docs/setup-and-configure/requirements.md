@@ -18,7 +18,14 @@ Extended information on [recommended hardware requirements is available in Tende
 
 * 4-8 GB RAM (2 GB RAM minimum)
 * x64 2.0 GHz 2-4 vCPU or equivalent (x64 1.4 GHz 1 vCPU or equivalent minimum)
-* 650 GB SSD (500 GB minimum)
+
+#### Storage requirements
+
+Storage requirements may vary, depending on your specific needs:
+
+* If you need more historic data and you plan to initialize your node by using state DB snapshot, you will need at least 625 GB of SSD storage.
+* If you don't need specific historic data, you can use state sync to initialize your node. In this case, your node will start with less than 1GB of disk space consume, but it will keep to grow with time. It's recommended to provide at least 10GB of SSD.
+* In case you need full chain history and you want to run an archive node, you will need 2.7 TB of disk storage. For obtaining full chain history snapshot, reach out to our team on Discord.
 
 > ⚠️ **Storage requirements for the blockchain grows with time**. Therefore, these minimum storage figures are expected to increase over time. Read our validator guide for "pruning" settings to optimise storage consumed.
 

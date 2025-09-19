@@ -9,6 +9,7 @@
   * [(Alternative) Install with Docker](docs/setup-and-configure/docker.md)
   * [Configure cheqd node](docs/setup-and-configure/configure-cheqd-node.md)
   * [Configure cosmovisor](docs/setup-and-configure/cosmovisor-configuration.md)
+  * [Configure State Sync](docs/setup-and-configure/set-up-state-sync.md)
 * [Command Line usage](docs/cheqd-cli/README.md)
   * [Manage keys](docs/cheqd-cli/cheqd-cli-key-management.md)
   * [Manage accounts](docs/cheqd-cli/cheqd-cli-accounts.md)

@@ -16,7 +16,7 @@ Alternatively, if you want to manage network upgrades manually, you can also opt
 >
 > This document specifies the CPU/RAM requirements, firewall ports, and operating system requirements for running cheqd-node.
 
-The interactive installer is written in **Python 3** and is designed to work on **Ubuntu Linux 20.04 LTS** systems. The script has been written to work pre-installed Python 3.x libraries generally available on Ubuntu 20.04.
+The interactive installer is written in **Python 3** and is designed to work on **Ubuntu Linux 24.04 LTS** systems. The script has been written to work pre-installed Python 3.x libraries generally available on Ubuntu 24.04.
 
 ### Software installed by installer
 
@@ -81,13 +81,13 @@ All the questions specify the default answer/value for that question in square (
 Binary release version to install, automatically fetched from Github. The first release displayed in the list will always be the latest stable version. Other versions displayed below it are pre-release/beta versions.
   
 ```text
-Latest stable cheqd-noded release version is Name: v1.3.0
+Latest stable cheqd-noded release version is Name: v4.1.4
 List of cheqd-noded releases: 
-1. v1.3.0
-2. v1.4.0-develop.1
-3. v1.3.1-develop.1
-4. v1.3.0-develop.3
-5. v1.3.0-develop.2
+1. v4.1.4
+2. v4.1.4-develop.1
+3. v4.1.3
+4. v4.1.3-develop.1
+5. v4.1.2
 Choose list option number above to select version of cheqd-node to install [default: 1]:
 ```
 
@@ -112,6 +112,7 @@ The next few questions are used to configure Cosmovisor-related options. Read [a
 1. `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]`: Use Cosmovisor to run node
 2. `Do you want Cosmovisor to automatically download binaries for scheduled upgrades? (yes/no) [default: yes]`: By default, Cosmovisor will attempt to automatically download new binaries that have passed [software upgrade proposals voted on the network](../upgrades/README.md). You can choose to do this manually if you want more control.
 3. `Do you want Cosmovisor to automatically restart after an upgrade? (yes/no) [default: yes]`: By default, Cosmovisor will automatically restart the node after an [upgrade height](../upgrades/README.md) is reached and an upgrade carried out.
+4. `Do you want to overwrite existing configuration (or create a new one) for cosmovisor, with the values you provided? (yes/no) [default: yes]`: By default, Cosmovisor will create `config.toml` file under `/home/cheqd/.cheqdnode/cosmovisor`, with values you provided previously. However, the environment variables set in `systemd` file will take precedence over this file, unless you modify the file and pass `--config` flag to cosmovisor.
 
 You can also choose `no` to installing with Cosmovisor on the first question, in which case a standalone binary installation is carried out.
 
@@ -131,7 +132,18 @@ See more details about `app.toml` and `config.toml` configuration parameters on 
 7. `Specify log level (trace|debug|info|warn|error|fatal|panic) [default: error]:`: The default log level of `error` is generally recommended for normal operation. You may temporarily need to change to more verbose logging levels if trying to diagnose issues if the node isn't behaving correctly.
 8. `Specify log format (json|plain) [default: json]:`: JSON log format allows parsing log files more easily if there's an issue with your node, hence it's set as the default.
 
-#### 6. Choose whether to restore from snapshot
+#### 6. Choose whether to init from State Sync
+
+In case you don't need full (or significant) blockchain history, you can start your initialize your node via State Sync:
+
+> [INFO]: State sync rapidly bootstraps a node without downloading full snapshot and uses less storage. You can still choose snapshot (slower, much larger storage) if you decline state sync.
+
+`Initialize chain via State Sync? (yes/no) [default: yes]:`
+This will massively reduce your node operational costs, as required disk space in this case is less than 10GB.
+Installer will update `config.toml` file with RPC endpoints to fetch state sync snapshots from, trusted height and trusted block hash.
+It will also enable state sync, so after starting the `cheqd-cosmovisor service`, the node will start discovering snapshots, restoring them and start catching up with the network.
+
+If you skip this step, you will be asked if you want to proceed with state DB snapshot restoration.
 
 When setting up a new node, you typically need to download all past blocks on the network, including any upgrades that were done along the way with the specific binary releases those upgrades went through.
 
