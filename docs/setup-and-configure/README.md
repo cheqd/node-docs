@@ -112,7 +112,7 @@ The next few questions are used to configure Cosmovisor-related options. Read [a
 1. `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]`: Use Cosmovisor to run node
 2. `Do you want Cosmovisor to automatically download binaries for scheduled upgrades? (yes/no) [default: yes]`: By default, Cosmovisor will attempt to automatically download new binaries that have passed [software upgrade proposals voted on the network](../upgrades/README.md). You can choose to do this manually if you want more control.
 3. `Do you want Cosmovisor to automatically restart after an upgrade? (yes/no) [default: yes]`: By default, Cosmovisor will automatically restart the node after an [upgrade height](../upgrades/README.md) is reached and an upgrade carried out.
-4. `Do you want to overwrite existing configuration (or create a new one) for cosmovisor, with the values you provided? (yes/no) [default: yes]`: By default, Cosmovisor will create `config.toml` file under `/home/cheqd/.cheqdnode/cosmovisor`, with values you provider previously. However, the environment variables set in `systemd` file will take precendence over this file, unless you modify the file and pass `--config` flag to cosmovisor.
+4. `Do you want to overwrite existing configuration (or create a new one) for cosmovisor, with the values you provided? (yes/no) [default: yes]`: By default, Cosmovisor will create `config.toml` file under `/home/cheqd/.cheqdnode/cosmovisor`, with values you provided previously. However, the environment variables set in `systemd` file will take precedence over this file, unless you modify the file and pass `--config` flag to cosmovisor.
 
 You can also choose `no` to installing with Cosmovisor on the first question, in which case a standalone binary installation is carried out.
 
@@ -139,7 +139,7 @@ In case you don't need full (or significant) blockchain history, you can start y
 > [INFO]: State sync rapidly bootstraps a node without downloading full snapshot and uses less storage. You can still choose snapshot (slower, much larger storage) if you decline state sync.
 
 `Initialize chain via State Sync? (yes/no) [default: yes]:`
-This will masively reduce your node operational costs, as required disk space in this case is less than 10GB.
+This will massively reduce your node operational costs, as required disk space in this case is less than 10GB.
 Installer will update `config.toml` file with RPC endpoints to fetch state sync snapshots from, trusted height and trusted block hash.
 It will also enable state sync, so after starting the `cheqd-cosmovisor service`, the node will start discovering snapshots, restoring them and start catching up with the network.
 

@@ -1,7 +1,7 @@
 # Configure State Sync
 
 State Sync allows node operators to initialize their nodes quickly with much less storage consumed.
-This is really useful in case you don't need full (or significant) chain history and it significantly reduces costs. For comparisson, our state DB snapshots published on snapshots.cheqd.net, tipically have around 600GB of data, while after State Sync initialization, node consumes only around 540 MB of data.
+This is really useful in case you don't need full (or significant) chain history and it significantly reduces costs. For comparison, our state DB snapshots published on snapshots.cheqd.net, typically have around 600GB of data, while after State Sync initialization, node consumes only around 540 MB of data.
 
 ## Modifying config.toml file
 
@@ -62,5 +62,5 @@ sed -i -E "/^\[statesync\]/,/^\[/{s|^rpc_servers\s*=.*$|rpc_servers = \"${RPC1},
 sed -i -E "/^\[statesync\]/,/^\[/{s|^trust_height\s*=.*$|trust_height = ${BLOCK_HEIGHT}|}" "$CONFIG"
 sed -i -E "/^\[statesync\]/,/^\[/{s|^trust_hash\s*=.*$|trust_hash = \"${TRUST_HASH}\"|}" "$CONFIG"
 
-echo "Configuration file updated succesfully."
+echo "Configuration file updated successfully."
 ```
