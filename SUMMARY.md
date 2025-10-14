@@ -26,6 +26,7 @@
   * [Unjailing a jailed validator](docs/validator-guide/unjail.md)
   * [Move validator to a different machine](docs/validator-guide/move-validator.md)
   * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore.md)
+  * [Re-enable pruning and recovering node db](docs/validator-guide/reenable-pruning.md)
 * [Network-wide Software Upgrades](docs/upgrades/README.md)
   * [Upgrade Guides](docs/upgrades/upgrade-guides/README.md)
     * [Upgrade to v0.6.x](docs/upgrades/upgrade-guides/v0.6-upgrade.md)
