@@ -55,7 +55,7 @@ Start the node:
 sudo systemctl restart cheqd-cosmovisor.service
 ```
 
-The node should start looking for statesync chunks from it's peers and begin the restoration process in a few minutes. After some time, it should catch up with the network and continue siging blocks.
+The node should start looking for statesync chunks from it's peers and begin the restoration process in a few minutes. After some time, it should catch up with the network and continue signing blocks.
 
 ## Snapshot
 
