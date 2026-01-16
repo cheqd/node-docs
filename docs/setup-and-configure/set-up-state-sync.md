@@ -36,7 +36,7 @@ After that, you need to provide **RPC endpoints** that expose and serve state sy
 After that, you need to add the `trust_height` - this is usually $CURRENT_BLOCK_HEIGHT - 2000 blocks (which is the interval at we generate new snapshots on our RPC nodes).
 Finally, you need to add the block ID hash, as `trust_hash` parameter. This can be fetched via RPC, like this - `https://rpc.cheqd.net/block?height=20748000`. You will find block hash under `.result.block_id.hash`.
 
-Reference: [CometBFT State Sync docs](https://docs.cometbft.com/v0.34/core/state-sync)
+Reference: [CometBFT State Sync docs](https://docs.cometbft.com/v0.38/core/state-sync)
 
 You can also use this simple bash script to update your node configuration:
 

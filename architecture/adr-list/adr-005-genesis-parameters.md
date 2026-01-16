@@ -22,7 +22,7 @@ Genesis consists of Tendermint consensus engine parameters and Cosmos app-specif
 
 ## Tendermint consensus parameters
 
-Tendermint requires [genesis parameters](https://docs.cometbft.com/v0.34/core/using-cometbft#genesis) to be defined for basic consensus conditions on any Cosmos network.
+Tendermint requires [genesis parameters](https://docs.cometbft.com/v0.38/core/using-cometbft#genesis) to be defined for basic consensus conditions on any Cosmos network.
 
 ### Block parameters
 
@@ -185,4 +185,4 @@ The parameters above were agreed separate the cheqd mainnet and testnet paramete
 ## References
 
 * [List of Cosmos modules](https://docs.cosmos.network/main/modules)
-* [Tendermint genesis parameters](https://docs.cometbft.com/v0.34/core/using-cometbft#genesis)
+* [Tendermint genesis parameters](https://docs.cometbft.com/v0.38/core/using-cometbft#genesis)
