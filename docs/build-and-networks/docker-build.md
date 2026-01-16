@@ -13,7 +13,7 @@ These advanced instructions are intended for developers who want to build their 
 1. Docker Engine v20.10.x and above (use `docker -v` to check)
 2. Docker Compose v2.3.x and above (use `docker compose version` to check)
 
-Our Docker Compose files [use Compose v2 syntax](https://docs.docker.com/compose/compose-v2/). The primary difference in usage is that Docker Compose's new implementation uses `docker compose` commands (with a space), rather than the legacy `docker-compose` although they are supposed to be drop-in replacements for each other.
+Our Docker Compose files [use Compose v2 syntax](https://docs.docker.com/reference/compose-file/). The primary difference in usage is that Docker Compose's new implementation uses `docker compose` commands (with a space), rather than the legacy `docker-compose` although they are supposed to be drop-in replacements for each other.
 
 ### Special guidance for Mac OS running on Apple silicon (M-series chips)
 
