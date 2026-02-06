@@ -15,6 +15,7 @@
   * [Manage accounts](docs/cheqd-cli/cheqd-cli-accounts.md)
   * [Manage a node](docs/cheqd-cli/cheqd-cli-node-management.md)
   * [Make transactions](docs/cheqd-cli/cheqd-cli-token-transactions.md)
+  * [Draft governance proposals](docs/cheqd-cli/cheqd-cli-gov-proposals-types.md)
   * [Use fee abstraction](docs/cheqd-cli/cheqd-cli-fee-abstraction.md)
 
 ## 🏦 Validator Guides
