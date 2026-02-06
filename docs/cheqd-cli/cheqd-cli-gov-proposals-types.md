@@ -12,7 +12,9 @@ Use the arrow keys to navigate: ↓ ↑ → ←
     cancel-software-upgrade
     other
 ```
+
 It provides an interactive interface and provides a json output using user submitted information. The json file can be submitted on chain for voting using the following command:
+
 ```bash
 cheqd-noded tx gov submit-proposal [path/to/proposal.json]
   --from <key-name> \
@@ -25,6 +27,7 @@ cheqd-noded tx gov submit-proposal [path/to/proposal.json]
 ## Examples of `proposal.json` for a few commonly submitted proposal types:
 
 ### 1) Text proposals:
+
 ```bash
 {
  "metadata": "ipfs://CID",
@@ -34,12 +37,14 @@ cheqd-noded tx gov submit-proposal [path/to/proposal.json]
  "expedited": false
 }
 ```
+
 The main parameters here are:
 
 - `proposal-title` - name of the proposal.
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
 
 ### 2) Community Pool Spend:
+
 ```bash
 {
   "messages": [
@@ -62,6 +67,7 @@ The main parameters here are:
   "expedited": false
 }
 ```
+
 The main parameters here are:
 
 - `proposal-title` - name of the proposal.
@@ -70,6 +76,7 @@ The main parameters here are:
 - `amount` - amount of tokens to be sent to the recipient address. 
 
 ### 3) Software upgrade:
+
 ```
 {
  "messages": [
@@ -104,6 +111,7 @@ The main parameters here are:
 - `<chain_id>` - identifier of chain which will be used while creating the blockchain.
 
 ### 4) IBC Recover Client:
+
 ```bash
 {
  "messages": [
@@ -121,6 +129,9 @@ The main parameters here are:
  "expedited": false
 }
 ```
+
+The main parameters here are:
+
 - `proposal-title` - name of the proposal.
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
 - `expired-client-id` - IBC client id of the expired connection.
@@ -134,6 +145,7 @@ Cosmos SDK v0.50+ also added support for **expedited proposals**. Expedited prop
 ### Submitting expedited proposals 
 
 Any and all proposals can be submitted as expedited proposals by switching the `expedited` field to `true` in proposal.json file.  Eg;-
+
 ```bash
 {
  "metadata": "ipfs://CID",
