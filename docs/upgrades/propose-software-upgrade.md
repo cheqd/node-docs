@@ -16,7 +16,7 @@ The next steps are describing the general flow for making a proposal:
 
 - Send proposal command to the pool;
 - After getting it, ledger will be in the `PROPOSAL_STATUS_DEPOSIT_PERIOD`;
-- After sending the first deposit from one of other operators, proposal status will be moved to `PROPOSAL_STATUS_VOTING_PERIOD` and voting period (2 weeks for now) will be started;
+- After sending the first deposit from one of other operators, proposal status will be moved to `PROPOSAL_STATUS_VOTING_PERIOD` and voting period (5 days for now) will be started;
 - Due to the voting period operators should send their votes to the pool, get new binary downloaded and got to be installed;
 - After voting period passing (for now it's 2 weeks) in case of success voting process proposal should be passed to `PROPOSAL_STATUS_PASSED`;
 - The next step is waiting for `height` which was suggested for upgrade.
@@ -25,21 +25,40 @@ The next steps are describing the general flow for making a proposal:
 #### Command for sending proposal
 
 ```bash
-cheqd-noded tx gov submit-legacy-proposal software-upgrade <proposal_name> \
-  --title "<proposal_title>" \
-  --description "<proposal_description>" \
-  --upgrade-height <upgrade_height> \
-  --upgrade-info <upgrade_info> \
-  --deposit 8000000000000ncheq \
+cheqd-noded tx gov submit-proposal [path/to/proposal.json]
   --from <operator_alias> \
   --chain-id cheqd-mainnet-1 \
   --gas auto \
   --gas-adjustment 1.4 \
   --gas-prices 5000ncheq
 ```
+Where the contents of `proposal.json` are in the following format
+```
+{
+ "messages": [
+  {
+   "@type": "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
+   "authority": "cheqd10d07y265gmmuvt4z0w9aw880jnsr700j5ql9az",
+   "plan": {
+    "name": "<proposal_name>",
+    "time": "0001-01-01T00:00:00Z",
+    "height": "<upgrade_height>",
+    "info": "<upgrade_info>",
+    "upgraded_client_state": null
+   }
+  }
+ ],
+ "metadata": "ipfs://CID",
+ "deposit": "8000000000000ncheq",
+ "title": "<proposal-title>",
+ "summary": "<proposal_description>",
+ "expedited": false
+}
+```
 
 The main parameters here are:
 
+- `proposal-title` - name of the proposal.
 - `proposal_name` - name of proposal which will be used in `UpgradeHandler` in the new application,
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links,
 - `upgrade_height` - height when upgrade process will be occurred. Keep in mind that this needs to be after voting period has ended.
