@@ -32,15 +32,15 @@ cheqd-noded tx gov submit-proposal [path/to/proposal.json]
 {
  "metadata": "ipfs://CID",
  "deposit": "8000000000000ncheq",
- "title": "<proposal-title>",
- "summary": "<proposal-description>",
+ "title": "<proposal_title>",
+ "summary": "<proposal_description>",
  "expedited": false
 }
 ```
 
 The main parameters here are:
 
-- `proposal-title` - name of the proposal.
+- `proposal_title` - name of the proposal.
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
 
 ### 2) Community Pool Spend
@@ -51,7 +51,7 @@ The main parameters here are:
     {
       "@type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
       "authority": "cheqd10d07y265gmmuvt4z0w9aw880jnsr700j5ql9az",
-      "recipient": "<recipient-address>",
+      "recipient": "<recipient_address>",
       "amount": [
         {
           "denom": "ncheq",
@@ -62,17 +62,17 @@ The main parameters here are:
   ],
   "metadata": "ipfs://CID",
   "deposit": "8000000000000ncheq",
-  "title": "<proposal-title>",
-  "summary": "<proposal-description>",
+  "title": "<proposal_title>",
+  "summary": "<proposal_description>",
   "expedited": false
 }
 ```
 
 The main parameters here are:
 
-- `proposal-title` - name of the proposal.
+- `proposal_title` - name of the proposal.
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
-- `recipient-address`- cheqd address to which the community pool tokens should be sent.
+- `recipient_address`- cheqd address to which the community pool tokens should be sent.
 - `amount` - amount of tokens to be sent to the recipient address.
 
 ### 3) Software upgrade
@@ -94,7 +94,7 @@ The main parameters here are:
  ],
  "metadata": "ipfs://CID",
  "deposit": "8000000000000ncheq",
- "title": "<proposal-title>",
+ "title": "<proposal_title>",
  "summary": "<proposal_description>",
  "expedited": false
 }
@@ -102,7 +102,7 @@ The main parameters here are:
 
 The main parameters here are:
 
-- `proposal-title` - name of the proposal.
+- `proposal_title` - name of the proposal.
 - `proposal_name` - name of proposal which will be used in `UpgradeHandler` in the new application,
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
 - `upgrade_height` - height when upgrade process will be triggered. Keep in mind that this needs to be after voting period has ended.
@@ -117,14 +117,14 @@ The main parameters here are:
  "messages": [
   {
    "@type": "/ibc.core.client.v1.MsgRecoverClient",
-   "subject_client_id": "<expired-client-id>",
-   "substitute_client_id": "<new-client-id>",
-   "signer": "prop-submitter-address>"
+   "subject_client_id": "<expired_client-id>",
+   "substitute_client_id": "<new_client-id>",
+   "signer": "prop_submitter_address>"
   }
  ],
  "metadata": "ipfs://CID",
  "deposit": "8000000000000ncheq",
- "title": "<proposal-title>",
+ "title": "<proposal_title>",
  "summary": "<proposal_description>",
  "expedited": false
 }
@@ -132,11 +132,11 @@ The main parameters here are:
 
 The main parameters here are:
 
-- `proposal-title` - name of the proposal.
+- `proposal_title` - name of the proposal.
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
-- `expired-client-id` - IBC client id of the expired connection.
-- `new-client-id` - IBC client id of the replacement connection.
-- `prop-submitter-address` - Cheqd address of the user who will submit the proposal.
+- `expired_client_id` - IBC client id of the expired connection.
+- `new_client_id` - IBC client id of the replacement connection.
+- `prop_submitter_address` - Cheqd address of the user who will submit the proposal.
 
 ## Expedited Proposals
 
@@ -150,8 +150,8 @@ Any and all proposals can be submitted as expedited proposals by switching the `
 {
  "metadata": "ipfs://CID",
  "deposit": "8000000000000ncheq",
- "title": "<proposal-title>",
- "summary": "<proposal-description>",
+ "title": "<proposal_title>",
+ "summary": "<proposal_description>",
  "expedited": true
 }
 ```

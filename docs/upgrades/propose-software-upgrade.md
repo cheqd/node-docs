@@ -68,6 +68,8 @@ The main parameters here are:
 - `operator_alias` - alias of a key which will be used for signing proposal,
 - `<chain_id>` - identifier of chain which will be used while creating the blockchain.
 
+Follow our [guide for drafting governance proposal](../cheqd-cli/cheqd-cli-gov-proposals-types.md) if you need help with creating the proposal file.
+
 In case of successful submitting  the next command can be used for getting `proposal_id`:
 
 ```bash
