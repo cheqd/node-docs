@@ -24,9 +24,9 @@ cheqd-noded tx gov submit-proposal [path/to/proposal.json]
   --gas-prices 5000ncheq
 ```
 
-## Examples of `proposal.json` for a few commonly submitted proposal types:
+## Examples of `proposal.json` for a few commonly submitted proposal types
 
-### 1) Text proposals:
+### 1) Text proposals
 
 ```bash
 {
@@ -43,7 +43,7 @@ The main parameters here are:
 - `proposal-title` - name of the proposal.
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
 
-### 2) Community Pool Spend:
+### 2) Community Pool Spend
 
 ```bash
 {
@@ -73,11 +73,11 @@ The main parameters here are:
 - `proposal-title` - name of the proposal.
 - `proposal_description` - proposal description; limited to 255 characters; you can use json markdown to provide links.
 - `recipient-address`- cheqd address to which the community pool tokens should be sent.
-- `amount` - amount of tokens to be sent to the recipient address. 
+- `amount` - amount of tokens to be sent to the recipient address.
 
-### 3) Software upgrade:
+### 3) Software upgrade
 
-```
+```json
 {
  "messages": [
   {
@@ -110,7 +110,7 @@ The main parameters here are:
 - `operator_alias` - alias of a key which will be used for signing proposal.
 - `<chain_id>` - identifier of chain which will be used while creating the blockchain.
 
-### 4) IBC Recover Client:
+### 4) IBC Recover Client
 
 ```bash
 {
@@ -142,7 +142,7 @@ The main parameters here are:
 
 Cosmos SDK v0.50+ also added support for **expedited proposals**. Expedited proposals have shorter a voting period and a higher tally threshold by default. If an expedited proposal fails to meet the threshold within the shorter voting period, it is then automatically converted to a regular proposal and restarts voting under regular voting conditions.
 
-### Submitting expedited proposals 
+### Submitting expedited proposals
 
 Any and all proposals can be submitted as expedited proposals by switching the `expedited` field to `true` in proposal.json file.  Eg;-
 

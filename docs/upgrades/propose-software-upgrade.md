@@ -32,8 +32,10 @@ cheqd-noded tx gov submit-proposal [path/to/proposal.json]
   --gas-adjustment 1.4 \
   --gas-prices 5000ncheq
 ```
-Where the contents of `proposal.json` are in the following format
-```bash
+
+Where the contents of `proposal.json` are in the following format:
+
+```json
 {
  "messages": [
   {
