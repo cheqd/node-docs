@@ -9,11 +9,13 @@
   * [(Alternative) Install with Docker](docs/setup-and-configure/docker.md)
   * [Configure cheqd node](docs/setup-and-configure/configure-cheqd-node.md)
   * [Configure cosmovisor](docs/setup-and-configure/cosmovisor-configuration.md)
+  * [Configure State Sync](docs/setup-and-configure/set-up-state-sync.md)
 * [Command Line usage](docs/cheqd-cli/README.md)
   * [Manage keys](docs/cheqd-cli/cheqd-cli-key-management.md)
   * [Manage accounts](docs/cheqd-cli/cheqd-cli-accounts.md)
   * [Manage a node](docs/cheqd-cli/cheqd-cli-node-management.md)
   * [Make transactions](docs/cheqd-cli/cheqd-cli-token-transactions.md)
+  * [Draft governance proposals](docs/cheqd-cli/cheqd-cli-gov-proposals-types.md)
   * [Use fee abstraction](docs/cheqd-cli/cheqd-cli-fee-abstraction.md)
 
 ## 🏦 Validator Guides
@@ -25,6 +27,7 @@
   * [Unjailing a jailed validator](docs/validator-guide/unjail.md)
   * [Move validator to a different machine](docs/validator-guide/move-validator.md)
   * [Backup and restore node keys with Hashicorp Vault](docs/validator-guide/backup-and-restore.md)
+  * [Re-enable pruning and recovering node db](docs/validator-guide/reenable-pruning.md)
 * [Network-wide Software Upgrades](docs/upgrades/README.md)
   * [Upgrade Guides](docs/upgrades/upgrade-guides/README.md)
     * [Upgrade to v0.6.x](docs/upgrades/upgrade-guides/v0.6-upgrade.md)

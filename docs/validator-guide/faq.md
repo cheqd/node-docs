@@ -108,7 +108,7 @@ We have also [built a tool](https://github.com/cheqd/validator-status) internall
 
 Please join the channel 'mainnet-alerts' on the cheqd community slack.
 
-In addition to that, [Cosmos/Tendermint also provide a Prometheus metrics interface](https://docs.cometbft.com/v0.34/core/metrics) (for those who already use it for monitoring/want to set one up) that has metrics for monitoring node status (and a lot more).
+In addition to that, [Cosmos/Tendermint also provide a Prometheus metrics interface](https://docs.cometbft.com/v0.38/core/metrics) (for those who already use it for monitoring/want to set one up) that has metrics for monitoring node status (and a lot more).
 
 ## **Are there any other ways to optimise?**
 
