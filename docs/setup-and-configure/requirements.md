@@ -95,4 +95,4 @@ If you're not running a validator node, or if you want more advanced control on 
 ## Further information
 
 * Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.cometbft.com/v0.38/core/running-in-production).
-* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/main/tooling/cosmovisor); however in our testing so far this method has not been reliable and is therefore currently not recommended.
+* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/sdk/latest/guides/upgrades/cosmovisor#cosmovisor); however in our testing so far this method has not been reliable and is therefore currently not recommended.

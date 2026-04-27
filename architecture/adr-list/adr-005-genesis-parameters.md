@@ -48,7 +48,7 @@ Tendermint requires [genesis parameters](https://docs.cometbft.com/v0.38/core/us
 
 ## Cosmos SDK module parameters
 
-Cosmos application is divided [into a list of modules](https://docs.cosmos.network/main/modules). Each module has parameters that help to adjust the module's behaviour.
+Cosmos application is divided [into a list of modules](https://docs.cosmos.network/sdk/latest/modules/modules). Each module has parameters that help to adjust the module's behaviour.
 
 ### `auth` module
 
@@ -80,7 +80,7 @@ Cosmos application is divided [into a list of modules](https://docs.cosmos.netwo
 
 | Parameter | Description | Mainnet | Testnet |
 | - | - | - | - |
-| `constant_fee` | The fee is used to verify the [invariant(s)](https://docs.cosmos.network/main/build/building-modules/invariants) | 10,000,000,000,000 ncheq (10,000 CHEQ) | 10,000,000,000,000 ncheq (10,000 CHEQ) |
+| `constant_fee` | The fee is used to verify the invariant(s) | 10,000,000,000,000 ncheq (10,000 CHEQ) | 10,000,000,000,000 ncheq (10,000 CHEQ) |
 
 ### `distribution` module
 
@@ -184,5 +184,5 @@ The parameters above were agreed separate the cheqd mainnet and testnet paramete
 
 ## References
 
-* [List of Cosmos modules](https://docs.cosmos.network/main/modules)
+* [List of Cosmos modules](https://docs.cosmos.network/sdk/latest/modules/modules)
 * [Tendermint genesis parameters](https://docs.cometbft.com/v0.38/core/using-cometbft#genesis)
