@@ -20,7 +20,7 @@ The interactive installer is written in **Python 3** and is designed to work on 
 
 ### Software installed by installer
 
-1. **Cosmovisor** (default, but can be skipped): The installer [configures Cosmovisor](https://docs.cosmos.network/main/tooling/cosmovisor) by default, which is a standard Cosmos SDK tool that makes network upgrades happen in an automated fashion. This makes the process of upgrading to new releases for network-wide upgrades easier.
+1. **Cosmovisor** (default, but can be skipped): The installer [configures Cosmovisor](https://docs.cosmos.network/sdk/latest/guides/upgrades/cosmovisor#cosmovisor) by default, which is a standard Cosmos SDK tool that makes network upgrades happen in an automated fashion. This makes the process of upgrading to new releases for network-wide upgrades easier.
 2. **`cheqd-noded` binary** (mandatory): This is the main piece of ledger-side code each node runs.
 3. **Dependencies**: In case you request the installer to restore from a snapshot, dependencies such as `pv` will be installed so that a progress bar can be shown for snapshot extraction. Otherwise, no additional software is installed by the installer.
 
@@ -107,7 +107,7 @@ Select cheqd network to join:
 
 #### 4. Choose Cosmovisor configuration options
 
-The next few questions are used to configure Cosmovisor-related options. Read [an explanation of Cosmovisor configuration options in  Cosmos SDK documentation](https://docs.cosmos.network/main/tooling/cosmovisor), or choose to install with the default settings.
+The next few questions are used to configure Cosmovisor-related options. Read [an explanation of Cosmovisor configuration options in  Cosmos SDK documentation](https://docs.cosmos.network/sdk/latest/guides/upgrades/cosmovisor#cosmovisor), or choose to install with the default settings.
 
 1. `Install cheqd-noded using Cosmovisor? (yes/no) [default: yes]`: Use Cosmovisor to run node
 2. `Do you want Cosmovisor to automatically download binaries for scheduled upgrades? (yes/no) [default: yes]`: By default, Cosmovisor will attempt to automatically download new binaries that have passed [software upgrade proposals voted on the network](../upgrades/README.md). You can choose to do this manually if you want more control.

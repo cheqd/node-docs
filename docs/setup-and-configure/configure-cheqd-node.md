@@ -291,7 +291,6 @@ Here are some of the most important parameters set in the config file above:
 * Keep the state sync off, unless you want to serve statesync snapshots from your node.
 * Set the mempool limit to 5000 txs. This should be sufficient to most use-cases.
 
-See more details about cosmos-SDK configuration [here](https://docs.cosmos.network/v0.50/learn/advanced/config).
 
 ## `config.toml` Configuration file
 

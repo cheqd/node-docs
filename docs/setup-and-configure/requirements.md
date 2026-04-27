@@ -23,9 +23,9 @@ Extended information on [recommended hardware requirements is available in Tende
 
 Storage requirements may vary, depending on your specific needs:
 
-* If you need more historic data and you plan to initialize your node by using state DB snapshot, you will need at least 625 GB of SSD storage.
-* If you don't need specific historic data, you can use state sync to initialize your node. In this case, your node will start with less than 1GB of disk space consume, but it will keep to grow with time. It's recommended to provide at least 10GB of SSD.
-* In case you need full chain history and you want to run an archive node, you will need 2.7 TB of disk storage. For obtaining full chain history snapshot, reach out to our team on Discord.
+* If you need more historic data and you plan to initialize your node by using state DB snapshot, you will need at least 50GB of storage.
+* If you don't need specific historic data, you can use **state sync** to initialize your node. In this case, your node will start with less than 1GB of disk space consume, but it will keep to grow with time. It's recommended to provide at least 10GB of SSD. You can always reset your node and reinitialize it with state sync if you run out of space.
+* In case you need full chain history and you want to run an archive node, you will need 3 TB of disk storage. For obtaining full chain history snapshot, reach out to our team on Discord.
 
 > ⚠️ **Storage requirements for the blockchain grows with time**. Therefore, these minimum storage figures are expected to increase over time. Read our validator guide for "pruning" settings to optimise storage consumed.
 
@@ -95,4 +95,4 @@ If you're not running a validator node, or if you want more advanced control on 
 ## Further information
 
 * Tendermint documentation has [best practices for running a Cosmos node in production](https://docs.cometbft.com/v0.38/core/running-in-production).
-* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/main/tooling/cosmovisor); however in our testing so far this method has not been reliable and is therefore currently not recommended.
+* [Сosmovisor could be used for automatic upgrades](https://docs.cosmos.network/sdk/latest/guides/upgrades/cosmovisor#cosmovisor); however in our testing so far this method has not been reliable and is therefore currently not recommended.

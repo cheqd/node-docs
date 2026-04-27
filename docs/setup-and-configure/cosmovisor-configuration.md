@@ -107,4 +107,4 @@ cosmovisor_disable_recase = false
 
 > **⚠️ Reminder**: Like the service file, custom config.toml changes can be overwritten by the installer. **Decline updates** if you’ve made manual modifications.
 
-For further details, refer to the official [Cosmovisor documentation](https://docs.cosmos.network/main/tooling/cosmovisor).
+For further details, refer to the official [Cosmovisor documentation](https://docs.cosmos.network/sdk/latest/guides/upgrades/cosmovisor#cosmovisor).
