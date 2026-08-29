@@ -72,3 +72,15 @@ ba1689516f45be7f79c7450394144711e02e7341@3.13.19.41:26656
 ```
 
 Using this information other participants will be able to join your node.
+
+## Public RPC Endpoints
+
+The following public endpoints can be used to connect to cheqd-mainnet-1:
+
+| Provider   | RPC Endpoint                              |
+| ---------- | ----------------------------------------- |
+| cheqd      | https://rpc.cheqd.net                     |
+| PublicNode | https://cheqd-rpc.publicnode.com:443      |
+| NodeStake  | https://rpc.cheqd.nodestake.org           |
+
+For independent latency and availability measurements across these endpoints, see the [cheqd RPC Benchmark](https://openchainbench.com/benchmarks/cheqd-rpc) on OpenChainBench.
